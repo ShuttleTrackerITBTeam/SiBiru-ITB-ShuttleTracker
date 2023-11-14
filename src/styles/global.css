@@ -1,0 +1,4 @@
+@tailwind base; /* Tailwind's base styles, if any */
+@tailwind components; /* Tailwind's component classes, if any */
+@tailwind utilities; /* Tailwind's utility classes, if any */
+
