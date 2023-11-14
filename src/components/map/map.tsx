@@ -67,7 +67,7 @@ const Map = () => {
     // Set interval to fetch location every 3 seconds
     const interval = setInterval(() => {
       fetchLocation();
-    }, 3000);
+    }, 1000);
 
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, []);
