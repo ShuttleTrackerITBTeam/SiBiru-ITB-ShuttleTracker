@@ -7,7 +7,10 @@ const Map = () => {
   const [location, setLocation] = useState({
     loaded: false,
     coordinates: { lat: 0.0, lng: 0.0 },
-    error: null,
+    error: null as null | {
+        code: number;
+        message: string;
+        },
   });
 
   const CenterPoint = { lat: -6.933370, lng: 107.772060 };
@@ -20,7 +23,7 @@ const Map = () => {
   });
 
   const fetchLocation = () => {
-    const onSuccess = (location) => {
+    const onSuccess = (location: { coords: { latitude: number; longitude: number; }; }) => {
       setLocation({
         loaded: true,
         coordinates: {
@@ -32,9 +35,13 @@ const Map = () => {
       console.log("Latitude: " + location.coords.latitude + " Longitude: " + location.coords.longitude);
     };
 
-    const onError = (error) => {
+    const onError = (error: { code: any; message: any; }) => {
       setLocation({
         loaded: true,
+        coordinates: {
+          lat: 0,
+          lng: 0,
+        },
         error: {
           code: error.code,
           message: error.message,
