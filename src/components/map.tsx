@@ -108,36 +108,38 @@ const Map = () => {
 
   return (
     <div className='h-screen flex items-center justify-center'>
-      <MapContainer center={CenterPoint} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '390px' }}>
-        <div className='absolute z-[1000] item-center h-[100px] w-full bottom-11'>
-          <div className=' justify-center w-full flex  '>
-            <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-3xl'>
-              <div className=' flex mx-3'>
-                <Image src={'/busPanel.svg'} alt="bus panel" width={25} height={20} />
-                <p className=' ml-3 text-lg font-bold text-white'>Tampilkan Halte Terdekat</p>
-              </div>
-            </button>
+      <div className='h-full w-full md:w-[468px]'>
+        <MapContainer center={CenterPoint} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
+          <div className='absolute z-[1000] item-center h-[100px] w-full bottom-11'>
+            <div className=' justify-center w-full flex  '>
+              <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-3xl'>
+                <div className=' flex mx-3'>
+                  <Image src={'/busPanel.svg'} alt="bus panel" width={25} height={20} />
+                  <p className=' ml-3 text-lg font-bold text-white'>Tampilkan Halte Terdekat</p>
+                </div>
+              </button>
+            </div>
           </div>
-        </div>
 
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        />
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
 
-        <Marker key={location.coordinates.lat + location.coordinates.lng} position={CenterPoint} icon={iconUser}>
-          <Popup>
-            Your Location
-          </Popup>
+          <Marker key={location.coordinates.lat + location.coordinates.lng} position={CenterPoint} icon={iconUser}>
+            <Popup>
+              Your Location
+            </Popup>
+          </Marker>
+
+          {markers.map((marker, index) => (
+        <Marker key={`marker-${index}`} position={marker.geocode as LatLngTuple} icon={halteIcon}>
+          <Popup>{marker.popUp}</Popup>
         </Marker>
+      ))}
 
-        {markers.map((marker, index) => (
-      <Marker key={`marker-${index}`} position={marker.geocode as LatLngTuple} icon={halteIcon}>
-        <Popup>{marker.popUp}</Popup>
-      </Marker>
-    ))}
-
-      </MapContainer>
+        </MapContainer>
+      </div>
     </div>
   );
 };
