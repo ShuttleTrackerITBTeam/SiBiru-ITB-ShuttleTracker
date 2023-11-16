@@ -9,7 +9,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ title, links }) => {
   return (
     <nav className='flex justify-center '>
-      <div className="border-[2px] border-black border-solid w-[390px] z-[200]">
+      <div className="border-[2px] border-black border-solid w-full md:w-[468px]">
         <div className="flex justify-between px-[14px] py-[15px]">
           <div className='flex items-center'>
             <a href="/help"><Image src="/images/help.png" alt='help' width={23} height={23} /></a>

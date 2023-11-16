@@ -73,18 +73,20 @@ const Map = () => {
   }, []);
 
   return (
-    <div className='h-screen flex items-center justify-center'>
-      <MapContainer center={CenterPoint} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '390px' }}>
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        />
-        <Marker key={location.coordinates.lat + location.coordinates.lng} position={CenterPoint} icon={iconUser}>
-          <Popup>
-            Your Location
-          </Popup>
-        </Marker>
-      </MapContainer>
+    <div className='h-screen w-screen flex items-center justify-center'>
+      <div className='w-full h-full md:w-[468px] border-[2px] border-solid border-black'>
+        <MapContainer center={CenterPoint} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
+          <Marker key={location.coordinates.lat + location.coordinates.lng} position={CenterPoint} icon={iconUser}>
+            <Popup>
+              Your Location
+            </Popup>
+          </Marker>
+        </MapContainer>
+      </div>
     </div>
   );
 };
