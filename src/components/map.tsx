@@ -78,7 +78,7 @@ const Map = () => {
       <MapContainer center={CenterPoint} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '390px' }}>
         <div className='absolute z-[1000] item-center h-[100px] w-full bottom-11'>
           <div className=' justify-center w-full flex  '>
-            <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-3 rounded-3xl'>
+            <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-3xl'>
               <div className=' flex mx-3'>
                 <Image src={'/busPanel.svg'} alt="bus panel" width={25} height={20} />
                 <p className=' ml-3 text-lg font-bold text-white'>Tampilkan Halte Terdekat</p>
