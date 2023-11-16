@@ -110,12 +110,12 @@ const Map = () => {
     <div className='h-screen flex items-center justify-center'>
       <div className='h-full w-full md:w-[468px]'>
         <MapContainer center={CenterPoint} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
-          <div className='absolute z-[1000] item-center h-[100px] w-full bottom-11'>
+          <div className='absolute z-[1000] item-center h-[100px] w-full bottom-2'>
             <div className=' justify-center w-full flex  '>
               <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-3xl'>
-                <div className=' flex mx-3'>
+                <div className=' flex ml-4 mr-5 mt-2 '>
                   <Image src={'/busPanel.svg'} alt="bus panel" width={25} height={20} />
-                  <p className=' ml-3 text-lg font-bold text-white'>Tampilkan Halte Terdekat</p>
+                  <p className='ml-3 mb-2 text-lg font-bold text-white'>Tampilkan Halte Terdekat</p>
                 </div>
               </button>
             </div>
