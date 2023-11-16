@@ -16,15 +16,15 @@ const Map = () => {
 
   const markers = [
     {
-      geocode : [-6.929415, 107.768598],
+      geocode : [-6.929396, 107.768557],
       popUp : "Labtek 1B"
     },
     {
-      geocode : [-6.929841, 107.769065],
+      geocode : [-6.929788, 107.769033],
       popUp : "GKU 2"
     },
     {
-      geocode : [-6.929142, 107.769884],
+      geocode : [-6.929119, 107.769818],
       popUp : "GKU 1"
     },
     {
@@ -43,7 +43,8 @@ const Map = () => {
 
   const halteIcon = L.icon({
     // iconUrl: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png",
-    iconUrl: "/images/halte.svg",
+    iconUrl: "/images/halte.png",
+    iconSize: [30, 41],
   });
 
   const CenterPoint = { lat: -6.933370, lng: 107.772060 };
