@@ -21,10 +21,10 @@ export default function Home() {
       </Head>
       <main>
         <div className="relative">
-        <Navbar title="My App" links={navbarLinks} />
+          <Navbar title="My App" links={navbarLinks} />
         </div>
         <div className="">
-        <Map />
+          <Map />
         </div>
       </main>
     </>
