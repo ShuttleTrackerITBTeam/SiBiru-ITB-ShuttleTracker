@@ -5,7 +5,7 @@ import Navbar from "@src/components/Navbar";
 import LoginWarning from "@src/components/LoginWarning";
 import React, { useState } from 'react';
 
-const Map = dynamic(() => import("@src/components/map/map"), { ssr: false });
+const Map = dynamic(() => import("@src/components/map"), { ssr: false });
 
 export default function Home() {
   const navbarLinks = [
@@ -33,8 +33,6 @@ export default function Home() {
       <main>
         <div className="relative">
         <Navbar title="My App" links={navbarLinks} />
-        </div>
-        <div className="">
         <Map />
         </div>
         <button onClick={handleOpenLoginWarning}>Open Login Warning</button>
