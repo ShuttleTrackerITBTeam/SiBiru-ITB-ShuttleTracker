@@ -1,4 +1,4 @@
-import L from 'leaflet';
+import L, { LatLngTuple } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { useEffect, useState } from 'react';
@@ -12,6 +12,38 @@ const Map = () => {
         code: number;
         message: string;
         },
+  });
+
+  const markers = [
+    {
+      geocode : [-6.929415, 107.768598],
+      popUp : "Labtek 1B"
+    },
+    {
+      geocode : [-6.929841, 107.769065],
+      popUp : "GKU 2"
+    },
+    {
+      geocode : [-6.929142, 107.769884],
+      popUp : "GKU 1"
+    },
+    {
+      geocode : [-6.927963, 107.770518],
+      popUp : "Gedung Rektorat"
+    },
+    {
+      geocode : [-6.927467, 107.770047],
+      popUp : "GKU 3 / Koica"
+    },
+    {
+      geocode : [-6.926586, 107.769261],
+      popUp : "GSG"
+    }
+  ];
+
+  const halteIcon = L.icon({
+    // iconUrl: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png",
+    iconUrl: "/images/halte.svg",
   });
 
   const CenterPoint = { lat: -6.933370, lng: 107.772060 };
@@ -97,6 +129,13 @@ const Map = () => {
             Your Location
           </Popup>
         </Marker>
+
+        {markers.map((marker, index) => (
+      <Marker key={`marker-${index}`} position={marker.geocode as LatLngTuple} icon={halteIcon}>
+        <Popup>{marker.popUp}</Popup>
+      </Marker>
+    ))}
+
       </MapContainer>
     </div>
   );
