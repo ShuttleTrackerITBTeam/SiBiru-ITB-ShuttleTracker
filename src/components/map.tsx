@@ -69,38 +69,66 @@ const Map = () => {
       console.log("Latitude: " + location.coords.latitude + " Longitude: " + location.coords.longitude);
     };
 
-    const onError = (error: { code: any; message: any; }) => {
-      setLocation({
-        loaded: true,
-        coordinates: {
-          lat: 0,
-          lng: 0,
-        },
-        error: {
-          code: error.code,
-          message: error.message,
-        },
-      });
-      console.log("Error: " + error.message);
+      const onError = (error: { code: any; message: any; }) => {
+        setLocation({
+          loaded: true,
+          coordinates: {
+            lat: 0,
+            lng: 0,
+          },
+          error: {
+            code: error.code,
+            message: error.message,
+          },
+        });
+        console.log("Error: " + error.message);
+      };
+
+      if (!("geolocation" in navigator)) {
+        onError({
+          code: 0,
+          message: "Geolocation not supported",
+        });
+      }
+
+      navigator.geolocation.getCurrentPosition(onSuccess, onError);
     };
 
-    if (!("geolocation" in navigator)) {
-      onError({
-        code: 0,
-        message: "Geolocation not supported",
-      });
+    const fetchContents = async (): Promise<void> => {
+      try {
+        const res = await fetch('http://localhost:8000/track-shuttle/K77i9UwQegT48lxyzTh6KRt3aef1')
+        const data = await res.json()
+        setLocationBus(
+          {
+            loaded: true,
+            coordinates: {
+              lat: data.data.latitude,
+              lng: data.data.longitude,
+            },
+            error: null,
+          }
+        )
+        console.log("Latitude BUS: " + data.data.latitude + " Longitude BUS: " + data.data.longitude);
+      } catch (err) {
+        console.log(err)
+      }
     }
 
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
-  };
+    const [locationBus, setLocationBus] = useState({
+      loaded: false,
+      coordinates: { lat: 0.0, lng: 0.0 },
+      error: null as null | {
+          code: number;
+          message: string;
+          },
+    });
 
   useEffect(() => {
     // Fetch location initially
-    fetchLocation();
 
-    // Set interval to fetch location every 3 seconds
     const interval = setInterval(() => {
       fetchLocation();
+      fetchContents();
     }, 1000);
 
     return () => clearInterval(interval); // Cleanup interval on unmount
@@ -126,9 +154,15 @@ const Map = () => {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
 
-          <Marker key={location.coordinates.lat + location.coordinates.lng} position={CenterPoint} icon={iconUser}>
+          {/* <Marker key={location.coordinates.lat + location.coordinates.lng} position={CenterPoint} icon={iconUser}>
             <Popup>
               Your Location
+            </Popup>
+          </Marker> */}
+
+          <Marker key={locationBus.coordinates.lat + locationBus.coordinates.lng} position={locationBus.coordinates} icon={iconUser}>
+            <Popup>
+              Bus Location
             </Popup>
           </Marker>
 
