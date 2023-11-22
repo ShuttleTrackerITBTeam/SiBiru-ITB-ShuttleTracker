@@ -10,13 +10,21 @@ const Map = () => {
     loaded: false,
     coordinates: { lat: 0.0, lng: 0.0 },
     error: null as null | {
+      code: number;
+      message: string;
+    },
+  });
+  
+  const [locationBus, setLocationBus] = useState({
+    loaded: false,
+    coordinates: { lat: 0.0, lng: 0.0 },
+    numberMhs: 0,
+    error: null as null | {
         code: number;
         message: string;
         },
   });
-
   
-
   const markers = [
     {
       geocode : [-6.929396, 107.768557],
@@ -52,8 +60,17 @@ const Map = () => {
   });
 
   const CenterPoint = { lat: -6.933370, lng: 107.772060 };
+  
   const iconUser = L.icon({
-    iconUrl: "/images/marker-icon.png",
+    iconUrl: "/images/iconUser.svg",
+    iconSize: [25, 41],
+    iconAnchor: [10, 41],
+    popupAnchor: [2, -40],
+    shadowSize: [41, 41]
+  });
+
+  const iconBus = L.icon({
+    iconUrl: "/images/redBus.svg",
     iconSize: [25, 41],
     iconAnchor: [10, 41],
     popupAnchor: [2, -40],
@@ -109,6 +126,7 @@ const Map = () => {
             lat: data.data.latitude,
             lng: data.data.longitude,
           },
+          numberMhs: data.data.countMhs,
           error: null,
         }
       )
@@ -118,14 +136,6 @@ const Map = () => {
     }
   }
 
-  const [locationBus, setLocationBus] = useState({
-    loaded: false,
-    coordinates: { lat: 0.0, lng: 0.0 },
-    error: null as null | {
-        code: number;
-        message: string;
-        },
-  });
   
   const [isButtonClicked, setButtonClicked] = useState(true);
   const handleButtonClick = () => {
@@ -203,7 +213,7 @@ const Map = () => {
                   <div className='w-[100%] flex justify-end'>
                     <Image src="/images/closeBusPanel.svg" alt='close-button' width={25} height={25} onClick={handleButtonClick} style={{ cursor: 'pointer' }}/>
                   </div>
-                  <div className='flex border-b-[#0078C9] border-b-[3px] border-solid'>
+                  <div className='flex border-b-[#0078C9] border-b-[3px] border-solid pb-1'>
                     <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={50} height={50} />
                     <div className='header-busPanel ml-1'>
                       <p className='font-bold text-white'>Halte Terdekat</p>
@@ -211,10 +221,10 @@ const Map = () => {
                     </div>
                   </div>
                   <div className='flex mt-3 mb-3'>
-                    <Image className='mt-1.5 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
+                    <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
                     <div className='mt-1.5 ml-3'>
                       <p className='font-extralight text-white text-xs'>Nama Bus</p>
-                      <p className='font-bold text-white text-xs'>XX/XX CAPACITY</p>
+                      <p className='font-bold text-white text-xs'>{locationBus.numberMhs}/30 CAPACITY</p>
                     </div>
                     <div className=' bg-[#00409980] bg-opacity-50 h-fit absolute w-fit rounded-lg right-3 p-1.5'>
                       <div className='flex items-center'>
@@ -236,13 +246,13 @@ const Map = () => {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
 
-          {/* <Marker key={location.coordinates.lat + location.coordinates.lng} position={CenterPoint} icon={iconUser}>
+          <Marker key={location.coordinates.lat + location.coordinates.lng} position={location.coordinates} icon={iconUser}>
             <Popup>
               Your Location
             </Popup>
-          </Marker> */}
+          </Marker>
 
-          <Marker key={locationBus.coordinates.lat + locationBus.coordinates.lng} position={locationBus.coordinates} icon={iconUser}>
+          <Marker key={locationBus.coordinates.lat + locationBus.coordinates.lng} position={locationBus.coordinates} icon={iconBus}>
             <Popup>
               Bus Location
             </Popup>
