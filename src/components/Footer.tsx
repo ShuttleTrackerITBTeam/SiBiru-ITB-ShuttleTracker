@@ -1,3 +1,4 @@
+// footer component
 export default function Footer() {
     return (
         <div className="fixed bottom-0 h-[40px] w-full md:w-[468px] bg-black shadow-[0px_-2px_15px_#00000054] flex justify-center items-center">
