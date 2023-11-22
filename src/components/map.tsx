@@ -15,6 +15,8 @@ const Map = () => {
         },
   });
 
+  
+
   const markers = [
     {
       geocode : [-6.929396, 107.768557],
@@ -41,6 +43,7 @@ const Map = () => {
       popUp : "GSG"
     }
   ];
+  
 
   const halteIcon = L.icon({
     // iconUrl: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png",
@@ -185,7 +188,7 @@ const Map = () => {
   return (
     <div className='h-screen flex items-center justify-center'>
       <div className='h-full w-full md:w-[468px]'>
-        <MapContainer center={CenterPoint} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
+        <MapContainer center={CenterPoint} zoom={16} zoomControl={false} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
         <div className='fixed z-[1000] item-center h-[100px] w-full md:w-[468px] bottom-0'>
             <div className='justify-center w-full flex'>
               {isButtonClicked ? (

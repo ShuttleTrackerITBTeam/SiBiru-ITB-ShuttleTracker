@@ -5,7 +5,7 @@ export default function Home() {
             <div className="relative container mx-auto h-[103px] rounded-b-lg bg-[#F6F6F6] drop-shadow-xl flex-col">
                 <div className='h-[40px]' />
                 <div className='flex items-center justify-center'>
-                    <a className="absolute left-0 ml-[17px]" href="../" target="_blank" rel="noopener noreferrer">
+                    <a className="absolute left-0 ml-[17px]" href="/" target="_blank" rel="noopener noreferrer">
                         <img className=" rounded-full hover:brightness-110 hover:shadow-lg" src="images/back.svg" alt="back" width={39} height={39}/>
                     </a>
                     <a className="absolute right-0 mr-[17px]" href="/your-page-url-2" target="_blank" rel="noopener noreferrer">
