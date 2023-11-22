@@ -10,4 +10,13 @@
 
 .logo{
     margin-right: 11px;
+    
+/* @font-face {
+    font-family: "Montserrat";
+    src: url("../../public/fonts/Montserrat/Montserrat-VariableFont_wght.ttf");
+  } */
+
+@font-face {
+    font-family: "Open Sans";
+    src: url("../../public/fonts/Open_Sans/OpenSans-VariableFont_wdth\,wght.ttf");
 }
