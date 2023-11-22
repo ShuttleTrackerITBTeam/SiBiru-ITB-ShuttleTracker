@@ -129,7 +129,7 @@ const Map = () => {
     const interval = setInterval(() => {
       fetchLocation();
       fetchContents();
-    }, 1000);
+    }, 3000);
 
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, []);
