@@ -205,7 +205,7 @@ const Map = () => {
                 <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-3xl bottom-1' onClick={handleButtonClick}>
                   <div className=' flex mx-3'>
                     <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={25} height={20} />
-                    <p className=' ml-3 text-lg font-bold text-white'>Tampilkan Halte Terdekat</p>
+                    <p className='ml-3 text-lg font-bold text-white'>Tampilkan Halte Terdekat</p>
                   </div>
                 </button>
               ) : (
