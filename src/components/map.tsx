@@ -1,8 +1,9 @@
-import L, { LatLngTuple } from 'leaflet';
+import L, { LatLngTuple, popup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import * as turf from '@turf/turf';
 
 const Map = () => {
   const [location, setLocation] = useState({
@@ -69,83 +70,161 @@ const Map = () => {
       console.log("Latitude: " + location.coords.latitude + " Longitude: " + location.coords.longitude);
     };
 
-      const onError = (error: { code: any; message: any; }) => {
-        setLocation({
-          loaded: true,
-          coordinates: {
-            lat: 0,
-            lng: 0,
-          },
-          error: {
-            code: error.code,
-            message: error.message,
-          },
-        });
-        console.log("Error: " + error.message);
-      };
-
-      if (!("geolocation" in navigator)) {
-        onError({
-          code: 0,
-          message: "Geolocation not supported",
-        });
-      }
-
-      navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    const onError = (error: { code: any; message: any; }) => {
+      setLocation({
+        loaded: true,
+        coordinates: {
+          lat: 0,
+          lng: 0,
+        },
+        error: {
+          code: error.code,
+          message: error.message,
+        },
+      });
+      console.log("Error: " + error.message);
     };
 
-    const fetchContents = async (): Promise<void> => {
-      try {
-        const res = await fetch('http://localhost:8000/track-shuttle/K77i9UwQegT48lxyzTh6KRt3aef1')
-        const data = await res.json()
-        setLocationBus(
-          {
-            loaded: true,
-            coordinates: {
-              lat: data.data.latitude,
-              lng: data.data.longitude,
-            },
-            error: null,
-          }
-        )
-        console.log("Latitude BUS: " + data.data.latitude + " Longitude BUS: " + data.data.longitude);
-      } catch (err) {
-        console.log(err)
-      }
+    if (!("geolocation" in navigator)) {
+      onError({
+        code: 0,
+        message: "Geolocation not supported",
+      });
     }
 
-    const [locationBus, setLocationBus] = useState({
-      loaded: false,
-      coordinates: { lat: 0.0, lng: 0.0 },
-      error: null as null | {
-          code: number;
-          message: string;
-          },
-    });
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  };
 
+  const fetchContents = async (): Promise<void> => {
+    try {
+      const res = await fetch('http://localhost:8000/track-shuttle/K77i9UwQegT48lxyzTh6KRt3aef1')
+      const data = await res.json()
+      setLocationBus(
+        {
+          loaded: true,
+          coordinates: {
+            lat: data.data.latitude,
+            lng: data.data.longitude,
+          },
+          error: null,
+        }
+      )
+      console.log("Latitude BUS: " + data.data.latitude + " Longitude BUS: " + data.data.longitude);
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const [locationBus, setLocationBus] = useState({
+    loaded: false,
+    coordinates: { lat: 0.0, lng: 0.0 },
+    error: null as null | {
+        code: number;
+        message: string;
+        },
+  });
+  
+  const [isButtonClicked, setButtonClicked] = useState(true);
+  const handleButtonClick = () => {
+    setButtonClicked(!isButtonClicked);
+  };
+  
+  // Fetch nearest halte and arriving time
+  var nearestHalte = {
+    geocode : [-6.929788, 107.769033],
+    popUp : "GKU 2"
+  };
+  
+  let idx = 0;
+  let distance = turf.distance(turf.point([location.coordinates.lng, location.coordinates.lat]), turf.point([markers[0].geocode[1], markers[0].geocode[0]]), {units: 'meters'});
+  for (let i = 1; i < markers.length; i++) {
+    let temp = turf.distance(turf.point([location.coordinates.lng, location.coordinates.lat]), turf.point([markers[i].geocode[1], markers[i].geocode[0]]), {units: 'meters'});
+    if (temp < distance) {
+      distance = temp;
+      idx = i;
+    }
+  }
+  nearestHalte = markers[idx];
+  
+  var waitingTime = Math.round(turf.distance(turf.point([locationBus.coordinates.lng, locationBus.coordinates.lat]), turf.point([nearestHalte.geocode[1], nearestHalte.geocode[0]]), {units: 'meters'}) / 1800); // 30 m/second -> 1800 m/minute
+  const [arriveTime, setArriveTime] = useState('');
+  
+  // Fungsi untuk memformat waktu menjadi format HH:mm:ss
+  const formatTime = (date : any) => {
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+
+    const arriveHours = Math.floor(waitingTime / 60);
+    const arriveMinutes = Math.floor(waitingTime % 60);
+
+    if (hours + arriveHours < 24) {
+      return `${hours + arriveHours}:${minutes + arriveMinutes}`;
+    } else {
+      return `00:00`;
+    }
+  };
+  
+  // Fungsi untuk memperbarui waktu setiap detik
+  const updateTime = () => {
+    const currentDate = new Date();
+    const formattedTime = formatTime(currentDate);
+    setArriveTime(formattedTime);
+  };
+  
   useEffect(() => {
     // Fetch location initially
-
     const interval = setInterval(() => {
+      updateTime();
       fetchLocation();
       fetchContents();
-    }, 3000);
-
+    }, 1000);
+    
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, []);
-
+  
   return (
     <div className='h-screen flex items-center justify-center'>
       <div className='h-full w-full md:w-[468px]'>
         <MapContainer center={CenterPoint} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
-          <div className='absolute z-[1000] item-center h-[100px] w-full bottom-2'>
-            <div className=' justify-center w-full flex  '>
-              <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-3xl'>
-                <div className=' flex ml-4 mr-5 mt-2 '>
-                  <Image src={'/busPanel.svg'} alt="bus panel" width={25} height={20} />
-                  <p className='ml-3 mb-2 text-lg font-bold text-white'>Tampilkan Halte Terdekat</p>
+        <div className='fixed z-[1000] item-center h-[100px] w-full md:w-[468px] bottom-0'>
+            <div className='justify-center w-full flex'>
+              {isButtonClicked ? (
+                <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-3xl bottom-1' onClick={handleButtonClick}>
+                  <div className=' flex mx-3'>
+                    <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={25} height={20} />
+                    <p className=' ml-3 text-lg font-bold text-white'>Tampilkan Halte Terdekat</p>
+                  </div>
+                </button>
+              ) : (
+                <div className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-2xl absolute w-[90%] h-fit bottom-11'>
+                  <div className='w-[100%] flex justify-end'>
+                    <Image src="/images/closeBusPanel.svg" alt='close-button' width={25} height={25} onClick={handleButtonClick} style={{ cursor: 'pointer' }}/>
+                  </div>
+                  <div className='flex border-b-[#0078C9] border-b-[3px] border-solid'>
+                    <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={50} height={50} />
+                    <div className='header-busPanel ml-1'>
+                      <p className='font-bold text-white'>Halte Terdekat</p>
+                      <p className='font-bold text-white text-2xl'>{nearestHalte['popUp']}</p>
+                    </div>
+                  </div>
+                  <div className='flex mt-3 mb-3'>
+                    <Image className='mt-1.5 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
+                    <div className='mt-1.5 ml-3'>
+                      <p className='font-extralight text-white text-xs'>Nama Bus</p>
+                      <p className='font-bold text-white text-xs'>XX/XX CAPACITY</p>
+                    </div>
+                    <div className=' bg-[#00409980] bg-opacity-50 h-fit absolute w-fit rounded-lg right-3 p-1.5'>
+                      <div className='flex items-center'>
+                        <p className='font-thin text-xs text-white mx-1.5'>Arriving in</p>
+                        <div className='inline-block mx-1.5'>
+                          <p className='font-extralight text-white text-center'>{waitingTime} mins</p>
+                          <p className='font-extralight text-white text-center'>{arriveTime}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </button>
+              )}
             </div>
           </div>
 
