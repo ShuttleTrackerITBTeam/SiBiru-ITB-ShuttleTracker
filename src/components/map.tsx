@@ -1,6 +1,6 @@
-import L, { LatLngTuple, popup } from 'leaflet';
+import L, { LatLngExpression, LatLngTuple} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import * as turf from '@turf/turf';
@@ -51,7 +51,57 @@ const Map = () => {
       popUp : "GSG"
     }
   ];
-  
+
+  const route = [
+      [-6.933629, 107.768350], // main gate
+      [-6.932798, 107.768344],
+      [-6.932136, 107.768637],
+      [-6.931763, 107.768779],
+      [-6.931441, 107.768794],
+      [-6.929420, 107.768277],
+      [-6.929284, 107.768520],
+      [-6.929365, 107.768625],
+      [-6.929457, 107.768620],
+      [-6.929606, 107.768343],
+      [-6.930347, 107.768536],
+      [-6.928266, 107.770839],
+      [-6.926311, 107.769114],
+      [-6.926383, 107.769041],
+      [-6.925930, 107.768640],
+      [-6.926707, 107.767768],
+      [-6.926877, 107.767673], 
+      [-6.927600, 107.767534],
+      [-6.927928, 107.767506],
+      [-6.928605, 107.767725],
+      [-6.929118, 107.768162],
+      [-6.931424, 107.768804],
+      [-6.931695, 107.768913],
+      [-6.931831, 107.769009],
+      [-6.932200, 107.768610],
+      [-6.932732, 107.768369],
+      [-6.933629, 107.768350]
+  ]
+
+  const route2 = [
+    [-6.928999, 107.770029],
+    [-6.929842, 107.770312],
+    [-6.930405, 107.770477],
+    [-6.931596, 107.770825],
+    [-6.932023, 107.770862],
+    [-6.932260, 107.770825],
+    [-6.932451, 107.770642],
+    [-6.932620, 107.770232],
+    [-6.932678, 107.769916],
+    [-6.932591, 107.769699],
+    [-6.931975, 107.769131],
+    [-6.931928, 107.768897],
+    [-6.932184, 107.768622],
+    [-6.932732, 107.768369],
+    [-6.933629, 107.768350]
+  ]
+
+  const latlngs = route as unknown as LatLngExpression[][];
+  const latlngs2 = route2 as unknown as LatLngExpression[][];
 
   const halteIcon = L.icon({
     // iconUrl: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png",
@@ -263,7 +313,8 @@ const Map = () => {
           <Popup>{marker.popUp}</Popup>
         </Marker>
       ))}
-
+      <Polyline positions={latlngs} color="red" />
+      <Polyline positions={latlngs2} color="red" />
         </MapContainer>
       </div>
     </div>
