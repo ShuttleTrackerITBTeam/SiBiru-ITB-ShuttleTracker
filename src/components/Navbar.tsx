@@ -3,6 +3,7 @@ import Image from 'next/image';
 import LoginWarning from './LoginWarning';
 import LoginPopUp from './LoginPopUp';
 import LogoutPopUp from './LogoutPopUp';
+import Link from 'next/link';
 
 const Navbar: React.FC = () => {
   const [isLoginWarningOpen, setIsLoginWarningOpen] = useState(false);
@@ -49,14 +50,19 @@ const Navbar: React.FC = () => {
       <div className="w-full md:w-[468px] fixed bg-white appBar">
         <div className="flex justify-between px-[14px] py-[15px] relative">
           <div className='flex items-center'>
-            <a href="/help"><Image src="/images/help.svg" alt='help' width={23} height={23} /></a>
-            <a href="/report">
-              <Image src="/images/report.svg" alt='report' width={27} height={27} />
-            </a>
-            
+            <Link href='/help'>
+            <div><Image src="/images/help.svg" alt='help' width={23} height={23} /></div>
+            </Link>
+            <Link href="/report">
+            <div><Image src="/images/report.svg" alt='report' width={27} height={27} /></div>
+            </Link>        
           </div>
           <div className='flex items-center logo'>
-            <a href="/"><Image src="/images/logo.svg" alt='logo' width={69} height={38} /></a>
+            <Link href="/">
+              <div>
+                <Image src="/images/logo.svg" alt='logo' width={69} height={38} />
+              </div>
+            </Link>
           </div>
           <div className='flex items-center'>
             {/* Conditionally render based on the user state */}
