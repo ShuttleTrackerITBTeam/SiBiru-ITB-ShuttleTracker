@@ -4,8 +4,10 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import * as turf from '@turf/turf';
+import LoginWarning from './LoginWarning';
 
 const Map = () => {
+  
   const [location, setLocation] = useState({
     loaded: false,
     coordinates: { lat: 0.0, lng: 0.0 },
@@ -127,6 +129,11 @@ const Map = () => {
   const [isButtonClicked, setButtonClicked] = useState(true);
   const handleButtonClick = () => {
     setButtonClicked(!isButtonClicked);
+
+    if (user === null) {
+      setIsLoginWarningOpen(true);
+    }
+
   };
   
   // Fetch nearest halte and arriving time
@@ -178,16 +185,45 @@ const Map = () => {
       fetchLocation();
       fetchContents();
     }, 1000);
+
+    const fetchData = async () => {
+      try {
+        // const response = await fetch('http://localhost:8000/check-session');
+        // const userData = await response.json();
+        const userData = null;
+        setUser(userData); // Store the fetched data in the user state
+        console.log('user',user);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
     
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, []);
+
+  const [user, setUser] = useState<any>(null);
+
+  const [isLoginWarningOpen, setIsLoginWarningOpen] = useState(false);
+
+  const handleOpenLoginWarning = () => {
+    setIsLoginWarningOpen(true);
+  };
+
+  const handleCloseLoginWarning = () => {
+    setIsLoginWarningOpen(false);
+    setButtonClicked(!isButtonClicked);
+  };
   
   return (
     <div className='h-screen flex items-center justify-center'>
       <div className='h-full w-full md:w-[468px]'>
-        <MapContainer center={CenterPoint} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
+        <MapContainer className='relative' center={CenterPoint} zoom={16} zoomControl={false} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
         <div className='fixed z-[1000] item-center h-[100px] w-full md:w-[468px] bottom-0'>
             <div className='justify-center w-full flex'>
+
+              
               {isButtonClicked ? (
                 <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-3xl bottom-1' onClick={handleButtonClick}>
                   <div className=' flex mx-3'>
@@ -196,6 +232,12 @@ const Map = () => {
                   </div>
                 </button>
               ) : (
+                user === null ? (
+                  <div className='absolute bottom-[0px] h-screen'>
+                    <LoginWarning isOpen={isLoginWarningOpen} onClose={handleCloseLoginWarning}></LoginWarning>
+                  </div>
+                  
+                ) : (               
                 <div className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-2xl absolute w-[90%] h-fit bottom-11'>
                   <div className='w-[100%] flex justify-end'>
                     <Image src="/images/closeBusPanel.svg" alt='close-button' width={25} height={25} onClick={handleButtonClick} style={{ cursor: 'pointer' }}/>
@@ -224,6 +266,7 @@ const Map = () => {
                     </div>
                   </div>
                 </div>
+                )
               )}
             </div>
           </div>
@@ -252,6 +295,7 @@ const Map = () => {
       ))}
 
         </MapContainer>
+        {/* <LoginWarning isOpen={isLoginWarningOpen} onClose={handleCloseLoginWarning}></LoginWarning> */}
       </div>
     </div>
   );
