@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
     <nav className='flex justify-center '>
       <div className="w-full md:w-[468px] fixed bg-white appBar">
         <div className="flex justify-between px-[14px] py-[15px] relative">
-          <div className='flex items-center'>
+          <div className='flex items-center gap-2'>
             <Link href='/help'>
             <div><Image src="/images/help.svg" alt='help' width={23} height={23} /></div>
             </Link>
@@ -57,10 +57,10 @@ const Navbar: React.FC = () => {
             <div><Image src="/images/report.svg" alt='report' width={27} height={27} /></div>
             </Link>        
           </div>
-          <div className='flex items-center logo'>
+          <div className='flex items-center ml-[-10px] logo'>
             <Link href="/">
               <div>
-                <Image src="/images/logo.svg" alt='logo' width={69} height={38} />
+                <Image src="/images/logo.svg" alt='logo' width={88} height={30} />
               </div>
             </Link>
           </div>
@@ -86,7 +86,7 @@ const Navbar: React.FC = () => {
         </div>
       </div>
     </nav>
-    <LoginWarning isOpen={isLoginWarningOpen} onClose={handleCloseLoginWarning}></LoginWarning>
+    {/* <LoginWarning isOpen={isLoginWarningOpen} onClose={handleCloseLoginWarning}></LoginWarning> */}
     </>
   );
 };

@@ -285,21 +285,16 @@ const Map = () => {
         <MapContainer className='relative' center={CenterPoint} zoom={16} zoomControl={false} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
         <div className='fixed z-[1000] item-center h-[100px] w-full md:w-[468px] bottom-0'>
             <div className='justify-center w-full flex'>
-
-              
-              {isButtonClicked ? (
-                <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-3xl bottom-1' onClick={handleButtonClick}>
-                  <div className=' flex mx-3'>
-                    <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={25} height={20} />
-                    <p className='ml-3 text-lg font-bold text-white'>Tampilkan Halte Terdekat</p>
+                <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] w-[256px] h-[46px] rounded-3xl' onClick={handleButtonClick}>
+                  <div className='flex justify-center items-center'>
+                    <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={22} height={29} />
+                    <p className='ml-2 text-[14px] font-bold text-white'>Tampilkan Halte Terdekat</p>
                   </div>
                 </button>
-              ) : (
-                user === null ? (
+                {( user === null ? (
                   <div className='absolute bottom-[0px] h-screen'>
                     <LoginWarning isOpen={isLoginWarningOpen} onClose={handleCloseLoginWarning}></LoginWarning>
                   </div>
-                  
                 ) : (               
                 <div className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-2xl absolute w-[90%] h-fit bottom-11'>
                   <div className='w-[100%] flex justify-end'>

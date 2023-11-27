@@ -1,16 +1,18 @@
+import Link from 'next/link';
+
 export default function Home() {
   return (
     <div className="flex justify-center">
-        <div className='w-[360px] h-[800px] bg-slate-100'>
+        <div className='w-full md:w-[468px] h-[800px] bg-slate-100'>
             <div className="relative container mx-auto h-[103px] rounded-b-lg bg-[#F6F6F6] drop-shadow-xl flex-col">
                 <div className='h-[40px]' />
                 <div className='flex items-center justify-center'>
-                    <a className="absolute left-0 ml-[17px]" href="/" target="_blank" rel="noopener noreferrer">
+                    <Link className="absolute left-0 ml-[17px]" href="/">
                         <img className=" rounded-full hover:brightness-110 hover:shadow-lg" src="images/back.svg" alt="back" width={39} height={39}/>
-                    </a>
-                    <a className="absolute right-0 mr-[17px]" href="/your-page-url-2" target="_blank" rel="noopener noreferrer">
+                    </Link>
+                    <Link className="absolute right-0 mr-[17px]" href="/your-page-url-2">
                         <img className=" rounded-full hover:brightness-110 hover:shadow-lg" src="images/profile.svg" alt="profile" width={39} height={39}/>
-                    </a>
+                    </Link>
                     <h1 className="text-center text-[18px] font-bold text-[#0078C9] font-montserrat leading-[22px]">Pusat <br/> Bantuan </h1>
                 </div>
             </div>
@@ -53,7 +55,7 @@ export default function Home() {
         <div className="mt-[30px] mx-[19px] font-open-sans">
             <h2 className="text-justify-left text-[16px] leading-[19.5px] font-bold text-[#0078C9] font-montserrat">Cara Mengakses Fitur Shuttle<span className="text-[#002582]">Tracker</span></h2>
             <p className="mt-[8px] ml-[19px] text-justify-left text-[14px] leading-[19px] text-[#1E1E1E]">
-                Saat membuka <span className="font-bold">Shuttle<span className="text-[#002582]">Tracker</span></span>, Anda dapat menemukan tombol sebagai berikut:
+                Saat membuka <span className="font-bold text-[#0078C9] font-montserrat">Shuttle<span className="font-bold text-[#002582] font-montserrat">Tracker</span></span>, Anda dapat menemukan tombol sebagai berikut:
             </p>
             <ul className="mt-[10px] ml-[24px]">
                 <li className="flex justify-between mt-[12px]">
