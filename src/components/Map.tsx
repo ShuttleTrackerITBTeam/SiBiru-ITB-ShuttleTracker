@@ -171,7 +171,7 @@ const Map = () => {
 
   const fetchContents = async (): Promise<void> => {
     try {
-      const res = await fetch('http://localhost:8000/track-shuttle/K77i9UwQegT48lxyzTh6KRt3aef1')
+      const res = await fetch('https://shuttle-tracker-itb-backend.vercel.app/track-shuttle/K77i9UwQegT48lxyzTh6KRt3aef1')
       const data = await res.json()
       setLocationBus(
         {
@@ -268,7 +268,7 @@ const Map = () => {
     <div className='h-screen flex items-center justify-center'>
       <div className='h-full w-full md:w-[468px]'>
         <MapContainer className='relative' center={CenterPoint} zoom={16} zoomControl={false} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
-          <div className='fixed z-[1000] item-center h-[100px] w-full md:w-[468px] bottom-0'>
+          <div className='fixed z-[400] item-center h-[100px] w-full md:w-[468px] bottom-0'>
             <div className='justify-center w-full flex'>
                 <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] w-[256px] h-[46px] rounded-3xl' onClick={handleButtonClick}>
                   <div className='flex justify-center items-center mt-[2px]'>
