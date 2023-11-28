@@ -13,6 +13,32 @@ const LoginWarning: React.FC<LoginWarningProps> = ({ isOpen, onClose, isFromLogi
   }
 
   const [isLogin, setIsLogin] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password  }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Data:', JSON.stringify(data));
+        await localStorage.setItem('session', JSON.stringify(data));; 
+        onClose();
+      } else {
+        console.error('Login failed');
+
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <div className='w-screen h-[100%] flex justify-center'>
@@ -28,12 +54,15 @@ const LoginWarning: React.FC<LoginWarningProps> = ({ isOpen, onClose, isFromLogi
                   </button>
                   <h1 className='text-[24px] mt-[3px] font-bold font-montserrat'>Login</h1>
                 </div>
-                <input type="email" className='w-[90%] mb-[6px] h-[39px] px-[20px] py-[10px] bg-[#D9D9D9] rounded-[20px] text-black mt-[6px] text-[14px]' placeholder='Email' />
-                <input type="password" className='w-[90%] mb-[6px] h-[39px] px-[20px] py-[10px] bg-[#D9D9D9] rounded-[20px] text-black mt-[6px] text-[14px]' placeholder='Password' />
-                <button className='w-[90%] h-[39px] px-[20px] py-[10px] bg-[#0078C9] rounded-[20px] text-white mt-[6px] font-bold text-[14px]'>
+                <input type="email" className='w-[90%] mb-[6px] h-[39px] px-[20px] py-[10px] bg-[#D9D9D9] rounded-[20px] text-black mt-[6px] text-[14px]' placeholder='Email' value={email}
+                  onChange={(e) => setEmail(e.target.value)} />
+                <input type="password" className='w-[90%] mb-[6px] h-[39px] px-[20px] py-[10px] bg-[#D9D9D9] rounded-[20px] text-black mt-[6px] text-[14px]' placeholder='Password' value={password}
+                      onChange={(e) => setPassword(e.target.value)}  />
+                <button onClick={()=> handleLogin()} className='w-[90%] h-[39px] px-[20px] py-[10px] bg-[#0078C9] rounded-[20px] text-white mt-[6px] font-bold text-[14px]'>
                   <div className='flex justify-center gap-[9px]'>
                     {/* <Image alt="iconLogin" src="images/iconITB.svg" width={20} height={20}  /> */}
-                    ITB Account/SSO Login
+                    {/* ITB Account/SSO Login */}
+                    Login
                   </div>
                 </button>
                 <button className='w-[90%] h-[39px] px-[20px] py-[10px] bg-[#00AFF7] rounded-[20px] text-white mt-[10px] font-bold text-[14px]'>

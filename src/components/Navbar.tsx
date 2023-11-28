@@ -5,11 +5,15 @@ import LoginPopUp from './LoginPopUp';
 import LogoutPopUp from './LogoutPopUp';
 import Link from 'next/link';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  user : boolean;
+}
+
+const Navbar : React.FC<NavbarProps> = (user) => {
+  console.log('user navbar : ', user);
   const [isLoginWarningOpen, setIsLoginWarningOpen] = useState(false);
   const [isLoginPopUpOpen, setIsLoginPopUpOpen] = useState(false);
   const [isLogoutPopUpOpen, setIsLogOutPopUpOpen] = useState(false);
-  const [user, setUser] = useState<any>(null); // Initialize user state
 
   const handleOpenLoginWarning = () => {
     setIsLoginWarningOpen(true);
@@ -27,23 +31,6 @@ const Navbar: React.FC = () => {
     setIsLogOutPopUpOpen(!isLogoutPopUpOpen);
   }
 
-
-  useEffect(() => {
-    // Fetch data when the component mounts
-    const fetchData = async () => {
-      try {
-        // const response = await fetch('http://localhost:8000/check-session');
-        // const userData = await response.json();
-        const userData = null;
-        setUser(userData); // Store the fetched data in the user state
-        console.log('user',user);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
   return (
     <>
     <nav className='flex justify-center '>
@@ -66,7 +53,7 @@ const Navbar: React.FC = () => {
           </div>
           <div className='flex items-center'>
             {/* Conditionally render based on the user state */}
-            {user === null ? (
+            {user ? (
               <button onClick={handleClickLoginPopUp}>
                 <Image src="/images/profile.svg" alt='logo' width={33} height={33} />
               </button>
@@ -77,10 +64,10 @@ const Navbar: React.FC = () => {
             )}
           </div>
 
-          {user === null ? (
+          {user ? (
             <LoginPopUp isOpen={isLoginPopUpOpen}></LoginPopUp>
           ) : (
-            <LogoutPopUp isOpen={isLogoutPopUpOpen} user={user}></LogoutPopUp>
+            <LogoutPopUp isOpen={isLogoutPopUpOpen} user="Adrian"></LogoutPopUp>
           )}
 
         </div>

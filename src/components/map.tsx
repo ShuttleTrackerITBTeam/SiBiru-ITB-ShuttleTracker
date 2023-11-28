@@ -6,7 +6,11 @@ import Image from 'next/image';
 import * as turf from '@turf/turf';
 import LoginWarning from './LoginWarning';
 
-const Map = () => {
+interface MapProps {
+  user : boolean;
+}
+
+const Map : React.FC<MapProps> = ({ user }) => {
   
   const [location, setLocation] = useState({
     loaded: false,
@@ -139,7 +143,7 @@ const Map = () => {
         },
         error: null,
       });
-      console.log("Latitude: " + location.coords.latitude + " Longitude: " + location.coords.longitude);
+      // console.log("Latitude: " + location.coords.latitude + " Longitude: " + location.coords.longitude);
     };
 
     const onError = (error: { code: any; message: any; }) => {
@@ -182,7 +186,7 @@ const Map = () => {
           error: null,
         }
       )
-      console.log("Latitude BUS: " + data.data.latitude + " Longitude BUS: " + data.data.longitude);
+      // console.log("Latitude BUS: " + data.data.latitude + " Longitude BUS: " + data.data.longitude);
     } catch (err) {
       console.log(err)
     }
@@ -249,24 +253,10 @@ const Map = () => {
       fetchContents();
     }, 1000);
 
-    const fetchData = async () => {
-      try {
-        // const response = await fetch('http://localhost:8000/check-session');
-        // const userData = await response.json();
-        const userData = null;
-        setUser(userData); // Store the fetched data in the user state
-        console.log('user',user);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
     
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, []);
 
-  const [user, setUser] = useState<any>(null);
 
   const [isLoginWarningOpen, setIsLoginWarningOpen] = useState(false);
 
