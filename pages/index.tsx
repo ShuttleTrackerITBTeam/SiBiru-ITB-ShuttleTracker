@@ -35,15 +35,16 @@ export default function Home() {
             <div>
             {loading ? <SplashScreen  /> : (
               <>
+              <div>
                 <Navbar />
                 <Login />
+              </div>
+              <Map  />
               </>
             )}
             </div>
-            <Map  />
           </div>
         </AuthProvider>
-        <div />
       </main>
     </>
   );
