@@ -1,16 +1,14 @@
 import L, { LatLngExpression, LatLngTuple} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
+import { useAuth } from '@src/services/AuthContext';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import * as turf from '@turf/turf';
 import LoginWarning from './LoginWarning';
 
-interface MapProps {
-  user : boolean;
-}
-
-const Map : React.FC<MapProps> = ({ user }) => {
+const Map = () => {
+  const { user } = useAuth()
   
   const [location, setLocation] = useState({
     loaded: false,
@@ -191,17 +189,6 @@ const Map : React.FC<MapProps> = ({ user }) => {
       console.log(err)
     }
   }
-
-  
-  const [isButtonClicked, setButtonClicked] = useState(true);
-  const handleButtonClick = () => {
-    setButtonClicked(!isButtonClicked);
-
-    if (user === null) {
-      setIsLoginWarningOpen(true);
-    }
-
-  };
   
   // Fetch nearest halte and arriving time
   var nearestHalte = {
@@ -259,6 +246,14 @@ const Map : React.FC<MapProps> = ({ user }) => {
 
 
   const [isLoginWarningOpen, setIsLoginWarningOpen] = useState(false);
+  const [isButtonClicked, setButtonClicked] = useState(true);
+  const handleButtonClick = () => {
+    setButtonClicked(!isButtonClicked);
+
+    if (!false) {
+      setIsLoginWarningOpen(true);
+    }
+  };
 
   const handleOpenLoginWarning = () => {
     setIsLoginWarningOpen(true);
@@ -273,7 +268,7 @@ const Map : React.FC<MapProps> = ({ user }) => {
     <div className='h-screen flex items-center justify-center'>
       <div className='h-full w-full md:w-[468px]'>
         <MapContainer className='relative' center={CenterPoint} zoom={16} zoomControl={false} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
-        <div className='fixed z-[1000] item-center h-[100px] w-full md:w-[468px] bottom-0'>
+          <div className='fixed z-[1000] item-center h-[100px] w-full md:w-[468px] bottom-0'>
             <div className='justify-center w-full flex'>
                 <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] w-[256px] h-[46px] rounded-3xl' onClick={handleButtonClick}>
                   <div className='flex justify-center items-center mt-[2px]'>
@@ -281,41 +276,40 @@ const Map : React.FC<MapProps> = ({ user }) => {
                     <p className='ml-2 text-[14px] font-bold text-white mt-[-3px]'>Tampilkan Halte Terdekat</p>
                   </div>
                 </button>
-                {( user === null ? (
+                {( !user ? (
                   <div className='absolute bottom-[0px] h-screen'>
-                    <LoginWarning isOpen={isLoginWarningOpen} onClose={handleCloseLoginWarning} isFromLoginButton={false}></LoginWarning>
+                    <LoginWarning isOpen={isLoginWarningOpen} onClose={handleCloseLoginWarning}></LoginWarning>
                   </div>
                 ) : (               
-                <div className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-2xl absolute w-[90%] h-fit bottom-11'>
-                  <div className='w-[100%] flex justify-end'>
-                    <Image src="/images/closeBusPanel.svg" alt='close-button' width={25} height={25} onClick={handleButtonClick} style={{ cursor: 'pointer' }}/>
-                  </div>
-                  <div className='flex border-b-[#0078C9] border-b-[3px] border-solid pb-1'>
-                    <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={50} height={50} />
-                    <div className='header-busPanel ml-1'>
-                      <p className='font-bold text-white'>Halte Terdekat</p>
-                      <p className='font-bold text-white text-2xl'>{nearestHalte['popUp']}</p>
+                  <div className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-2xl absolute w-[90%] h-fit bottom-11'>
+                    <div className='w-[100%] flex justify-end'>
+                      <Image src="/images/closeBusPanel.svg" alt='close-button' width={25} height={25} onClick={handleButtonClick} style={{ cursor: 'pointer' }}/>
                     </div>
-                  </div>
-                  <div className='flex mt-3 mb-3'>
-                    <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
-                    <div className='mt-1.5 ml-3'>
-                      <p className='font-extralight text-white text-xs'>Nama Bus</p>
-                      <p className='font-bold text-white text-xs'>{locationBus.numberMhs}/30 CAPACITY</p>
+                    <div className='flex border-b-[#0078C9] border-b-[3px] border-solid pb-1'>
+                      <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={50} height={50} />
+                      <div className='header-busPanel ml-1'>
+                        <p className='font-bold text-white'>Halte Terdekat</p>
+                        <p className='font-bold text-white text-2xl'>{nearestHalte['popUp']}</p>
+                      </div>
                     </div>
-                    <div className=' bg-[#00409980] bg-opacity-50 h-fit absolute w-fit rounded-lg right-3 p-1.5'>
-                      <div className='flex items-center'>
-                        <p className='font-thin text-xs text-white mx-1.5'>Arriving in</p>
-                        <div className='inline-block mx-1.5'>
-                          <p className='font-extralight text-white text-center'>{waitingTime} mins</p>
-                          <p className='font-extralight text-white text-center'>{arriveTime}</p>
+                    <div className='flex mt-3 mb-3'>
+                      <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
+                      <div className='mt-1.5 ml-3'>
+                        <p className='font-extralight text-white text-xs'>Nama Bus</p>
+                        <p className='font-bold text-white text-xs'>{locationBus.numberMhs}/30 CAPACITY</p>
+                      </div>
+                      <div className=' bg-[#00409980] bg-opacity-50 h-fit absolute w-fit rounded-lg right-3 p-1.5'>
+                        <div className='flex items-center'>
+                          <p className='font-thin text-xs text-white mx-1.5'>Arriving in</p>
+                          <div className='inline-block mx-1.5'>
+                            <p className='font-extralight text-white text-center'>{waitingTime} mins</p>
+                            <p className='font-extralight text-white text-center'>{arriveTime}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                )
-              )}
+                ))}
             </div>
           </div>
 
@@ -324,25 +318,25 @@ const Map : React.FC<MapProps> = ({ user }) => {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
 
-          <Marker key={location.coordinates.lat + location.coordinates.lng} position={location.coordinates} icon={iconUser}>
+          <Marker position={location.coordinates} icon={iconUser}>
             <Popup>
               Your Location
             </Popup>
           </Marker>
 
-          <Marker key={locationBus.coordinates.lat + locationBus.coordinates.lng} position={locationBus.coordinates} icon={iconBus}>
+          <Marker position={locationBus.coordinates} icon={iconBus}>
             <Popup>
               Bus Location
             </Popup>
           </Marker>
 
           {markers.map((marker, index) => (
-        <Marker key={`marker-${index}`} position={marker.geocode as LatLngTuple} icon={halteIcon}>
-          <Popup>{marker.popUp}</Popup>
-        </Marker>
-      ))}
-      <Polyline positions={latlngs} color="red" />
-      <Polyline positions={latlngs2} color="red" />
+            <Marker key={`marker-${index}`} position={marker.geocode as LatLngTuple} icon={halteIcon}>
+              <Popup>{marker.popUp}</Popup>
+            </Marker>
+          ))}
+          <Polyline positions={latlngs} color="red" />
+          <Polyline positions={latlngs2} color="red" />
         </MapContainer>
         {/* <LoginWarning isOpen={isLoginWarningOpen} onClose={handleCloseLoginWarning}></LoginWarning> */}
       </div>

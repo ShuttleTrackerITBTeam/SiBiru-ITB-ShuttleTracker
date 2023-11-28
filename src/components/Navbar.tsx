@@ -1,34 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import LoginWarning from './LoginWarning';
-import LoginPopUp from './LoginPopUp';
-import LogoutPopUp from './LogoutPopUp';
+import ProfilePopUp from './ProfilePopUp';
 import Link from 'next/link';
 
-interface NavbarProps {
-  user : boolean;
-}
+const Navbar = () => {
+  const [isProfilePopUpOpen, setIsProfilePopUpOpen] = useState(false);
 
-const Navbar : React.FC<NavbarProps> = (user) => {
-  console.log('user navbar : ', user);
-  const [isLoginWarningOpen, setIsLoginWarningOpen] = useState(false);
-  const [isLoginPopUpOpen, setIsLoginPopUpOpen] = useState(false);
-  const [isLogoutPopUpOpen, setIsLogOutPopUpOpen] = useState(false);
-
-  const handleOpenLoginWarning = () => {
-    setIsLoginWarningOpen(true);
-  };
-
-  const handleCloseLoginWarning = () => {
-    setIsLoginWarningOpen(false);
-  };
-
-  const handleClickLoginPopUp = () => {
-    setIsLoginPopUpOpen(!isLoginPopUpOpen);
-  }
-  
-  const handleClickLogoutPopUp = () => {
-    setIsLogOutPopUpOpen(!isLogoutPopUpOpen);
+  const handleProfileClick = () => {
+    setIsProfilePopUpOpen(!isProfilePopUpOpen);
   }
 
   return (
@@ -52,28 +32,18 @@ const Navbar : React.FC<NavbarProps> = (user) => {
             </Link>
           </div>
           <div className='flex items-center'>
-            {/* Conditionally render based on the user state */}
-            {user ? (
-              <button onClick={handleClickLoginPopUp}>
-                <Image src="/images/profile.svg" alt='logo' width={33} height={33} />
-              </button>
-            ) : (
-              <button onClick={handleClickLogoutPopUp}>
-                <Image src="/images/profile.svg" alt='logo' width={33} height={33} />
-              </button>
-            )}
+            <button onClick={handleProfileClick}>
+              <Image src="/images/profile.svg" alt='logo' width={33} height={33} />
+            </button>
           </div>
-
-          {user ? (
-            <LoginPopUp isOpen={isLoginPopUpOpen}></LoginPopUp>
-          ) : (
-            <LogoutPopUp isOpen={isLogoutPopUpOpen} user="Adrian"></LogoutPopUp>
-          )}
-
         </div>
+        { isProfilePopUpOpen &&
+          <div>
+            <ProfilePopUp setIsProfilePopUpOpen={setIsProfilePopUpOpen} />
+          </div>
+        }
       </div>
     </nav>
-    {/* <LoginWarning isOpen={isLoginWarningOpen} onClose={handleCloseLoginWarning}></LoginWarning> */}
     </>
   );
 };
