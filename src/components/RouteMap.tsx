@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '@src/components/Navbar';
-import Footer from "@src/components/Footer";
+// import Footer from "@src/components/Footer";
 
 export default function RouteMap () {
     return (
@@ -12,7 +12,7 @@ export default function RouteMap () {
             <div className = "h-full w-full md:w-[468px] bg-slate-50">
 
                 {/* Import navbar */}
-                <Navbar title = {'Shuttle Tracker'} links = {[]}/>
+                <Navbar />
 
                     {/* Import button close bus panel */}
                     <div className = "flex flex-col justify-center items-center mt-20 font-open-sans">
@@ -68,7 +68,7 @@ export default function RouteMap () {
                         </ul>
                     </div>
                 {/* Import footer */}
-                <Footer/>
+                {/* <Footer/> */}
             </div>
         </div>
     );
