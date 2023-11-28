@@ -3,14 +3,14 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <div className="flex justify-center">
-        <div className='w-full md:w-[468px] h-[800px] bg-slate-100'>
+        <div className='w-full md:w-[468px] h-[100vh] bg-slate-100'>
             <div className="relative container mx-auto h-[103px] rounded-b-lg bg-[#F6F6F6] drop-shadow-xl flex-col">
                 <div className='h-[40px]' />
                 <div className='flex items-center justify-center'>
                     <Link className="absolute left-0 ml-[17px]" href="/">
                         <img className=" rounded-full hover:brightness-110 hover:shadow-lg" src="images/back.svg" alt="back" width={39} height={39}/>
                     </Link>
-                    <Link className="absolute right-0 mr-[17px]" href="/your-page-url-2">
+                    <Link className="absolute right-0 mr-[17px]" href="/">
                         <img className=" rounded-full hover:brightness-110 hover:shadow-lg" src="images/profile.svg" alt="profile" width={39} height={39}/>
                     </Link>
                     <h1 className="text-center text-[18px] font-bold text-[#0078C9] font-montserrat leading-[22px]">Pusat <br/> Bantuan </h1>
@@ -77,14 +77,15 @@ export default function Home() {
             </ul>   
             <h2 className="mt-[30px] text-justify-left text-[16px] leading-[19.5px] font-bold text-[#0078C9] font-montserrat">Butuh Lebih Banyak Bantuan?</h2>
             <a href="https://your-google-form-link" target="_blank" rel="noopener noreferrer">
-                <div className="container flex h-[67px] w-[322px] mt-[8px] bg-gradient-to-t from-[#005BBF] to-[#0078C9] rounded-[22.79px] drop-shadow-xl items-center justify-between hover:brightness-110">
-                    <div className="ml-[23px] h-[15px] w-[15px] bg-transparent-500"></div>
-                    <h2 className="text-white text-[16px] leading-[19.5px] font-montserrat weight-[600]">Tanya Disini!</h2>
-                    <img className="mr-[23px]" src="images/arrow.svg" alt="arrow" width={15} height={15} />
+                <div className="flex w-[100%] justify-center">
+                    <div className="container flex h-[67px] w-[100%] mt-[8px] bg-gradient-to-t from-[#005BBF] to-[#0078C9] rounded-[22.79px] drop-shadow-xl items-center justify-between hover:brightness-110">
+                        <div className="ml-[23px] h-[15px] w-[15px] bg-transparent-500"></div>
+                        <h2 className="text-white text-[16px] leading-[19.5px] font-montserrat weight-[600]">Tanya Disini!</h2>
+                        <img className="mr-[23px]" src="images/arrow.svg" alt="arrow" width={15} height={15} />
+                    </div>
                 </div>
             </a>
         </div>
-
       </div>
     </div>
   );

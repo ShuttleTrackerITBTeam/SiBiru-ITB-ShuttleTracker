@@ -16,15 +16,15 @@ const LoginPopUp: React.FC<LoginPopUpProps> = ({ isOpen}) => {
         <p className='text-[12px] font-medium'>Hello, Guest!</p>
         <p className='text-[10px]'>Welcome to <span className='text-[#0078C9]'>Shuttle<span className='text-[#002582]'>Tracker</span></span></p>
         <button className='w-[128px] h-[39px] px-[20px] py-[10px] bg-[#004099] rounded-[20px] text-white mt-[11px] font-bold text-[14px]'>
-            <div className='flex justify-center gap-[9px]'>
-              About Us
-            </div>
+          <div className='flex justify-center gap-[9px] mt-[-1px]'>
+            About Us
+          </div>
         </button>
         <button className='w-[128px] h-[39px] px-[20px] py-[10px] bg-[#0078C9] rounded-[20px] text-white mt-[6px] font-bold text-[14px]'>
-            <div className='flex justify-center gap-[9px]'>
-              <Image alt="iconLogin" src="images/iconLogin.svg" width={20} height={20}  />
-              Log In
-            </div>
+          <div className='flex justify-center gap-[9px] mt-[-1px]'>
+            <Image alt="iconLogin" src="images/iconLogin.svg" width={20} height={20}  />
+            Log In
+          </div>
         </button>
       </div>
     </div>

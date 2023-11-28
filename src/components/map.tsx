@@ -107,7 +107,7 @@ const Map = () => {
 
   const halteIcon = L.icon({
     // iconUrl: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png",
-    iconUrl: "/images/halte.png",
+    iconUrl: "/images/halte.svg",
     iconSize: [30, 41],
   });
 
@@ -286,14 +286,14 @@ const Map = () => {
         <div className='fixed z-[1000] item-center h-[100px] w-full md:w-[468px] bottom-0'>
             <div className='justify-center w-full flex'>
                 <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] w-[256px] h-[46px] rounded-3xl' onClick={handleButtonClick}>
-                  <div className='flex justify-center items-center'>
+                  <div className='flex justify-center items-center mt-[2px]'>
                     <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={22} height={29} />
-                    <p className='ml-2 text-[14px] font-bold text-white'>Tampilkan Halte Terdekat</p>
+                    <p className='ml-2 text-[14px] font-bold text-white mt-[-3px]'>Tampilkan Halte Terdekat</p>
                   </div>
                 </button>
                 {( user === null ? (
                   <div className='absolute bottom-[0px] h-screen'>
-                    <LoginWarning isOpen={isLoginWarningOpen} onClose={handleCloseLoginWarning}></LoginWarning>
+                    <LoginWarning isOpen={isLoginWarningOpen} onClose={handleCloseLoginWarning} isFromLoginButton={false}></LoginWarning>
                   </div>
                 ) : (               
                 <div className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-2xl absolute w-[90%] h-fit bottom-11'>

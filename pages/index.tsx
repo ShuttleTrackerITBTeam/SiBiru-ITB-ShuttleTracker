@@ -2,10 +2,9 @@ import exp from "constants";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import Navbar from "@src/components/Navbar";
-import LoginWarning from "@src/components/LoginWarning";
 import React, { useEffect, useState } from 'react';
 
-const Map = dynamic(() => import("@src/components/map"), { ssr: false });
+const Map = dynamic(() => import("@src/components/Map"), { ssr: false });
 
 export default function Home() {
   return (
