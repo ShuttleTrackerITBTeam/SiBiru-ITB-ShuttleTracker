@@ -1,13 +1,26 @@
 import exp from "constants";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import { AuthProvider } from "@src/services/AuthContext";
 import Navbar from "@src/components/Navbar";
-import LoginWarning from "@src/components/LoginWarning";
-import React, { useEffect, useState } from 'react';
+import Login from "@src/components/LoginPopUp";
+import React, { useState, useEffect } from 'react';
+import SplashScreen from "@src/components/SplashScreen";
 
-const Map = dynamic(() => import("@src/components/map"), { ssr: false });
+const Map = dynamic(() => import("@src/components/Map"), { ssr: false });
 
 export default function Home() {
+
+  const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 1000);
+
+        return () => clearTimeout(timer); // Clean up on component unmount
+    }, []);
+
   return (
     <>
       <Head>
@@ -17,10 +30,21 @@ export default function Home() {
         <link rel="icon" href="/favicon.svg" />
       </Head>
       <main>
-        <div className="relative">
-        <Navbar/>
-        <Map />
-        </div>
+        <AuthProvider>
+          <div className="relative">
+            <div>
+            {loading ? <SplashScreen  /> : (
+              <>
+              <div>
+                <Navbar />
+                <Login />
+              </div>
+              <Map  />
+              </>
+            )}
+            </div>
+          </div>
+        </AuthProvider>
       </main>
     </>
   );

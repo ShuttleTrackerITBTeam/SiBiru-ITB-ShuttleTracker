@@ -10,18 +10,25 @@
   },
   "dependencies": {
     "@turf/turf": "^6.5.0",
+    "gsap": "^3.12.2",
     "leaflet": "^1.9.4",
+<<<<<<< HEAD
     "next": "^14.0.2",
+=======
+    "next": "14.0.2",
+>>>>>>> 8b0a5016a3ab54b47e334821aea8ecc9cf773552
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.1",
-    "react-leaflet-cluster": "^2.1.0"
+    "react-leaflet-cluster": "^2.1.0",
+    "react-router-dom": "^6.20.0"
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.8",
     "@types/node": "^20",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18",
+    "@types/react-leaflet": "^3.0.0",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.2",
