@@ -59,8 +59,4 @@ const RouteMap = () => {
     );
 }; 
 
-<<<<<<< HEAD:src/components/routemap.tsx
 export default RouteMap; 
-=======
-};
->>>>>>> 8b0a5016a3ab54b47e334821aea8ecc9cf773552:src/components/RouteMap.tsx
