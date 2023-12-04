@@ -3,7 +3,7 @@ import Router from 'next/router';
 import { useAuth } from '@src/services/AuthContext';
 import { useState } from 'react';
 
-const Login = () => {
+const LoginPopUp = () => {
   const { showLoginPopUp, setShowLoginPopUp } = useAuth()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -78,5 +78,5 @@ const Login = () => {
   );
 };
   
-export default Login;
+export default LoginPopUp;
   

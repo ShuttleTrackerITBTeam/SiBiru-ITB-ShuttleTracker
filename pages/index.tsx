@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import { AuthProvider } from "@src/services/AuthContext";
 import Navbar from "@src/components/Navbar";
-import Login from "@src/components/LoginPopUp";
+import LoginPopUp from "@src/components/LoginPopUp";
 import React, { useState, useEffect } from 'react';
 import SplashScreen from "@src/components/SplashScreen";
 
@@ -11,15 +11,15 @@ const Map = dynamic(() => import("@src/components/Map"), { ssr: false });
 
 export default function Home() {
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 1000);
+    // useEffect(() => {
+    //     const timer = setTimeout(() => {
+    //         setLoading(false);
+    //     }, 1000);
 
-        return () => clearTimeout(timer); // Clean up on component unmount
-    }, []);
+    //     return () => clearTimeout(timer); // Clean up on component unmount
+    // }, []);
 
   return (
     <>
@@ -37,7 +37,7 @@ export default function Home() {
               <>
               <div>
                 <Navbar />
-                <Login />
+                <LoginPopUp />
               </div>
               <Map  />
               </>

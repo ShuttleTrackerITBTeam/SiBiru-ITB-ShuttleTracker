@@ -57,33 +57,33 @@ const Map = () => {
   ];
 
   const route = [
-      [-6.933629, 107.768350], // main gate
-      [-6.932798, 107.768344],
-      [-6.932136, 107.768637],
-      [-6.931763, 107.768779],
-      [-6.931441, 107.768794],
-      [-6.929420, 107.768277],
-      [-6.929284, 107.768520],
-      [-6.929365, 107.768625],
-      [-6.929457, 107.768620],
-      [-6.929606, 107.768343],
-      [-6.930347, 107.768536],
-      [-6.928266, 107.770839],
-      [-6.926311, 107.769114],
-      [-6.926383, 107.769041],
-      [-6.925930, 107.768640],
-      [-6.926707, 107.767768],
-      [-6.926877, 107.767673], 
-      [-6.927600, 107.767534],
-      [-6.927928, 107.767506],
-      [-6.928605, 107.767725],
-      [-6.929118, 107.768162],
-      [-6.931424, 107.768804],
-      [-6.931695, 107.768913],
-      [-6.931831, 107.769009],
-      [-6.932200, 107.768610],
-      [-6.932732, 107.768369],
-      [-6.933629, 107.768350]
+    [-6.933629, 107.768350], // main gate
+    [-6.932798, 107.768344],
+    [-6.932136, 107.768637],
+    [-6.931763, 107.768779],
+    [-6.931441, 107.768794],
+    [-6.929420, 107.768277],
+    [-6.929284, 107.768520],
+    [-6.929365, 107.768625],
+    [-6.929457, 107.768620],
+    [-6.929606, 107.768343],
+    [-6.930347, 107.768536],
+    [-6.928266, 107.770839],
+    [-6.926311, 107.769114],
+    [-6.926383, 107.769041],
+    [-6.925930, 107.768640],
+    [-6.926707, 107.767768],
+    [-6.926877, 107.767673], 
+    [-6.927600, 107.767534],
+    [-6.927928, 107.767506],
+    [-6.928605, 107.767725],
+    [-6.929118, 107.768162],
+    [-6.931424, 107.768804],
+    [-6.931695, 107.768913],
+    [-6.931831, 107.769009],
+    [-6.932200, 107.768610],
+    [-6.932732, 107.768369],
+    [-6.933629, 107.768350]
   ]
 
   const route2 = [
@@ -113,7 +113,7 @@ const Map = () => {
     iconSize: [30, 41],
   });
 
-  const CenterPoint = { lat: -6.933370, lng: 107.772060 };
+  const CenterPoint = { lat: -6.930370, lng: 107.769550 };
   
   const iconUser = L.icon({
     iconUrl: "/images/iconUser.svg",
@@ -246,12 +246,12 @@ const Map = () => {
 
 
   const [isLoginWarningOpen, setIsLoginWarningOpen] = useState(false);
-  const [isButtonClicked, setButtonClicked] = useState(true);
+  const [isButtonClicked, setButtonClicked] = useState(false);
   const handleButtonClick = () => {
     setButtonClicked(!isButtonClicked);
 
-    if (!false) {
-      setIsLoginWarningOpen(true);
+    if (user === "") {
+      handleOpenLoginWarning();
     }
   };
 
@@ -268,7 +268,7 @@ const Map = () => {
     <div className='h-screen flex items-center justify-center'>
       <div className='h-full w-full md:w-[468px]'>
         <MapContainer className='relative' center={CenterPoint} zoom={16} zoomControl={false} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
-          <div className='fixed z-[1000] item-center h-[100px] w-full md:w-[468px] bottom-0'>
+          <div className='fixed z-[400] item-center h-[100px] w-full md:w-[468px] bottom-0'>
             <div className='justify-center w-full flex'>
                 <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] w-[256px] h-[46px] rounded-3xl' onClick={handleButtonClick}>
                   <div className='flex justify-center items-center mt-[2px]'>
@@ -276,40 +276,42 @@ const Map = () => {
                     <p className='ml-2 text-[14px] font-bold text-white mt-[-3px]'>Tampilkan Halte Terdekat</p>
                   </div>
                 </button>
-                {( !user ? (
-                  <div className='absolute bottom-[0px] h-screen'>
-                    <LoginWarning isOpen={isLoginWarningOpen} onClose={handleCloseLoginWarning}></LoginWarning>
-                  </div>
-                ) : (               
-                  <div className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-2xl absolute w-[90%] h-fit bottom-11'>
-                    <div className='w-[100%] flex justify-end'>
-                      <Image src="/images/closeBusPanel.svg" alt='close-button' width={25} height={25} onClick={handleButtonClick} style={{ cursor: 'pointer' }}/>
+                {( isButtonClicked &&            
+                  ( user === "" ? (
+                    <div className='absolute bottom-[0px] h-screen'>
+                      <LoginWarning isOpen={isLoginWarningOpen} onClose={handleCloseLoginWarning}></LoginWarning>
                     </div>
-                    <div className='flex border-b-[#0078C9] border-b-[3px] border-solid pb-1'>
-                      <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={50} height={50} />
-                      <div className='header-busPanel ml-1'>
-                        <p className='font-bold text-white'>Halte Terdekat</p>
-                        <p className='font-bold text-white text-2xl'>{nearestHalte['popUp']}</p>
+                  ) : (
+                    <div className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-2xl absolute w-[90%] h-fit bottom-11'>
+                      <div className='w-[100%] flex justify-end'>
+                        <Image src="/images/closeBusPanel.svg" alt='close-button' width={25} height={25} onClick={handleButtonClick} style={{ cursor: 'pointer' }}/>
                       </div>
-                    </div>
-                    <div className='flex mt-3 mb-3'>
-                      <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
-                      <div className='mt-1.5 ml-3'>
-                        <p className='font-extralight text-white text-xs'>Nama Bus</p>
-                        <p className='font-bold text-white text-xs'>{locationBus.numberMhs}/30 CAPACITY</p>
+                      <div className='flex border-b-[#0078C9] border-b-[3px] border-solid pb-1'>
+                        <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={50} height={50} />
+                        <div className='header-busPanel ml-1'>
+                          <p className='font-bold text-white'>Halte Terdekat</p>
+                          <p className='font-bold text-white text-2xl'>{nearestHalte['popUp']}</p>
+                        </div>
                       </div>
-                      <div className=' bg-[#00409980] bg-opacity-50 h-fit absolute w-fit rounded-lg right-3 p-1.5'>
-                        <div className='flex items-center'>
-                          <p className='font-thin text-xs text-white mx-1.5'>Arriving in</p>
-                          <div className='inline-block mx-1.5'>
-                            <p className='font-extralight text-white text-center'>{waitingTime} mins</p>
-                            <p className='font-extralight text-white text-center'>{arriveTime}</p>
+                      <div className='flex mt-3 mb-3'>
+                        <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
+                        <div className='mt-1.5 ml-3'>
+                          <p className='font-extralight text-white text-xs'>Nama Bus</p>
+                          <p className='font-bold text-white text-xs'>{locationBus.numberMhs}/30 CAPACITY</p>
+                        </div>
+                        <div className=' bg-[#00409980] bg-opacity-50 h-fit absolute w-fit rounded-lg right-3 p-1.5'>
+                          <div className='flex items-center'>
+                            <p className='font-thin text-xs text-white mx-1.5'>Arriving in</p>
+                            <div className='inline-block mx-1.5'>
+                              <p className='font-extralight text-white text-center'>{waitingTime} mins</p>
+                              <p className='font-extralight text-white text-center'>{arriveTime}</p>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                )}
             </div>
           </div>
 
@@ -335,10 +337,10 @@ const Map = () => {
               <Popup>{marker.popUp}</Popup>
             </Marker>
           ))}
+
           <Polyline positions={latlngs} color="red" />
           <Polyline positions={latlngs2} color="red" />
         </MapContainer>
-        {/* <LoginWarning isOpen={isLoginWarningOpen} onClose={handleCloseLoginWarning}></LoginWarning> */}
       </div>
     </div>
   );
