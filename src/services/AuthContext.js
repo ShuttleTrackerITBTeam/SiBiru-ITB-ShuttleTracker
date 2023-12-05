@@ -5,6 +5,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState("");
   const [showLoginPopUp, setShowLoginPopUp] = useState(false);
+  const [isProfilePopUpOpen, setIsProfilePopUpOpen] = useState(false);
 
   useEffect(() => {
     async function checklogin() {
@@ -41,7 +42,7 @@ export const AuthProvider = ({ children }) => {
   });
 
   return (
-    <AuthContext.Provider value={{ user, setUser, showLoginPopUp, setShowLoginPopUp }}>
+    <AuthContext.Provider value={{ user, setUser, showLoginPopUp, setShowLoginPopUp, isProfilePopUpOpen, setIsProfilePopUpOpen }}>
       {children}
     </AuthContext.Provider>
   )

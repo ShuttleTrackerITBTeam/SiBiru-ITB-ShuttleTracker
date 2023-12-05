@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { useAuth } from '@src/services/AuthContext';
+import React from 'react';
 import Image from 'next/image';
-import Router from 'next/router';
+import { useAuth } from '@src/services/AuthContext';
 
 interface LoginWarningProps {
   isOpen: boolean;
@@ -9,13 +8,16 @@ interface LoginWarningProps {
 }
 
 const LoginWarning: React.FC<LoginWarningProps> = ({ isOpen, onClose }) => {
-  const { setShowLoginPopUp } = useAuth()
+  const { setShowLoginPopUp, isProfilePopUpOpen, setIsProfilePopUpOpen } = useAuth()
 
   if (!isOpen) {
     return null; // If isOpen is false, don't render anything
   }
 
   const handleLoginClick = () => {
+    if (isProfilePopUpOpen) {
+      setIsProfilePopUpOpen(false);
+    }
     setShowLoginPopUp(true);
     onClose();
   }

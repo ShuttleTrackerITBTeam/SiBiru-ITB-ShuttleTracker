@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import LoginWarning from './LoginWarning';
-import ProfilePopUp from './ProfilePopUp';
 import Link from 'next/link';
+import Image from 'next/image';
+import ProfilePopUp from './ProfilePopUp';
+import { useAuth } from '@src/services/AuthContext';
 
 const Navbar = () => {
-  const [isProfilePopUpOpen, setIsProfilePopUpOpen] = useState(false);
+  const { isProfilePopUpOpen, setIsProfilePopUpOpen } = useAuth()
 
   const handleProfileClick = () => {
     setIsProfilePopUpOpen(!isProfilePopUpOpen);

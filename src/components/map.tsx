@@ -8,7 +8,7 @@ import { useAuth } from '@src/services/AuthContext';
 import LoginWarning from './LoginWarning';
 
 const Map = () => {
-  const { user } = useAuth()
+  const { user, isProfilePopUpOpen, setIsProfilePopUpOpen } = useAuth()
   
   const [location, setLocation] = useState({
     loaded: false,
@@ -133,14 +133,26 @@ const Map = () => {
 
   const fetchLocation = () => {
     const onSuccess = (location: { coords: { latitude: number; longitude: number; }; }) => {
-      setLocation({
-        loaded: true,
-        coordinates: {
-          lat: location.coords.latitude,
-          lng: location.coords.longitude,
-        },
-        error: null,
-      });
+      if (user) {
+        setLocation({
+          loaded: true,
+          coordinates: {
+            lat: location.coords.latitude,
+            lng: location.coords.longitude,
+          },
+          error: null,
+        });
+      }
+      else {
+        setLocation({
+          loaded: true,
+          coordinates: {
+            lat: 0,
+            lng: 0,
+          },
+          error: null,
+        });
+      }
       // console.log("Latitude: " + location.coords.latitude + " Longitude: " + location.coords.longitude);
     };
 
@@ -234,20 +246,23 @@ const Map = () => {
   
   useEffect(() => {
     // Fetch location initially
-    // const interval = setInterval(() => {
-    //   updateTime();
-    //   fetchLocation();
-    //   fetchContents();
-    // }, 1000);
+    const interval = setInterval(() => {
+      updateTime();
+      fetchContents();
+      fetchLocation();
+    }, 1000);
 
     
-    // return () => clearInterval(interval); // Cleanup interval on unmount
-  }, []);
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, [user]);
 
 
   const [isLoginWarningOpen, setIsLoginWarningOpen] = useState(false);
   const [isButtonClicked, setButtonClicked] = useState(false);
   const handleButtonClick = () => {
+    if (isProfilePopUpOpen) {
+      setIsProfilePopUpOpen(false);
+    }
     setButtonClicked(!isButtonClicked);
 
     if (user === "") {
