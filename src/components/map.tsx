@@ -1,10 +1,10 @@
-import L, { LatLngExpression, LatLngTuple} from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
-import { useAuth } from '@src/services/AuthContext';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import * as turf from '@turf/turf';
+import 'leaflet/dist/leaflet.css';
+import L, { LatLngExpression, LatLngTuple} from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
+import { useAuth } from '@src/services/AuthContext';
 import LoginWarning from './LoginWarning';
 
 const Map = () => {
@@ -234,14 +234,14 @@ const Map = () => {
   
   useEffect(() => {
     // Fetch location initially
-    const interval = setInterval(() => {
-      updateTime();
-      fetchLocation();
-      fetchContents();
-    }, 1000);
+    // const interval = setInterval(() => {
+    //   updateTime();
+    //   fetchLocation();
+    //   fetchContents();
+    // }, 1000);
 
     
-    return () => clearInterval(interval); // Cleanup interval on unmount
+    // return () => clearInterval(interval); // Cleanup interval on unmount
   }, []);
 
 

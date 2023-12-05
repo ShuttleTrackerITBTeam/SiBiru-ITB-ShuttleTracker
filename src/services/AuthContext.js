@@ -9,11 +9,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     async function checklogin() {
       const fetchData = async () => {
-        console.log('fetching data');
         try {
           const session = JSON.parse(localStorage.getItem('session') || '{ "access_token": "", "token_type": ""}');
-          if(session.access_token == '') {
-            console.log('session null : ', session);
+          if (session.access_token == '') {
             setUser("");
             return;
           }
@@ -23,18 +21,15 @@ export const AuthProvider = ({ children }) => {
             },
 
           });
+
           if (response.ok) {
             const data = await response.json();
-            console.log('Data:', JSON.stringify(data));
-            setUser(data.username);
-          } else {
-            console.log('session : ', session);
-            console.error('response not ok' + response.headers);
-            console.log('Authorization : ' ,`Bearer ${session.access_token}`)
+            const email = data.email;
+            const formattedEmail = email.split('@')[0].substring(0, 8);
+            setUser(formattedEmail);
           }
           
         } catch (error) {
-
           console.error('Error fetching data:', error);
         }
       };

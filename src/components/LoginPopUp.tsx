@@ -1,14 +1,18 @@
 import Image from 'next/image';
-import Router from 'next/router';
+import { jwtDecode } from "jwt-decode";
 import { useAuth } from '@src/services/AuthContext';
 import { useState } from 'react';
 
+declare const google: any;
+
 const LoginPopUp = () => {
-  const { showLoginPopUp, setShowLoginPopUp } = useAuth()
+  const { setUser, showLoginPopUp, setShowLoginPopUp } = useAuth()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const closeLoginPopUp = () => {
+    setEmail('');
+    setPassword('');
     setShowLoginPopUp(false);
   }
 
@@ -24,8 +28,10 @@ const LoginPopUp = () => {
 
       if (response.ok) {
         const data = await response.json();
+        const email = data.email;
+        const formattedEmail = email.split('@')[0].substring(0, 8);
         localStorage.setItem('session', JSON.stringify(data));
-        Router.push('/')
+        setUser(formattedEmail);
         closeLoginPopUp();
       } else {
         console.error('Login failed');
@@ -34,6 +40,45 @@ const LoginPopUp = () => {
     } catch (error) {
       console.error('Error:', error);
     }
+  };
+
+  const handleGoogleLogin = () => {
+    google.accounts.id.initialize({
+      client_id: "177385549640-03fkvdchmh83l0deo78gc6h82tv9u2pj.apps.googleusercontent.com",
+      callback: async (response: any) => {
+        const decodedJwt = jwtDecode(response.credential) as { email: string, name: string };
+
+        const email = decodedJwt.email;
+        const name = decodedJwt.name;
+
+        await fetch('http://localhost:8000/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: email, password: name }),
+        });
+
+        const loginResponse = await fetch('http://localhost:8000/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: email, password: name }),
+        });
+
+        if (loginResponse.ok) {
+          const data = await loginResponse.json();
+          const email = data.email;
+          const formattedEmail = email.split('@')[0].substring(0, 8);
+          localStorage.setItem('session', JSON.stringify(data));
+          setUser(formattedEmail);
+          closeLoginPopUp();
+        }
+      },
+    });
+
+    google.accounts.id.prompt();
   };
 
   return (
@@ -62,9 +107,19 @@ const LoginPopUp = () => {
                       Login
                     </div>
                   </button>
-                  <button className='w-[90%] h-[39px] px-[20px] py-[10px] bg-[#00AFF7] rounded-[20px] text-white font-bold text-[14px]' >
-                    <div className='flex justify-center gap-[9px]'>
-                      {/* <Image alt="iconLogin" src="images/iconGoogle.svg" width={20} height={20}  /> */}
+                  <button className='w-[90%] h-[39px] px-[10px] py-[10px] bg-[#00AFF7] rounded-[20px] text-white font-bold text-[14px]' onClick={handleGoogleLogin} >
+                    <div className='flex justify-center gap-[10px]'>
+                      <div style={{ 
+                        width: '20px', 
+                        height: '20px', 
+                        borderRadius: '50%', 
+                        backgroundColor: '#FFFFFF', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center' 
+                      }}>
+                        <Image alt="iconLogin" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" width={15} height={15} />
+                      </div>
                       Lanjutkan Dengan Google
                     </div>
                   </button>
