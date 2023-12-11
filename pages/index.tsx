@@ -12,11 +12,11 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-  //     const timer = setTimeout(() => {
-  //         setLoading(false);
-  //     }, 1000);
+      const timer = setTimeout(() => {
+          setLoading(false);
+      }, 1000);
 
-  //     return () => clearTimeout(timer); // Clean up on component unmount
+      return () => clearTimeout(timer); // Clean up on component unmount
   }, []);
 
   return (

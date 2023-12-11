@@ -23,7 +23,7 @@ const LoginPopUp = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password  }),
+        body: JSON.stringify({ email, password }),
       });
 
       if (response.ok) {
@@ -87,7 +87,7 @@ const LoginPopUp = () => {
         <div className='w-screen h-[100%] flex justify-center'>
           <div className='w-screen h-[100%] rounded-[20px] bg-transparent absolute top-[0px] z-[500] flex justify-center md:w-[468px]'>
             <div className='absolute inset-0 bg-black opacity-50' onClick={closeLoginPopUp}></div>
-            <div className='top-[50%] translate-y-[-50%] absolute w-[85%] px-[20px] py-[20px] rounded-[20px] bg-white md:w-[309px]'>
+            <div className='top-[50%] translate-y-[-50%] absolute w-[309px] px-[20px] py-[20px] rounded-[20px] bg-white md:w-[309px]'>
               <div className='flex flex-col items-center justify-center'>
                 <div className='flex flex-row mb-[25px]'>
                   <button className="absolute left-0 ml-[17px]" onClick={closeLoginPopUp}>
@@ -108,7 +108,7 @@ const LoginPopUp = () => {
                     </div>
                   </button>
                   <button className='w-[90%] h-[39px] px-[10px] py-[10px] bg-[#00AFF7] rounded-[20px] text-white font-bold text-[14px]' onClick={handleGoogleLogin} >
-                    <div className='flex justify-center gap-[10px]'>
+                    <div className='flex justify-center items-center gap-[10px]'>
                       <div style={{ 
                         width: '20px', 
                         height: '20px', 

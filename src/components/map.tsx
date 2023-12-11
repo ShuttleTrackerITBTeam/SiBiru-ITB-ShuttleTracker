@@ -132,53 +132,43 @@ const Map = () => {
   });
 
   const fetchLocation = () => {
-    const onSuccess = (location: { coords: { latitude: number; longitude: number; }; }) => {
-      if (user) {
-        setLocation({
-          loaded: true,
-          coordinates: {
-            lat: location.coords.latitude,
-            lng: location.coords.longitude,
-          },
-          error: null,
-        });
-      }
-      else {
+    if (user) {
+      const onSuccess = (location: { coords: { latitude: number; longitude: number; }; }) => {
+          setLocation({
+            loaded: true,
+            coordinates: {
+              lat: location.coords.latitude,
+              lng: location.coords.longitude,
+            },
+            error: null,
+          });
+        // console.log("Latitude: " + location.coords.latitude + " Longitude: " + location.coords.longitude);
+      };
+  
+      const onError = (error: { code: any; message: any; }) => {
         setLocation({
           loaded: true,
           coordinates: {
             lat: 0,
             lng: 0,
           },
-          error: null,
+          error: {
+            code: error.code,
+            message: error.message,
+          },
+        });
+        console.log("Error: " + error.message);
+      };
+  
+      if (!("geolocation" in navigator)) {
+        onError({
+          code: 0,
+          message: "Geolocation not supported",
         });
       }
-      // console.log("Latitude: " + location.coords.latitude + " Longitude: " + location.coords.longitude);
-    };
-
-    const onError = (error: { code: any; message: any; }) => {
-      setLocation({
-        loaded: true,
-        coordinates: {
-          lat: 0,
-          lng: 0,
-        },
-        error: {
-          code: error.code,
-          message: error.message,
-        },
-      });
-      console.log("Error: " + error.message);
-    };
-
-    if (!("geolocation" in navigator)) {
-      onError({
-        code: 0,
-        message: "Geolocation not supported",
-      });
+  
+      navigator.geolocation.getCurrentPosition(onSuccess, onError);
     }
-
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
   };
 
   const fetchContents = async (): Promise<void> => {
