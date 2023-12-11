@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { useAuth } from '@src/services/AuthContext';
+import React from 'react';
 import Image from 'next/image';
-import Router from 'next/router';
+import { useAuth } from '@src/services/AuthContext';
 
 interface LoginWarningProps {
   isOpen: boolean;
@@ -9,20 +8,23 @@ interface LoginWarningProps {
 }
 
 const LoginWarning: React.FC<LoginWarningProps> = ({ isOpen, onClose }) => {
-  const { setShowLoginPopUp } = useAuth()
+  const { setShowLoginPopUp, isProfilePopUpOpen, setIsProfilePopUpOpen } = useAuth()
 
   if (!isOpen) {
     return null; // If isOpen is false, don't render anything
   }
 
   const handleLoginClick = () => {
+    if (isProfilePopUpOpen) {
+      setIsProfilePopUpOpen(false);
+    }
     setShowLoginPopUp(true);
     onClose();
   }
 
   return (
     <div className='w-screen h-[100%] flex justify-center'>
-      <div className='w-screen h-[100%] rounded-[20px] bg-transparent absolute top-[0px] z-[500] flex justify-center md:w-[468px]'>
+      <div className='w-screen h-[100%] rounded-[20px] bg-transparent absolute top-[0px] z-[50] flex justify-center md:w-[100%]'>
         <div className='absolute inset-0 bg-black opacity-50' onClick={onClose}></div>
         <div className='top-[50%] translate-y-[-50%] absolute w-[85%] px-[20px] py-[20px] rounded-[20px] bg-white md:w-[309px]'>
           <div className='w-[100%] flex justify-end'>
