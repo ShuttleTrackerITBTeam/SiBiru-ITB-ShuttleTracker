@@ -51,6 +51,14 @@ const Map = () => {
     {
       geocode : [-6.926586, 107.769261],
       popUp : "GSG"
+    },
+    {
+      geocode : [-6.926399, 107.767933],
+      popUp : "Asrama"
+    },
+    {
+      geocode : [-6.931548, 107.770884],
+      popUp : "Parkiran Kehutanan"
     }
   ];
 
