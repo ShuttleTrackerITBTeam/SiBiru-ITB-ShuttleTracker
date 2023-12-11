@@ -293,9 +293,9 @@ const Map = () => {
   
   return (
     <div className='h-screen flex items-center justify-center'>
-      <div className='h-full w-full md:w-[468px]'>
+      <div className='h-full w-full md:w-[100%]'>
         <MapContainer className='relative' center={CenterPoint} zoom={16} zoomControl={false} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
-          <div className='fixed z-[400] item-center h-[100px] w-full md:w-[468px] bottom-0'>
+          <div className='fixed z-[400] item-center h-[100px] w-full md:w-[100%] bottom-0'>
             <div className='justify-center w-full flex'>
                 <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] w-[256px] h-[46px] rounded-3xl' onClick={handleButtonClick}>
                   <div className='flex justify-center items-center mt-[2px]'>
@@ -366,7 +366,7 @@ const Map = () => {
           ))}
 
           <Polyline positions={latlngs} color="red" />
-          <Polyline positions={latlngs2} color="red" />
+          <Polyline positions={latlngs2} color="blue" />
         </MapContainer>
       </div>
     </div>
