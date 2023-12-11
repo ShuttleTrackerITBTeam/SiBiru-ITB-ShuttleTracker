@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import * as turf from '@turf/turf';
 import 'leaflet/dist/leaflet.css';
-import L, { LatLngExpression, LatLngTuple} from 'leaflet';
+import L, { LatLngExpression, LatLngTuple, popup} from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import { useAuth } from '@src/services/AuthContext';
 import LoginWarning from './LoginWarning';
@@ -61,6 +61,10 @@ const Map = () => {
     {
       geocode : [-6.931548, 107.770884],
       popUp : "Parkiran Kehutanan"
+    },
+    {
+      geocode : [-6.933205, 107.768413],
+      popUp : "Gerbang Utama"
     }
   ];
 
