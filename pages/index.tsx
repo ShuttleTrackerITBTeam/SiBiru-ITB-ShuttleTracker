@@ -3,13 +3,15 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import Navbar from "@src/components/Navbar";
 import LoginPopUp from "@src/components/LoginPopUp";
+import RouteMap from "@src/components/RouteMap";
 import SplashScreen from "@src/components/SplashScreen";
 import { AuthProvider } from "@src/services/AuthContext";
 
-const Map = dynamic(() => import("@src/components/map"), { ssr: false });
+const Map = dynamic(() => import("@src/components/Map"), { ssr: false });
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
+  const [showRouteMap, setShowRouteMap] = useState(false);
 
   useEffect(() => {
       const timer = setTimeout(() => {
@@ -33,11 +35,14 @@ export default function Home() {
             <div>
             {loading ? <SplashScreen  /> : (
               <>
-              <div>
-                <Navbar />
-                <LoginPopUp />
-              </div>
-              <Map  />
+                <div>
+                  <Navbar />
+                  <LoginPopUp />
+                </div>
+                <RouteMap show={showRouteMap} setShow={setShowRouteMap} />
+                {!showRouteMap && (
+                  <Map />
+                )}
               </>
             )}
             </div>
