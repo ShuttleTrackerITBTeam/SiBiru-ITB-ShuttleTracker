@@ -85,7 +85,7 @@ const LoginPopUp = () => {
     <>
       { showLoginPopUp && (
         <div className='w-screen h-[100%] flex justify-center'>
-          <div className='w-screen h-[100%] rounded-[20px] bg-transparent absolute top-[0px] z-[500] flex justify-center md:w-[468px]'>
+          <div className='w-screen h-[100%] rounded-[20px] bg-transparent absolute top-[0px] z-[500] flex justify-center md:w-[100%]'>
             <div className='absolute inset-0 bg-black opacity-50' onClick={closeLoginPopUp}></div>
             <div className='top-[50%] translate-y-[-50%] absolute w-[85%] px-[20px] py-[20px] rounded-[20px] bg-white md:w-[309px]'>
               <div className='flex flex-col items-center justify-center'>
