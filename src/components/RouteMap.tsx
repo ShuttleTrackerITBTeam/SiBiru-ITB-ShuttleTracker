@@ -11,7 +11,7 @@ const RouteMap: React.FC<RouteMapProps> = ({ show, setShow }) => {
     return (
         <div>
             {!show && (
-                <div className = "fixed top-20 w-screen flex justify-end z-[500]">
+                <div className = "fixed top-20 w-screen flex justify-end z-[401]">
                     <button onClick={() => setShow(true)}>
                         <div 
                         className = "bg-white w-8 h-8 rounded-full mr-3 flex items-center justify-center"
