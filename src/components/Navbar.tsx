@@ -14,7 +14,7 @@ const Navbar = () => {
   return (
     <>
       <nav className='flex justify-center '>
-        <div className="w-full md:w-[468px] fixed bg-white appBar">
+        <div className="w-full md:w-[100%] fixed bg-white appBar">
           <div className="flex justify-between px-[14px] py-[15px] relative">
             <div className='flex items-center gap-2'>
               <Link href='/help'>

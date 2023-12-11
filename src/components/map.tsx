@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import * as turf from '@turf/turf';
 import 'leaflet/dist/leaflet.css';
-import L, { LatLngExpression, LatLngTuple} from 'leaflet';
+import L, { LatLngExpression, LatLngTuple, popup} from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import { useAuth } from '@src/services/AuthContext';
 import LoginWarning from './LoginWarning';
@@ -53,6 +53,18 @@ const Map = () => {
     {
       geocode : [-6.926586, 107.769261],
       popUp : "GSG"
+    },
+    {
+      geocode : [-6.926399, 107.767933],
+      popUp : "Asrama"
+    },
+    {
+      geocode : [-6.931548, 107.770884],
+      popUp : "Parkiran Kehutanan"
+    },
+    {
+      geocode : [-6.933205, 107.768413],
+      popUp : "Gerbang Utama"
     }
   ];
 
@@ -271,9 +283,9 @@ const Map = () => {
   
   return (
     <div className='h-screen flex items-center justify-center'>
-      <div className='h-full w-full md:w-[468px]'>
+      <div className='h-full w-full md:w-[100%]'>
         <MapContainer className='relative' center={CenterPoint} zoom={16} zoomControl={false} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
-          <div className='fixed z-[400] item-center h-[100px] w-full md:w-[468px] bottom-0'>
+          <div className='fixed z-[400] item-center h-[100px] w-full md:w-[100%] bottom-0'>
             <div className='justify-center w-full flex'>
                 <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] w-[256px] h-[46px] rounded-3xl' onClick={handleButtonClick}>
                   <div className='flex justify-center items-center mt-[2px]'>
@@ -344,7 +356,7 @@ const Map = () => {
           ))}
 
           <Polyline positions={latlngs} color="red" />
-          <Polyline positions={latlngs2} color="red" />
+          <Polyline positions={latlngs2} color="blue" />
         </MapContainer>
       </div>
     </div>

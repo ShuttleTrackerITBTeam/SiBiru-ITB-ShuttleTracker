@@ -6,7 +6,7 @@ import LoginPopUp from "@src/components/LoginPopUp";
 import SplashScreen from "@src/components/SplashScreen";
 import { AuthProvider } from "@src/services/AuthContext";
 
-const Map = dynamic(() => import("@src/components/Map"), { ssr: false });
+const Map = dynamic(() => import("@src/components/map"), { ssr: false });
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
