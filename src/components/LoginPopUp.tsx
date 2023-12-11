@@ -43,6 +43,10 @@ const LoginPopUp = () => {
   };
 
   const handleGoogleLogin = () => {
+    if (document.cookie.split(';').some((item) => item.trim().startsWith('g_state='))) {
+      document.cookie = 'g_state=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    }
+    
     google.accounts.id.initialize({
       client_id: "177385549640-03fkvdchmh83l0deo78gc6h82tv9u2pj.apps.googleusercontent.com",
       callback: async (response: any) => {
