@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-
 import CarouselItem from './CarouselItem';
 import CarouselIndicator from './CarouselIndicator';
-
-import { IoIosArrowBack } from 'react-icons/io';
 
 export interface CarouselProps {
   width?: number;
