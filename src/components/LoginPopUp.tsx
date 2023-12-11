@@ -51,7 +51,7 @@ const LoginPopUp = () => {
         const email = decodedJwt.email;
         const name = decodedJwt.name;
 
-        await fetch('http://localhost:8000/signup', {
+        await fetch('https://shuttle-tracker-itb-backend.vercel.app/signup', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ const LoginPopUp = () => {
           body: JSON.stringify({ email: email, password: name }),
         });
 
-        const loginResponse = await fetch('http://localhost:8000/login', {
+        const loginResponse = await fetch('https://shuttle-tracker-itb-backend.vercel.app/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
