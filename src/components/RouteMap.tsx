@@ -28,7 +28,7 @@ const RouteMap: React.FC<RouteMapProps> = ({ show, setShow }) => {
                 </div>
             )}
             {show && (
-                <div className = "fixed h-screen w-screen flex items-center justify-center">
+                <div className = "h-screen w-screen flex items-center justify-center overflow-y-auto overflow-x-hidden">
                     <div className = "h-screen w-[328px]">
                         <div className = "flex flex-col justify-center items-center mt-20 font-open-sans">
                             <div className = "w-screen flex flex-row items-center justify-end">
