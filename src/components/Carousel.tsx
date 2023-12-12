@@ -30,7 +30,7 @@ export default function Carousel({ width, height, items }: CarouselProps) {
           className="carousel-btn-switch-card absolute left-10"
           onClick={handlePrevItemBtn}
         >
-          <img src="/images/fotoProfileAbout/arrow_circle_left.svg" style={{ width: '50px', height: '50px' }} />
+          <img src="/images/fotoProfileAbout/arrow_circle_left.svg" style={{ width: '40px', height: '40px' }} />
         </button>
       )}
       {items?.map((item, index) => (
@@ -43,7 +43,7 @@ export default function Carousel({ width, height, items }: CarouselProps) {
           className="carousel-btn-switch-card absolute right-10"
           onClick={handleNextItemBtn}
         >
-          <img src="/images/fotoProfileAbout/arrow_circle_right.svg" style={{ width: '50px', height: '50px' }}/>
+          <img src="/images/fotoProfileAbout/arrow_circle_right.svg" style={{ width: '40px', height: '40px' }}/>
         </button>
       )}
 

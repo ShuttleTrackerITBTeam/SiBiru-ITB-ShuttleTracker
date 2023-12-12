@@ -17,7 +17,7 @@ const AboutUs = () => {
     showAboutUs && (
       <div className="flex w-[100vw] h-full flex-col items-center">
         <div className="h-24" />
-        <div className="relative w-full max-w-[384px] bg-[#c4eeff8c] rounded-lg p-4">
+        <div className="relative w-[85%] max-w-[384px] bg-[#c4eeff8c] rounded-lg p-4">
           <div className="flex flex-col justify-center items-center">
             <img src="/images/logo mark - light.svg" className="w-16 h-16" />
             <h2 className="text-center mt-4 font-montserrat" style={{ color: '#00096B', fontSize: '24px' }}>
@@ -42,7 +42,7 @@ const AboutUs = () => {
 function software(){
     return(
         <div className="flex flex-col items-center">
-            <img src="/images/fotoProfileAbout/aboutSoftware.png" className="h-24" />
+            <img src="/images/fotoProfileAbout/aboutSoftware.png" className="h-24 mb-3" />
             <img src="/images/fotoProfileAbout/software.svg"/>
         </div>
     );
@@ -51,7 +51,7 @@ function software(){
 function designer(){
     return(
         <div className="flex flex-col items-center">
-            <img src="/images/fotoProfileAbout/aboutDesigner.png" className="h-24" />
+            <img src="/images/fotoProfileAbout/aboutDesigner.png" className="h-24 mb-3" />
             <img src="/images/fotoProfileAbout/designer.svg"/>
         </div>
     );
@@ -60,8 +60,10 @@ function designer(){
 function requirement(){
     return(
         <div className="flex flex-col items-center">
-            <img src="/images/fotoProfileAbout/aboutRequirement.png" className="h-24" />
-            <img src="/images/fotoProfileAbout/requirement.svg"/>
+            <img src="/images/fotoProfileAbout/aboutRequirement.png" className="h-24 mb-3" />
+            <div className="mt-[-21px] ml-[10px]">
+              <img src="/images/fotoProfileAbout/requirement.svg"/>
+            </div>
         </div>
     );
 }
@@ -69,8 +71,8 @@ function requirement(){
 function supervisor(){
     return(
         <div className="flex flex-col items-center">
-            <img src="/images/fotoProfileAbout/aboutSupervisor.png" className="h-24" />
-            <img src="/images/fotoProfileAbout/supervisor.svg" className="h-48"/>
+            <img src="/images/fotoProfileAbout/aboutSupervisor.png" className="h-24 mb-3" />
+            <img src="/images/fotoProfileAbout/supervisor.svg" className="h-59"/>
         </div>
     );
 }

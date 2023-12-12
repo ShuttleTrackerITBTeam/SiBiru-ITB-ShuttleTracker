@@ -23,8 +23,8 @@ const LoginWarning: React.FC<LoginWarningProps> = ({ isOpen, onClose }) => {
   }
 
   return (
-    <div className='w-screen h-[100%] flex justify-center'>
-      <div className='w-screen h-[100%] rounded-[20px] bg-transparent absolute top-[0px] z-[50] flex justify-center'>
+    <div className='w-screen h-screen flex justify-center'>
+      <div className='w-screen h-screen rounded-[20px] bg-transparent absolute top-[0px] z-[50] flex justify-center'>
         <div className='absolute inset-0 bg-black opacity-50' onClick={onClose}></div>
         <div className='top-[50%] translate-y-[-50%] absolute w-[309px] px-[20px] py-[20px] rounded-[20px] bg-white'>
           <div className='w-[100%] flex justify-end'>

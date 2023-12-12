@@ -9,7 +9,7 @@ const RouteMap = () => {
     return (
         <div>
             {showMap && (
-                <div className = "fixed top-20 w-screen flex justify-end z-[401]">
+                <div className = "fixed top-20 w-screen flex justify-end z-[400]">
                     <button onClick={toggleShowRouteMap}>
                         <div 
                         className = "bg-white w-10 h-10 rounded-full mr-3 flex items-center justify-center"

@@ -25,10 +25,21 @@ const ProfilePopUp: React.FC<ProfilePopUpProps> = ({ setIsProfilePopUpOpen }) =>
   return (
     <>
       { user ? (
-        <div className='absolute top-[120%] right-[20px] px-[12px] py-[14px] rounded-tr-0 rounded-br-[20px] rounded-bl-[20px] rounded-tl-[20px] bg-white'>
+        <div className='absolute top-[120%] right-[20px] px-[12px] py-[14px] rounded-tr-0 rounded-br-[20px] rounded-bl-[20px] rounded-tl-[20px] bg-white flex flex-col' style={{ boxShadow: '0px 5px 5px rgba(0, 0, 0, 0.25)'}}>
           <p className='text-[12px] font-bold'>Hello, {user}!</p>
           <p className='text-[10px]'>Welcome to ShuttleTracker</p>
-          <button onClick={handleLogout} className='px-[20px] py-[10px] bg-[#C90000] rounded-[20px] text-white mt-[11px] font-bold text-[14px]'>Logout
+          <button 
+              className='w-[128px] h-[39px] px-[20px] py-[10px] bg-[#004099] rounded-[20px] text-white mt-[11px] font-bold text-[14px]'
+              onClick={() => {
+                toggleShowAboutUs();
+                setIsProfilePopUpOpen(false);
+              }}
+            >  
+              <div className='flex justify-center gap-[9px] mt-[-1px]'>
+                About Us
+              </div>
+            </button>
+          <button onClick={handleLogout} className='w-[128px] h-[39px] px-[20px] py-[10px] bg-[#C90000] rounded-[20px] text-white mt-[6px] font-bold text-[14px]'>Logout
           </button>
         </div>
       ) : (

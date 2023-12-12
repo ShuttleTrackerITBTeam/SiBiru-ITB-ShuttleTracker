@@ -53,23 +53,8 @@ const Map = () => {
       message: string;
     },
   });
-  
-  // let bus: Bus[] = [];
-  // bus[0] = {
-  //   loaded: true,
-  //   coordinates: {
-  //     lat: 0,
-  //     lng: 0,
-  //   },
-  //   halte: "None",
-  //   numberMhs: 0,
-  //   waitingTime: 0,
-  //   arriveTime: '',
-  //   error: null,
-  // };
 
   const [bus, setBus] = useState<Bus[]>([]);
-
   const [bus2, setBus2] = useState<Bus[]>([]);
   
   const markers = [
@@ -417,14 +402,14 @@ const Map = () => {
     setButtonClicked(!isButtonClicked);
   };
 
-  const [selectedRoute, setSelectedRoute] = useState<string>('Rute1');
+  const [selectedRoute, setSelectedRoute] = useState<string>('Route1');
 
   const handleRouteButtonClick = (route: string) => {
     setSelectedRoute(route);
-    if (route === 'Rute1') {
+    if (route === 'Route1') {
       setShowRedLine(true);
       setShowBlueLine(false);
-    } else if (route === 'Rute2') {
+    } else if (route === 'Route2') {
       setShowRedLine(false);
       setShowBlueLine(true);
     }
@@ -454,7 +439,7 @@ const Map = () => {
                     ) : (
                       <div className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] p-2 rounded-2xl absolute w-[90%] h-fit bottom-11'>
                         <div className='w-[100%] flex justify-end'>
-                          <Image src="/images/closeBusPanel.svg" alt='close-button' width={25} height={25} onClick={handleButtonClick} style={{ cursor: 'pointer' }}/>
+                          <Image src="/images/closeBusPanel.svg" alt='close-button' width={25} height={25} onClick={() => {handleButtonClick(); setShowRedLine(true); setShowBlueLine(true)}} style={{ cursor: 'pointer' }}/>
                         </div>
                         {/* <div className='flex border-b-[#0078C9] border-b-[3px] border-solid pb-1'>
                           <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={50} height={50} />
@@ -465,16 +450,16 @@ const Map = () => {
                         </div> */}
                         <div className='flex justify-between border-b-[#0078C9] border-b-[3px] border-solid pb-1'>
                           <div className='flex'>
-                            <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={50} height={50} />
-                            <div className='header-busPanel ml-1'>
+                            <Image className="ml-[5px]" src={'/images/busLocationPanel.svg'} alt="bus location" width={50} height={50} />
+                            <div className='header-busPanel ml-3'>
                               <p className='font-bold text-white'>Halte Terdekat</p>
                               <p className='font-bold text-white text-2xl'>{nearestHalte['popUp']}</p>
                             </div>
                           </div>
 
-                          <div className='z-[100000] flex justify-end gap-2 mr-[20px]'>
-                            <button onClick={() => handleRouteButtonClick('Rute1')} className={`rounded-[20px] bg-black text-white p-4 ${selectedRoute === 'Rute1' ? 'bg-red-500 text-white' : 'bg-black text-white'} `}>Route 1</button>
-                            <button onClick={() => handleRouteButtonClick('Rute2')} className={`rounded-[20px] bg-black text-white p-4 ${selectedRoute === 'Rute2' ? 'bg-red-500 text-white' : 'bg-black text-white'} `}>Route 2</button>
+                          <div className='flex justify-end items-end gap-2 mr-[14px] mb-[5px]'>
+                            <button onClick={() => handleRouteButtonClick('Route1')} className={`flex items-center justify-center rounded-[20px] h-[20px] bg-[#004099] text-white p-4 ${selectedRoute === 'Route1' ? 'bg-[#004099] text-white' : 'bg-[#0078C9] text-white'} `}>Red Route</button>
+                            <button onClick={() => handleRouteButtonClick('Route2')} className={`flex items-center justify-center rounded-[20px] h-[20px] bg-[#004099] text-white p-4 ${selectedRoute === 'Route2' ? 'bg-[#004099] text-white' : 'bg-[#0078C9] text-white'} `}>Blue Route</button>
                           </div>
                         </div>
                         {/* <div className='flex mt-3 mb-3'>
@@ -515,7 +500,7 @@ const Map = () => {
                           ))}
                         </div> */}
 
-                        {selectedRoute === 'Rute1' && (
+                        {selectedRoute === 'Route1' && (
                           <div className='scroll-container'>
                             {bus.map((busItem, index) => (
                               <div key={index} className='relative flex mt-3 mb-3'>
@@ -538,7 +523,7 @@ const Map = () => {
                           </div>
                         )}
 
-                        {selectedRoute === 'Rute2' && (
+                        {selectedRoute === 'Route2' && (
                           <div className='scroll-container'>
                             {bus2.map((busItem, index) => (
                               <div key={index} className='relative flex mt-3 mb-3'>
