@@ -270,7 +270,6 @@ const Map = () => {
 
       const rute2 = data.data.Rute2;
       const length2 = Object.keys(rute2).length;
-
   
       const newBus = [...bus]; // Create a copy of the bus array
 
@@ -313,7 +312,6 @@ const Map = () => {
         newBus2[i].waitingTime = time;
         newBus2[i].arriveTime = calculateArrivingTime(time);
       }
-
   
       setBus(newBus); // Update the bus state
       setBus2(newBus2); // update the bus route 2 state
@@ -434,7 +432,6 @@ const Map = () => {
 
   const [showRedLine, setShowRedLine] = useState(true);
   const [showBlueLine, setShowBlueLine] = useState(true);
-
   
   return (
     showMap && (
@@ -466,7 +463,6 @@ const Map = () => {
                             <p className='font-bold text-white text-2xl'>{nearestHalte['popUp']}</p>
                           </div>
                         </div> */}
-
                         <div className='flex justify-between border-b-[#0078C9] border-b-[3px] border-solid pb-1'>
                           <div className='flex'>
                             <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={50} height={50} />
@@ -481,8 +477,6 @@ const Map = () => {
                             <button onClick={() => handleRouteButtonClick('Rute2')} className={`rounded-[20px] bg-black text-white p-4 ${selectedRoute === 'Rute2' ? 'bg-red-500 text-white' : 'bg-black text-white'} `}>Route 2</button>
                           </div>
                         </div>
-
-                        
                         {/* <div className='flex mt-3 mb-3'>
                           <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
                           <div className='mt-1.5 ml-3'>
@@ -520,7 +514,6 @@ const Map = () => {
                             </div>
                           ))}
                         </div> */}
-
 
                         {selectedRoute === 'Rute1' && (
                           <div>
@@ -566,7 +559,7 @@ const Map = () => {
                               </div>
                             ))}
                           </div>
-                        )} 
+                        )}
                       </div>
                     ))
                   )}
@@ -602,8 +595,6 @@ const Map = () => {
             <Polyline positions={latlngs2} color="blue" /> */}
             {showRedLine && <Polyline positions={latlngs} color="red" />}
             {showBlueLine && <Polyline positions={latlngs2} color="blue" />}
-
-            
           </MapContainer>
         </div>
       </div>
@@ -612,3 +603,5 @@ const Map = () => {
 };
 
 export default Map;
+
+
