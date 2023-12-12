@@ -28,7 +28,7 @@ const Navbar = () => {
                   <button onClick={toggleShowHelp}>
                     <div><Image src="/images/help.svg" alt='help' width={23} height={23} /></div>
                   </button>
-                  <Link href="/report">
+                  <Link href="https://forms.gle/8rXwmaeP33aEaXsf8">
                     <div><Image src="/images/report.svg" alt='report' width={27} height={27} /></div>
                   </Link>        
                 </>

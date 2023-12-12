@@ -6,7 +6,7 @@ const Help = () => {
     return (
         showHelp && (
             <div className="flex w-screen justify-center overflow-y-auto">
-                <div className='fixed top-14 w-full max-w-[468px] h-[100vh]'>
+                <div className='mt-14 w-full max-w-[468px] h-[100vh]'>
                     <div className="container mx-auto bg-transparent px-[19px] pt-[27px]">
                         <div className="container mx-auto bg-[#005CB1] bg-opacity-[15%] rounded-lg">
                             <div className="container mx-auto bg-transparent">

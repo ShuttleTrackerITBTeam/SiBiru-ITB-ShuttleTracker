@@ -16,12 +16,21 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-      const timer = setTimeout(() => {
-          setLoading(false);
-      }, 1000);
+    const splashScreenLastShown = parseInt(localStorage.getItem('splashScreenLastShown') || '0');
+    const now = new Date().getTime();
 
-      return () => clearTimeout(timer); // Clean up on component unmount
+    if (!splashScreenLastShown || now - splashScreenLastShown > 3600000) { // 3600000 ms = 1 hour
+      setLoading(true);
+      localStorage.setItem('splashScreenLastShown', String(now));
+
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
   }, []);
+  
 
   return (
     <>

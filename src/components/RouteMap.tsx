@@ -12,13 +12,13 @@ const RouteMap = () => {
                 <div className = "fixed top-20 w-screen flex justify-end z-[401]">
                     <button onClick={toggleShowRouteMap}>
                         <div 
-                        className = "bg-white w-8 h-8 rounded-full mr-3 flex items-center justify-center"
+                        className = "bg-white w-10 h-10 rounded-full mr-3 flex items-center justify-center"
                         style={{ boxShadow: '0px 5px 5px rgba(0, 0, 0, 0.25)' }}>
                             <Image
                                 src = "/images/iconRouteMap.svg"
                                 alt = "route-map"
-                                width = {20}
-                                height = {20}
+                                width = {24}
+                                height = {24}
                                 style = {{ cursor: 'pointer' }}
                             />
                         </div>
@@ -26,7 +26,7 @@ const RouteMap = () => {
                 </div>
             )}
             {showRouteMap && (
-                <div className = "fixed h-screen w-screen flex items-center justify-center">
+                <div className = "h-screen w-screen flex items-center justify-center overflow-y-auto overflow-x-hidden">
                     <div className = "h-screen w-[328px]">
                         <div className = "flex flex-col justify-center items-center mt-20 font-open-sans">
                             <div className = "w-screen flex flex-row items-center justify-end">
@@ -39,8 +39,8 @@ const RouteMap = () => {
                                         <Image
                                             src = "/images/closeBusPanel.svg"
                                             alt = "close-button"
-                                            width = {32}
-                                            height = {32}
+                                            width = {48}
+                                            height = {48}
                                             style = {{ cursor: 'pointer' }}
                                         />
                                     </button>
