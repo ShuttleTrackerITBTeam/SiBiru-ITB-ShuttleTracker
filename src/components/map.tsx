@@ -69,6 +69,8 @@ const Map = () => {
   // };
 
   const [bus, setBus] = useState<Bus[]>([]);
+
+  const [bus2, setBus2] = useState<Bus[]>([]);
   
   const markers = [
     {
@@ -265,8 +267,13 @@ const Map = () => {
       const data = await res.json()
       const rute1 = data.data.Rute1
       const length = Object.keys(rute1).length;
+
+      const rute2 = data.data.Rute2;
+      const length2 = Object.keys(rute2).length;
   
       const newBus = [...bus]; // Create a copy of the bus array
+
+      const newBus2 = [...bus2]; // Create a copy of the bus route 2 array
   
       for (let i = 0; i < length; i++) {
         newBus[i] = {
@@ -286,8 +293,28 @@ const Map = () => {
         newBus[i].waitingTime = time;
         newBus[i].arriveTime = calculateArrivingTime(time);
       }
+
+      for (let i = 0; i < length2; i++) {
+        newBus2[i] = {
+          loaded: true,
+          coordinates: {
+            lat: rute2[`Bus${i + 1}`].latitude,
+            lng: rute2[`Bus${i + 1}`].longitude,
+          },
+          halte: rute2[`Bus${i + 1}`].Terminal,
+          numberMhs: rute2[`Bus${i + 1}`].countMhs,
+          waitingTime: 0,
+          arriveTime: '',
+          error: null,
+        }
+  
+        const time = calculateWaitingTime(newBus2[i]);
+        newBus2[i].waitingTime = time;
+        newBus2[i].arriveTime = calculateArrivingTime(time);
+      }
   
       setBus(newBus); // Update the bus state
+      setBus2(newBus2); // update the bus route 2 state
     } catch (err) {
       console.log(err)
     }
@@ -389,6 +416,22 @@ const Map = () => {
     setIsLoginWarningOpen(false);
     setButtonClicked(!isButtonClicked);
   };
+
+  const [selectedRoute, setSelectedRoute] = useState<string>('Rute1');
+
+  const handleRouteButtonClick = (route: string) => {
+    setSelectedRoute(route);
+    if (route === 'Rute1') {
+      setShowRedLine(true);
+      setShowBlueLine(false);
+    } else if (route === 'Rute2') {
+      setShowRedLine(false);
+      setShowBlueLine(true);
+    }
+  };
+
+  const [showRedLine, setShowRedLine] = useState(true);
+  const [showBlueLine, setShowBlueLine] = useState(true);
   
   return (
     showMap && (
@@ -413,14 +456,28 @@ const Map = () => {
                         <div className='w-[100%] flex justify-end'>
                           <Image src="/images/closeBusPanel.svg" alt='close-button' width={25} height={25} onClick={handleButtonClick} style={{ cursor: 'pointer' }}/>
                         </div>
-                        <div className='flex border-b-[#0078C9] border-b-[3px] border-solid pb-1'>
+                        {/* <div className='flex border-b-[#0078C9] border-b-[3px] border-solid pb-1'>
                           <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={50} height={50} />
                           <div className='header-busPanel ml-1'>
                             <p className='font-bold text-white'>Halte Terdekat</p>
                             <p className='font-bold text-white text-2xl'>{nearestHalte['popUp']}</p>
                           </div>
+                        </div> */}
+                        <div className='flex justify-between border-b-[#0078C9] border-b-[3px] border-solid pb-1'>
+                          <div className='flex'>
+                            <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={50} height={50} />
+                            <div className='header-busPanel ml-1'>
+                              <p className='font-bold text-white'>Halte Terdekat</p>
+                              <p className='font-bold text-white text-2xl'>{nearestHalte['popUp']}</p>
+                            </div>
+                          </div>
+
+                          <div className='z-[100000] flex justify-end gap-2 mr-[20px]'>
+                            <button onClick={() => handleRouteButtonClick('Rute1')} className={`rounded-[20px] bg-black text-white p-4 ${selectedRoute === 'Rute1' ? 'bg-red-500 text-white' : 'bg-black text-white'} `}>Route 1</button>
+                            <button onClick={() => handleRouteButtonClick('Rute2')} className={`rounded-[20px] bg-black text-white p-4 ${selectedRoute === 'Rute2' ? 'bg-red-500 text-white' : 'bg-black text-white'} `}>Route 2</button>
+                          </div>
                         </div>
-                        <div className='flex mt-3 mb-3'>
+                        {/* <div className='flex mt-3 mb-3'>
                           <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
                           <div className='mt-1.5 ml-3'>
                             <p className='font-extralight text-white text-xs'>Nama Bus</p>
@@ -435,7 +492,74 @@ const Map = () => {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
+
+                        {/* <div>
+                          {bus.map((bus, index) => (
+                            <div key={index} className='flex mt-3 mb-3'>
+                              <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
+                              <div className='mt-1.5 ml-3'>
+                                <p className='font-extralight text-white text-xs'>Nama Bus</p>
+                                <p className='font-bold text-white text-xs'>{bus.numberMhs}/30 CAPACITY</p>
+                              </div>
+                              <div className=' bg-[#00409980] bg-opacity-50 h-fit absolute w-fit rounded-lg right-3 p-1.5'>
+                                <div className='flex items-center'>
+                                  <p className='font-thin text-xs text-white mx-1.5'>Arriving in</p>
+                                  <div className='inline-block mx-1.5'>
+                                    <p className='font-extralight text-white text-center'>{bus.waitingTime} mins</p>
+                                    <p className='font-extralight text-white text-center'>{bus.arriveTime}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div> */}
+
+                        {selectedRoute === 'Rute1' && (
+                          <div>
+                            {bus.map((busItem, index) => (
+                              <div key={index} className='flex mt-3 mb-3'>
+                                <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
+                                <div className='mt-1.5 ml-3'>
+                                  <p className='font-extralight text-white text-xs'>Nama Bus</p>
+                                  <p className='font-bold text-white text-xs'>{busItem.numberMhs}/30 CAPACITY</p>
+                                </div>
+                                <div className=' bg-[#00409980] bg-opacity-50 h-fit absolute w-fit rounded-lg right-3 p-1.5'>
+                                  <div className='flex items-center'>
+                                    <p className='font-thin text-xs text-white mx-1.5'>Arriving in</p>
+                                    <div className='inline-block mx-1.5'>
+                                      <p className='font-extralight text-white text-center'>{busItem.waitingTime} mins</p>
+                                      <p className='font-extralight text-white text-center'>{busItem.arriveTime}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {selectedRoute === 'Rute2' && (
+                          <div>
+                            {bus2.map((busItem, index) => (
+                              <div key={index} className='flex mt-3 mb-3'>
+                                <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
+                                <div className='mt-1.5 ml-3'>
+                                  <p className='font-extralight text-white text-xs'>Nama Bus</p>
+                                  <p className='font-bold text-white text-xs'>{busItem.numberMhs}/30 CAPACITY</p>
+                                </div>
+                                <div className=' bg-[#00409980] bg-opacity-50 h-fit absolute w-fit rounded-lg right-3 p-1.5'>
+                                  <div className='flex items-center'>
+                                    <p className='font-thin text-xs text-white mx-1.5'>Arriving in</p>
+                                    <div className='inline-block mx-1.5'>
+                                      <p className='font-extralight text-white text-center'>{busItem.waitingTime} mins</p>
+                                      <p className='font-extralight text-white text-center'>{busItem.arriveTime}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     ))
                   )}
@@ -467,8 +591,10 @@ const Map = () => {
               </Marker>
             ))}
 
-            <Polyline positions={latlngs} color="red" />
-            <Polyline positions={latlngs2} color="blue" />
+            {/* <Polyline positions={latlngs} color="red" />
+            <Polyline positions={latlngs2} color="blue" /> */}
+            {showRedLine && <Polyline positions={latlngs} color="red" />}
+            {showBlueLine && <Polyline positions={latlngs2} color="blue" />}
           </MapContainer>
         </div>
       </div>
