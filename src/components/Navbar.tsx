@@ -18,10 +18,10 @@ const Navbar = () => {
           <div className="flex justify-between px-[14px] py-[15px] relative">
             <div className='flex items-center gap-2'>
               <Link href='/help'>
-              <div><Image src="/images/help.svg" alt='help' width={23} height={23} /></div>
+                <div><Image src="/images/help.svg" alt='help' width={23} height={23} /></div>
               </Link>
-              <Link href="/report">
-              <div><Image src="/images/report.svg" alt='report' width={27} height={27} /></div>
+              <Link href="https://forms.gle/8rXwmaeP33aEaXsf8">
+                <div><Image src="/images/report.svg" alt='report' width={27} height={27} /></div>
               </Link>        
             </div>
             <div className='flex items-center ml-[-10px] logo'>
