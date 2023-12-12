@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import * as turf from '@turf/turf';
 import 'leaflet/dist/leaflet.css';
-import L, { LatLngExpression, LatLngTuple, popup} from 'leaflet';
+import L, { LatLngExpression, LatLngTuple } from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import { useAuth } from '@src/services/AuthContext';
 import { usePages } from '@src/services/PagesContext';

@@ -7,12 +7,14 @@ export const PagesProvider = ({ children }) => {
     const [showRouteMap, setShowRouteMap] = useState(false);
     const [showAboutUs, setShowAboutUs] = useState(false);
     const [showHelp, setShowHelp] = useState(false);
+    const [showReport, setShowReport] = useState(false);
 
     const toggleShowMap = () => {
         setShowMap(true);
         setShowAboutUs(false);
         setShowHelp(false);
         setShowRouteMap(false);
+        setShowReport(false);
     }
 
     const toggleShowRouteMap = () => {
@@ -20,6 +22,7 @@ export const PagesProvider = ({ children }) => {
         setShowMap(false);
         setShowAboutUs(false);
         setShowHelp(false);
+        setShowReport(false);
     }
 
     const toggleShowAboutUs = () => {
@@ -27,6 +30,7 @@ export const PagesProvider = ({ children }) => {
         setShowMap(false);
         setShowRouteMap(false);
         setShowHelp(false);
+        setShowReport(false);
     }
 
     const toggleShowHelp = () => {
@@ -34,10 +38,19 @@ export const PagesProvider = ({ children }) => {
         setShowMap(false);
         setShowRouteMap(false);
         setShowAboutUs(false);
+        setShowReport(false);
+    }
+
+    const toggleShowReport = () => {
+        setShowReport(true);
+        setShowMap(false);
+        setShowRouteMap(false);
+        setShowAboutUs(false);
+        setShowHelp(false);
     }
 
     return (
-        <PagesContext.Provider value={{ showMap, setShowMap, showRouteMap, setShowRouteMap, showAboutUs, setShowAboutUs, showHelp, setShowHelp, toggleShowMap, toggleShowRouteMap, toggleShowAboutUs, toggleShowHelp }}>
+        <PagesContext.Provider value={{ showMap, setShowMap, showRouteMap, setShowRouteMap, showAboutUs, setShowAboutUs, showHelp, setShowHelp, showReport, setShowReport, toggleShowMap, toggleShowRouteMap, toggleShowAboutUs, toggleShowHelp, toggleShowReport }}>
             {children}
         </PagesContext.Provider>
     )

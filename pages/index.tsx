@@ -4,13 +4,14 @@ import Head from "next/head";
 import Navbar from "@src/components/Navbar";
 import LoginPopUp from "@src/components/LoginPopUp";
 import Help from "@src/components/Help";
+import Report from "@src/components/Report";
 import RouteMap from "@src/components/RouteMap";
 import AboutUs from '@src/components/AboutUs';
 import SplashScreen from "@src/components/SplashScreen";
 import { AuthProvider } from "@src/services/AuthContext";
 import { PagesProvider } from "@src/services/PagesContext";
 
-const Map = dynamic(() => import("@src/components/Map"), { ssr: false });
+const Map = dynamic(() => import("@src/components/map"), { ssr: false });
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -55,6 +56,7 @@ export default function Home() {
                   <RouteMap />
                   <AboutUs />
                   <Help />
+                  <Report />
                 </>
               )}
               </div>

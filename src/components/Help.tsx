@@ -67,7 +67,7 @@ const Help = () => {
                             </li>
                         </ul>   
                         <h2 className="mt-[30px] text-justify-left text-[14px] leading-[19.5px] font-bold text-[#0078C9] font-montserrat">Butuh Lebih Banyak Bantuan?</h2>
-                        <a href="https://your-google-form-link" target="_blank" rel="noopener noreferrer">
+                        <a href="https://forms.gle/J2oaFWVQbFGvheHD9" target="_blank" rel="noopener noreferrer">
                             <div className="flex w-[100%] justify-center">
                                 <div className="container flex h-[57px] w-[100%] mt-[14px] bg-gradient-to-t from-[#005BBF] to-[#0078C9] rounded-[22.79px] drop-shadow-xl items-center justify-between hover:brightness-110">
                                     <div className="ml-[23px] h-[10px] w-[15px] bg-transparent-500"></div>
