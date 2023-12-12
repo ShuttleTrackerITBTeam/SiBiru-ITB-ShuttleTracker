@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
             setUser("");
             return;
           }
-          const response = await fetch('http://localhost:8000/check-session/', {
+          const response = await fetch('https://shuttle-tracker-itb-backend.vercel.app/login/', {
             headers: {
               'Authorization': `Bearer ${session.access_token}`,
             },
