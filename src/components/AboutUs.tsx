@@ -1,4 +1,4 @@
-import React, { use, useEffect } from 'react';
+import React from 'react';
 import Carousel from "./Carousel";
 import { usePages } from '@src/services/PagesContext';
 
@@ -15,10 +15,9 @@ const AboutUs = () => {
 
   return (
     showAboutUs && (
-      <div className="flex flex-col items-center  flex-grow">
-        <div className="w-96 h-24" />
-
-        <div className="relative w-96 bg-[#c4eeff8c] rounded-lg p-4">
+      <div className="flex w-[100vw] h-full flex-col items-center">
+        <div className="h-24" />
+        <div className="relative w-full max-w-[384px] bg-[#c4eeff8c] rounded-lg p-4">
           <div className="flex flex-col justify-center items-center">
             <img src="/images/logo mark - light.svg" className="w-16 h-16" />
             <h2 className="text-center mt-4 font-montserrat" style={{ color: '#00096B', fontSize: '24px' }}>
@@ -30,7 +29,7 @@ const AboutUs = () => {
           </div>
         </div>
 
-        <div className="w-[280px] mt-4 font-montserrat font-[number:var(--h2-font-weight)] text-base-color-1secondary-color-15 text-[length:var(--h2-font-size)] text-center tracking-[var(--h2-letter-spacing)] leading-[var(--h2-line-height)] whitespace-nowrap [font-style:var(--h2-font-style)]" style={{ color: '#002582', fontSize: '24px', fontWeight: 500 }}>
+        <div className="w-[280px] mt-4 mb-4 font-montserrat font-[number:var(--h2-font-weight)] text-base-color-1secondary-color-15 text-[length:var(--h2-font-size)] text-center tracking-[var(--h2-letter-spacing)] leading-[var(--h2-line-height)] whitespace-nowrap [font-style:var(--h2-font-style)]" style={{ color: '#002582', fontSize: '24px', fontWeight: 500 }}>
           Our Team
         </div>
 

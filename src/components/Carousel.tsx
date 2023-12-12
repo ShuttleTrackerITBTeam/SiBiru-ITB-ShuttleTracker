@@ -24,13 +24,14 @@ export default function Carousel({ width, height, items }: CarouselProps) {
   }
 
   return (
-    <div className="carousel-container">
+    <div className="carousel-container w-[384px] relative">
       {activeIndex > 0 && (
         <button
-          className="carousel-btn-switch-card-left carousel-btn-switch-card"
+          className="carousel-btn-switch-card absolute left-10"
           onClick={handlePrevItemBtn}
         >
-            <img src="/images/fotoProfileAbout/arrow_circle_left.svg" style={{ width: '50px', height: '50px' }} />        </button>
+          <img src="/images/fotoProfileAbout/arrow_circle_left.svg" style={{ width: '50px', height: '50px' }} />
+        </button>
       )}
       {items?.map((item, index) => (
         <CarouselItem key={index} index={index} activeIndex={activeIndex}>
@@ -39,10 +40,10 @@ export default function Carousel({ width, height, items }: CarouselProps) {
       ))}
       {activeIndex < items.length - 1 && (
         <button
-          className="carousel-btn-switch-card-right carousel-btn-switch-card"
+          className="carousel-btn-switch-card absolute right-10"
           onClick={handleNextItemBtn}
         >
-            <img src="/images/fotoProfileAbout/arrow_circle_right.svg" style={{ width: '50px', height: '50px' }}/>
+          <img src="/images/fotoProfileAbout/arrow_circle_right.svg" style={{ width: '50px', height: '50px' }}/>
         </button>
       )}
 
