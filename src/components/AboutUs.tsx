@@ -1,6 +1,6 @@
-import React from 'react';
-import Navbar from "@src/components/Navbar";
+import React, { use, useEffect } from 'react';
 import Carousel from "./Carousel";
+import { usePages } from '@src/services/PagesContext';
 
 const Items = [
     designer(),
@@ -11,12 +11,10 @@ const Items = [
 
 
 const AboutUs = () => {
-    return (
-        <div className="flex flex-col items-center min-h-screen">
-      {/* Fixed Navbar */}
-      <Navbar />
+  const { showAboutUs } = usePages();
 
-      {/* Scrollable Content */}
+  return (
+    showAboutUs && (
       <div className="flex flex-col items-center  flex-grow">
         <div className="w-96 h-24" />
 
@@ -38,8 +36,8 @@ const AboutUs = () => {
 
         <Carousel items={Items} />
       </div>
-    </div>
-    );
+    )
+  );
 }
 
 function software(){

@@ -3,15 +3,17 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import Navbar from "@src/components/Navbar";
 import LoginPopUp from "@src/components/LoginPopUp";
+import Help from "@src/components/Help";
 import RouteMap from "@src/components/RouteMap";
+import AboutUs from '@src/components/AboutUs';
 import SplashScreen from "@src/components/SplashScreen";
 import { AuthProvider } from "@src/services/AuthContext";
+import { PagesProvider } from "@src/services/PagesContext";
 
 const Map = dynamic(() => import("@src/components/Map"), { ssr: false });
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
-  const [showRouteMap, setShowRouteMap] = useState(false);
 
   useEffect(() => {
       const timer = setTimeout(() => {
@@ -31,22 +33,24 @@ export default function Home() {
       </Head>
       <main>
         <AuthProvider>
-          <div className="relative">
-            <div>
-            {loading ? <SplashScreen  /> : (
-              <>
-                <div>
-                  <Navbar />
-                  <LoginPopUp />
-                </div>
-                <RouteMap show={showRouteMap} setShow={setShowRouteMap} />
-                {!showRouteMap && (
+          <PagesProvider>
+            <div className="relative">
+              <div>
+              {loading ? <SplashScreen  /> : (
+                <>
+                  <div>
+                    <Navbar />
+                    <LoginPopUp />
+                  </div>
                   <Map />
-                )}
-              </>
-            )}
+                  <RouteMap />
+                  <AboutUs />
+                  <Help />
+                </>
+              )}
+              </div>
             </div>
-          </div>
+          </PagesProvider>
         </AuthProvider>
       </main>
     </>
