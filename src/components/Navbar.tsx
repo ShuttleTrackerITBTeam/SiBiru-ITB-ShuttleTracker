@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import ProfilePopUp from './ProfilePopUp';
 import { useAuth } from '@src/services/AuthContext';
@@ -7,7 +6,7 @@ import { usePages } from '@src/services/PagesContext';
 
 const Navbar = () => {
   const { isProfilePopUpOpen, setIsProfilePopUpOpen } = useAuth()
-  const { showMap, showHelp, toggleShowMap, toggleShowHelp, toggleShowReport } = usePages();
+  const { showMap, showHelp, showRouteMap, toggleShowMap, toggleShowHelp, toggleShowReport } = usePages();
 
   const handleProfileClick = () => {
     setIsProfilePopUpOpen(!isProfilePopUpOpen);
@@ -19,7 +18,7 @@ const Navbar = () => {
         <div className="w-full md:w-[100%] fixed bg-white appBar">
           <div className="flex justify-between px-[14px] py-[15px] relative">
             <div className='flex items-center gap-2'>
-              {!showMap ? (
+              {!showMap && !showRouteMap ? (
                 <button className="absolute left-0 ml-[17px]" onClick={toggleShowMap}>
                   <img className=" rounded-full hover:brightness-110 hover:shadow-lg" src="images/back.svg" alt="back" width={27} height={27}/>
                 </button>
@@ -35,7 +34,7 @@ const Navbar = () => {
               )}
             </div>
             <button className='flex items-center ml-[-10px] logo' onClick={toggleShowMap}>
-              {!showMap ? (
+              {!showMap && !showRouteMap ? (
                 showHelp ? (
                   <p className="text-center ml-14 text-[14px] font-bold text-[#0078C9] font-montserrat leading-[16px]">Pusat <br/> Bantuan </p>
                 ) : (
