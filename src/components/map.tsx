@@ -516,9 +516,9 @@ const Map = () => {
                         </div> */}
 
                         {selectedRoute === 'Rute1' && (
-                          <div className='scroll-container'>
+                          <div>
                             {bus.map((busItem, index) => (
-                              <div key={index} className='relative flex mt-3 mb-3'>
+                              <div key={index} className='flex mt-3 mb-3'>
                                 <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
                                 <div className='mt-1.5 ml-3'>
                                   <p className='font-extralight text-white text-xs'>Nama Bus</p>
@@ -539,9 +539,9 @@ const Map = () => {
                         )}
 
                         {selectedRoute === 'Rute2' && (
-                          <div className='scroll-container'>
+                          <div>
                             {bus2.map((busItem, index) => (
-                              <div key={index} className='relative flex mt-3 mb-3'>
+                              <div key={index} className='flex mt-3 mb-3'>
                                 <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
                                 <div className='mt-1.5 ml-3'>
                                   <p className='font-extralight text-white text-xs'>Nama Bus</p>
