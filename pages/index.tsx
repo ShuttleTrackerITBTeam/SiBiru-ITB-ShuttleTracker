@@ -3,21 +3,34 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import Navbar from "@src/components/Navbar";
 import LoginPopUp from "@src/components/LoginPopUp";
+import Help from "@src/components/Help";
+import RouteMap from "@src/components/RouteMap";
+import AboutUs from '@src/components/AboutUs';
 import SplashScreen from "@src/components/SplashScreen";
 import { AuthProvider } from "@src/services/AuthContext";
+import { PagesProvider } from "@src/services/PagesContext";
 
-const Map = dynamic(() => import("@src/components/map"), { ssr: false });
+const Map = dynamic(() => import("@src/components/Map"), { ssr: false });
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-      const timer = setTimeout(() => {
-          setLoading(false);
-      }, 1000);
+    const splashScreenLastShown = parseInt(localStorage.getItem('splashScreenLastShown') || '0');
+    const now = new Date().getTime();
 
-      return () => clearTimeout(timer); // Clean up on component unmount
+    if (!splashScreenLastShown || now - splashScreenLastShown > 3600000) { // 3600000 ms = 1 hour
+      setLoading(true);
+      localStorage.setItem('splashScreenLastShown', String(now));
+
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
   }, []);
+  
 
   return (
     <>
@@ -29,19 +42,24 @@ export default function Home() {
       </Head>
       <main>
         <AuthProvider>
-          <div className="relative">
-            <div>
-            {loading ? <SplashScreen  /> : (
-              <>
+          <PagesProvider>
+            <div className="relative">
               <div>
-                <Navbar />
-                <LoginPopUp />
+              {loading ? <SplashScreen  /> : (
+                <>
+                  <div>
+                    <Navbar />
+                    <LoginPopUp />
+                  </div>
+                  <Map />
+                  <RouteMap />
+                  <AboutUs />
+                  <Help />
+                </>
+              )}
               </div>
-              <Map  />
-              </>
-            )}
             </div>
-          </div>
+          </PagesProvider>
         </AuthProvider>
       </main>
     </>

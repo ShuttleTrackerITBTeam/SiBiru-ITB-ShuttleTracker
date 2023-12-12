@@ -7,42 +7,9 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet'
 import { useAuth } from '@src/services/AuthContext';
 import LoginWarning from './LoginWarning';
 
-interface Bus {
-  loaded: boolean;
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
-  halte: string;
-  numberMhs: number;
-  waitingTime: number;
-  arriveTime: string;
-  error: any;
-}
-
 const Map = () => {
   const { user, isProfilePopUpOpen, setIsProfilePopUpOpen } = useAuth()
   
-  const markRoute1 = [
-    { halte : 'Gerbang Utama', estimasi : 200 },
-    { halte : 'Labtek 1B', estimasi : 200 },
-    { halte : 'GKU 2', estimasi : 100 },
-    { halte : 'GKU 1', estimasi : 100 },
-    { halte : 'Rektorat', estimasi : 100 },
-    { halte : 'Koica/GKU 3', estimasi : 100 },
-    { halte : 'GSG', estimasi : 100, },
-    { halte : 'Asrama', estimasi : 100 }
-  ]
-  
-  const markRoute2 = [
-    { halte : 'Gerbang Utama', estimasi : 100 },
-    { halte : 'Asrama', estimasi : 100 },
-    { halte : 'GSG', estimasi : 100 },
-    { halte : 'Koica/GKU 3', estimasi : 100 },
-    { halte : 'Rektorat', estimasi : 100 },
-    { halte : 'Kehutanan', estimasi : 100 },
-  ]
-
   const [location, setLocation] = useState({
     loaded: false,
     coordinates: { lat: 0.0, lng: 0.0 },
@@ -52,21 +19,24 @@ const Map = () => {
     },
   });
   
-  // let bus: Bus[] = [];
-  // bus[0] = {
-  //   loaded: true,
-  //   coordinates: {
-  //     lat: 0,
-  //     lng: 0,
-  //   },
-  //   halte: "None",
-  //   numberMhs: 0,
-  //   waitingTime: 0,
-  //   arriveTime: '',
-  //   error: null,
-  // };
+  const [bus, setBus] = useState([] as any);
 
-  const [bus, setBus] = useState<Bus[]>([]);
+  const addBus = () => {
+    const newBus = {
+      loaded: false,
+      coordinates: { lat: 0.0, lng: 0.0 },
+      halte: 'Gerbang Utama',
+      numberMhs: 0,
+      waitingTime: 0,
+      arriveTime: '',
+      error: null as null | {
+          code: number;
+          message: string;
+          },
+    }
+
+    setBus([...bus, newBus]);
+  }
   
   const markers = [
     {
@@ -138,7 +108,7 @@ const Map = () => {
   ]
 
   const route2 = [
-    [-6.929038, 107.770054],
+    [-6.928999, 107.770029],
     [-6.929842, 107.770312],
     [-6.930405, 107.770477],
     [-6.931596, 107.770825],
@@ -152,42 +122,7 @@ const Map = () => {
     [-6.931928, 107.768897],
     [-6.932184, 107.768622],
     [-6.932732, 107.768369],
-    [-6.933629, 107.768350],
-    [-6.933579, 107.768269],
-    [-6.933073, 107.768255],
-    [-6.932812, 107.768286],
-    [-6.932703, 107.768308],
-    [-6.932604, 107.768348],
-    [-6.932433, 107.768423],
-    [-6.932171, 107.768555],
-    [-6.931787, 107.768752],
-    [-6.931583, 107.768781],
-    [-6.931444, 107.768774],
-    [-6.930817, 107.768607],
-    [-6.929402, 107.768214],
-    [-6.929127, 107.768123],
-    [-6.928935, 107.767965],
-    [-6.928672, 107.767723],
-    [-6.928472, 107.767622],
-    [-6.928173, 107.767513],
-    [-6.927987, 107.767475],
-    [-6.927910, 107.767454],
-    [-6.927796, 107.767475],
-    [-6.927701, 107.767494],
-    [-6.927407, 107.767557],
-    [-6.926887, 107.767665],
-    [-6.926731, 107.767731],
-    [-6.926670, 107.767771],
-    [-6.925911, 107.768629],
-    [-6.926380, 107.769074],
-    [-6.926585, 107.769332],
-    [-6.926853, 107.769543],
-    [-6.927022, 107.769694],
-    [-6.927203, 107.769821],
-    [-6.928289, 107.770832],
-    [-6.928560, 107.770547],
-    [-6.928785, 107.770305],
-    [-6.929038, 107.770054]
+    [-6.933629, 107.768350]
   ]
 
   const latlngs = route as unknown as LatLngExpression[][];
@@ -259,51 +194,76 @@ const Map = () => {
 
   const fetchContents = async (): Promise<void> => {
     try {
-      const res = await fetch('https://shuttle-tracker-itb-backend.vercel.app/track-shuttle/Jhfxmkh6sFecE3xEWAJXZCpY9lC2')
+      const res = await fetch('https://shuttle-tracker-itb-backend.vercel.app/Jhfxmkh6sFecE3xEWAJXZCpY9lC2')
       const data = await res.json()
       const rute1 = data.data.Rute1
-      const length = Object.keys(rute1).length;
-  
-      const newBus = [...bus]; // Create a copy of the bus array
-  
-      for (let i = 0; i < length; i++) {
-        newBus[i] = {
-          loaded: true,
-          coordinates: {
-            lat: rute1[`Bus${i + 1}`].latitude,
-            lng: rute1[`Bus${i + 1}`].longitude,
-          },
-          halte: rute1[`Bus${i + 1}`].Terminal,
-          numberMhs: rute1[`Bus${i + 1}`].countMhs,
-          waitingTime: 0,
-          arriveTime: '',
-          error: null,
-        }
-  
-        const time = calculateWaitingTime(newBus[i]);
-        newBus[i].waitingTime = time;
-        newBus[i].arriveTime = calculateArrivingTime(time);
+      console.log(rute1)
+
+      for (let i = bus.length; i < rute1.length; i++) {
+        addBus()
       }
-  
-      setBus(newBus); // Update the bus state
+
+      var updateBus : any = []
+      for (let i = 0; i < rute1.length; i++) {
+        updateBus[i] = {
+            loaded: true,
+            coordinates: {
+              lat: rute1[`Bus${i}`].latitude,
+              lng: rute1[`Bus${i}`].longitude,
+            },
+            halte: rute1[`Bus${i}`].halte,
+            numberMhs: rute1[`Bus${i}`].countMhs,
+            waitingTime: calcualteWaitingTime(rute1[`Bus${i}`]),
+            arriveTime: calcualteArrivingTime(calcualteWaitingTime(rute1[`Bus${i}`])),
+            error: null,
+          }
+      }
+      
+      setBus(updateBus)
+      // console.log("Latitude BUS: " + data.data.latitude + " Longitude BUS: " + data.data.longitude);
     } catch (err) {
       console.log(err)
     }
   }
-
   
-  useEffect(() => {
-    // Fetch location initially
-    const interval = setInterval(() => {
-      fetchContents();
-      fetchLocation();
-    }, 1000);
+  // Fetch nearest halte and arriving time
+  const markRoute1 = [
+    { halte : 'Gerbang Utama', estimasi : 200 },
+    { halte : 'Labtek 1B', estimasi : 200 },
+    { halte : 'GKU 2', estimasi : 100 },
+    { halte : 'GKU 1', estimasi : 100 },
+    { halte : 'Rektorat', estimasi : 100 },
+    { halte : 'Koica/GKU 3', estimasi : 100 },
+    { halte : 'GSG', estimasi : 100, },
+    { halte : 'Asrama', estimasi : 100 }
+  ]
+  
+  const markRoute2 = [
+    { halte : 'Gerbang Utama', estimasi : 100 },
+    { halte : 'Asrama', estimasi : 100 },
+    { halte : 'GSG', estimasi : 100 },
+    { halte : 'Koica/GKU 3', estimasi : 100 },
+    { halte : 'Rektorat', estimasi : 100 },
+    { halte : 'Kehutanan', estimasi : 100 },
+  ]
 
-    
-    return () => clearInterval(interval); // Cleanup interval on unmount
-  }, [user]);
+  var nearestHalte = {
+    geocode : [-6.929788, 107.769033],
+    popUp : "GKU 2"
+  };
+  
+  let idx = 0;
+  let distance = turf.distance(turf.point([location.coordinates.lng, location.coordinates.lat]), turf.point([markers[0].geocode[1], markers[0].geocode[0]]), {units: 'meters'});
+  for (let i = 1; i < markers.length; i++) {
+    let temp = turf.distance(turf.point([location.coordinates.lng, location.coordinates.lat]), turf.point([markers[i].geocode[1], markers[i].geocode[0]]), {units: 'meters'});
+    if (temp < distance) {
+      distance = temp;
+      idx = i;
+    }
+  }
+  nearestHalte = markers[idx];
 
-  function calculateWaitingTime(bus : any) {
+  function calcualteWaitingTime(bus : any) {
     var start = 0;
     var end = 0;
     var waitingTime = 0;
@@ -331,39 +291,85 @@ const Map = () => {
       }
     }
 
-    // Hitung kecepatan dan arah menggunakan Turf.js
-    waitingTime = waitingTime + Math.round(turf.distance(turf.point([bus.coordinates.lng, bus.coordinates.lat]), turf.point([nearestHalte.geocode[1], nearestHalte.geocode[0]]), {units: 'meters'}) / 1800);
+    const [positionHistory, setPositionHistory] = useState([] as any);
+
+    useEffect(() => {
+      const newPosition = {
+        latitude: bus.coordinates.lat,
+        longitude: bus.coordinates.lng,
+        timestamp: new Date().getTime(),
+      };
+
+      // Perbarui riwayat posisi
+      setPositionHistory((prevPositionHistory : any) => [...prevPositionHistory, newPosition]);
+    }, []);
+
+    // Fungsi untuk menghitung kecepatan dan arah
+    const calculateVehicleInfo = () => {
+      // Pastikan bahwa ada setidaknya dua posisi untuk menghitung kecepatan
+      if (positionHistory.length < 2) {
+        return;
+      }
+
+      const lastPosition = positionHistory[positionHistory.length - 2];
+      const currentPosition = positionHistory[positionHistory.length - 1];
+
+      // Hitung waktu yang dibutuhkan antara dua posisi
+      const timeElapsed = (currentPosition.timestamp - lastPosition.timestamp);
+
+      // Hitung kecepatan dan arah menggunakan Turf.js
+      const speed = turf.distance(turf.point([lastPosition.longitude, lastPosition.latitude]), turf.point([currentPosition.longitude, currentPosition.latitude]),{ units: 'meters' }) / (timeElapsed);
+      waitingTime = waitingTime + Math.round(turf.distance(turf.point([bus.coordinates.lng, bus.coordinates.lat]), turf.point([nearestHalte.geocode[1], nearestHalte.geocode[0]]), {units: 'meters'}) / (speed / 60));
+    }
+
+    useEffect(() => {
+      // Lakukan perhitungan kecepatan dan arah ketika ada perubahan pada posisi
+      calculateVehicleInfo();
+    }, [positionHistory]);
+
     return waitingTime;
   }
 
-  function calculateArrivingTime(waitingTime : number) {
+  function calcualteArrivingTime(waitingTime : number) {
+    const [arriveTime, setArriveTime] = useState('');
+  
     // Fungsi untuk memformat waktu menjadi format HH:mm:ss
-    const date = new Date();
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const formatTime = (date : any) => {
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
 
-    const arriveHours = Math.floor(waitingTime / 60);
-    const arriveMinutes = Math.floor(waitingTime % 60);
+      const arriveHours = Math.floor(waitingTime / 60);
+      const arriveMinutes = Math.floor(waitingTime % 60);
 
-    return `${hours + arriveHours}:${minutes + arriveMinutes}`;
+      if (hours + arriveHours < 24) {
+        return `${hours + arriveHours}:${minutes + arriveMinutes}`;
+      } else {
+        return `00:00`;
+      }
+    };
+    
+    // Fungsi untuk memperbarui waktu setiap detik
+    const updateTime = () => {
+      const currentDate = new Date();
+      const formattedTime = formatTime(currentDate);
+      setArriveTime(formattedTime);
+    };
+    updateTime();
+
+    return arriveTime;
   }
   
-  // Fetch nearest halte and arriving time
-  var nearestHalte = {
-    geocode : [-6.929788, 107.769033],
-    popUp : "GKU 2"
-  };
-  
-  let idx = 0;
-  let distance = turf.distance(turf.point([location.coordinates.lng, location.coordinates.lat]), turf.point([markers[0].geocode[1], markers[0].geocode[0]]), {units: 'meters'});
-  for (let i = 1; i < markers.length; i++) {
-    let temp = turf.distance(turf.point([location.coordinates.lng, location.coordinates.lat]), turf.point([markers[i].geocode[1], markers[i].geocode[0]]), {units: 'meters'});
-    if (temp < distance) {
-      distance = temp;
-      idx = i;
-    }
-  }
-  nearestHalte = markers[idx];
+  useEffect(() => {
+    // Fetch location initially
+    const interval = setInterval(() => {
+      fetchContents();
+      fetchLocation();
+    }, 1000);
+
+    
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, [user]);
+
 
   const [isLoginWarningOpen, setIsLoginWarningOpen] = useState(false);
   const [isButtonClicked, setButtonClicked] = useState(false);
@@ -372,7 +378,6 @@ const Map = () => {
       setIsProfilePopUpOpen(false);
     }
     setButtonClicked(!isButtonClicked);
-    console.log(bus[0])
 
     if (user === "") {
       handleOpenLoginWarning();
@@ -440,7 +445,7 @@ const Map = () => {
           </div>
 
           <TileLayer
-            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png"
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
 
@@ -450,13 +455,11 @@ const Map = () => {
             </Popup>
           </Marker>
 
-          { (bus[0]?.coordinates) &&  (
-            <Marker position={bus[0].coordinates} icon={iconBus}>
-              <Popup>
-                Bus Location
-              </Popup>
-            </Marker>
-          )}
+          <Marker position={bus.coordinates} icon={iconBus}>
+            <Popup>
+              Bus Location
+            </Popup>
+          </Marker>
 
           {markers.map((marker, index) => (
             <Marker key={`marker-${index}`} position={marker.geocode as LatLngTuple} icon={halteIcon}>
