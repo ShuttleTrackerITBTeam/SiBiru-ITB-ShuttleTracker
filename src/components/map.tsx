@@ -303,7 +303,7 @@ const Map = () => {
 
     
     return () => clearInterval(interval); // Cleanup interval on unmount
-  }, [user]);
+  }, [user, fetchContents, fetchLocation]);
 
   function calculateWaitingTime(bus : any) {
     var start = 0;

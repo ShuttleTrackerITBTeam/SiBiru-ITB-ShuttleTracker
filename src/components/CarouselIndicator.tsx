@@ -18,9 +18,8 @@ export default function CarouselIndicator({
     <div className="carousel-indicator">
       {Array.from(Array(maxIndicator), (_, index) => {
         return (
-            <div>
+            <div key={index}>
                 <div
-                  key={index}
                   className={`carousel-indicator-dots
                   ${activeIndex === index ? 'w-4 opacity-100' : 'w-2 bg-gray-400'}`}
                 ></div>
