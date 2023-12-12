@@ -14,13 +14,13 @@ const RouteMap: React.FC<RouteMapProps> = ({ show, setShow }) => {
                 <div className = "fixed top-20 w-screen flex justify-end z-[401]">
                     <button onClick={() => setShow(true)}>
                         <div 
-                        className = "bg-white w-8 h-8 rounded-full mr-3 flex items-center justify-center"
+                        className = "bg-white w-10 h-10 rounded-full mr-3 flex items-center justify-center"
                         style={{ boxShadow: '0px 5px 5px rgba(0, 0, 0, 0.25)' }}>
                             <Image
                                 src = "/images/iconRouteMap.svg"
                                 alt = "route-map"
-                                width = {20}
-                                height = {20}
+                                width = {24}
+                                height = {24}
                                 style = {{ cursor: 'pointer' }}
                             />
                         </div>
@@ -41,8 +41,8 @@ const RouteMap: React.FC<RouteMapProps> = ({ show, setShow }) => {
                                         <Image
                                             src = "/images/closeBusPanel.svg"
                                             alt = "close-button"
-                                            width = {32}
-                                            height = {32}
+                                            width = {48}
+                                            height = {48}
                                             style = {{ cursor: 'pointer' }}
                                         />
                                     </button>
