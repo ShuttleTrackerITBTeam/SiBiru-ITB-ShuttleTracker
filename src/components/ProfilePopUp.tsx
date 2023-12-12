@@ -1,6 +1,8 @@
 import { useAuth } from '@src/services/AuthContext';
+import { usePages } from '@src/services/PagesContext';
 import Image from 'next/image';
 import Router from 'next/router';
+import Link from 'next/link';
 
 interface ProfilePopUpProps {
   setIsProfilePopUpOpen: (isOpen: boolean) => void;
@@ -8,6 +10,7 @@ interface ProfilePopUpProps {
 
 const ProfilePopUp: React.FC<ProfilePopUpProps> = ({ setIsProfilePopUpOpen }) => {
   const { user, setShowLoginPopUp } = useAuth()
+  const { toggleShowAboutUs } = usePages();
 
   const handleLoginClick = () => {
     setShowLoginPopUp(true);
@@ -33,7 +36,13 @@ const ProfilePopUp: React.FC<ProfilePopUpProps> = ({ setIsProfilePopUpOpen }) =>
           <div className='flex flex-col'>
             <p className='text-[12px] font-medium'>Hello, Guest!</p>
             <p className='text-[10px]'>Welcome to <span className='text-[#0078C9]'>Shuttle<span className='text-[#002582]'>Tracker</span></span></p>
-            <button className='w-[128px] h-[39px] px-[20px] py-[10px] bg-[#004099] rounded-[20px] text-white mt-[11px] font-bold text-[14px]'>
+            <button 
+              className='w-[128px] h-[39px] px-[20px] py-[10px] bg-[#004099] rounded-[20px] text-white mt-[11px] font-bold text-[14px]'
+              onClick={() => {
+                toggleShowAboutUs();
+                setIsProfilePopUpOpen(false);
+              }}
+            >  
               <div className='flex justify-center gap-[9px] mt-[-1px]'>
                 About Us
               </div>

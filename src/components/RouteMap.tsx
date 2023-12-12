@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePages } from '@src/services/PagesContext';
 
-interface RouteMapProps {
-    show: boolean;
-    setShow: (show: boolean) => void;
-}
+const RouteMap = () => {
+    const { showMap, showRouteMap, toggleShowRouteMap, toggleShowMap } = usePages();
 
-const RouteMap: React.FC<RouteMapProps> = ({ show, setShow }) => {
     return (
         <div>
-            {!show && (
+            {showMap && (
                 <div className = "fixed top-20 w-screen flex justify-end z-[401]">
-                    <button onClick={() => setShow(true)}>
+                    <button onClick={toggleShowRouteMap}>
                         <div 
                         className = "bg-white w-10 h-10 rounded-full mr-3 flex items-center justify-center"
                         style={{ boxShadow: '0px 5px 5px rgba(0, 0, 0, 0.25)' }}>
@@ -27,7 +25,7 @@ const RouteMap: React.FC<RouteMapProps> = ({ show, setShow }) => {
                     </button>
                 </div>
             )}
-            {show && (
+            {showRouteMap && (
                 <div className = "h-screen w-screen flex items-center justify-center overflow-y-auto overflow-x-hidden">
                     <div className = "h-screen w-[328px]">
                         <div className = "flex flex-col justify-center items-center mt-20 font-open-sans">
@@ -37,7 +35,7 @@ const RouteMap: React.FC<RouteMapProps> = ({ show, setShow }) => {
                                     <h2 className = "text-center text-[18px] font-bold font-montserrat text-[#002582]">Shuttle Route Map</h2>
                                 </div>
                                 <div className = "px-3 z-10">
-                                    <button onClick={() => setShow(false)}>
+                                    <button onClick={toggleShowMap}>
                                         <Image
                                             src = "/images/closeBusPanel.svg"
                                             alt = "close-button"
