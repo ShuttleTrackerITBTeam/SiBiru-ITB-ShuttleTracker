@@ -10,6 +10,7 @@ import LoginWarning from './LoginWarning';
 
 interface Bus {
   loaded: boolean;
+  namaBus : string;
   coordinates: {
     lat: number;
     lng: number;
@@ -26,23 +27,23 @@ const Map = () => {
   const { showMap } = usePages();
   
   const markRoute1 = [
-    { halte : 'Gerbang Utama', estimasi : 200 },
-    { halte : 'Labtek 1B', estimasi : 200 },
-    { halte : 'GKU 2', estimasi : 100 },
-    { halte : 'GKU 1', estimasi : 100 },
-    { halte : 'Rektorat', estimasi : 100 },
-    { halte : 'Koica/GKU 3', estimasi : 100 },
-    { halte : 'GSG', estimasi : 100, },
-    { halte : 'Asrama', estimasi : 100 }
+    { halte : 'Gerbang Utama', geocode : [-6.933205, 107.768413], estimasi : 350 },
+    { halte : 'Labtek 1B', geocode : [-6.929396, 107.768557], estimasi : 250 },
+    { halte : 'GKU 2', geocode : [-6.929788, 107.769033], estimasi : 100 },
+    { halte : 'GKU 1', geocode : [-6.929119, 107.769818], estimasi : 190 },
+    { halte : 'Gedung Rektorat', geocode : [-6.927963, 107.770518], estimasi : 100 },
+    { halte : 'GKU 3 / Koica', geocode : [-6.927467, 107.770047], estimasi : 130 },
+    { halte : 'GSG', geocode : [-6.926586, 107.769261], estimasi : 130, },
+    { halte : 'Asrama', geocode : [-6.926399, 107.767933], estimasi : 370 }
   ]
   
   const markRoute2 = [
-    { halte : 'Gerbang Utama', estimasi : 100 },
-    { halte : 'Asrama', estimasi : 100 },
-    { halte : 'GSG', estimasi : 100 },
-    { halte : 'Koica/GKU 3', estimasi : 100 },
-    { halte : 'Rektorat', estimasi : 100 },
-    { halte : 'Kehutanan', estimasi : 100 },
+    { halte : 'Gerbang Utama', geocode : [-6.933205, 107.768413], estimasi : 100 },
+    { halte : 'Asrama', geocode : [-6.926399, 107.767933], estimasi : 100 },
+    { halte : 'GSG', geocode : [-6.926586, 107.769261], estimasi : 130 },
+    { halte : 'GKU 3 / Koica', geocode : [-6.927467, 107.770047], estimasi : 100 },
+    { halte : 'Gedung Rektorat', geocode : [-6.927963, 107.770518], estimasi : 250 },
+    { halte : 'Parkiran Kehutanan', geocode : [-6.931548, 107.770884], estimasi : 350 },
   ]
 
   const [location, setLocation] = useState({
@@ -261,39 +262,55 @@ const Map = () => {
       const newBus2 = [...bus2]; // Create a copy of the bus route 2 array
   
       for (let i = 0; i < length; i++) {
+        var mhs = 0;
+        if (rute2[`Bus${i + 1}`].countMhs <= 19) {
+          mhs = rute2[`Bus${i + 1}`].countMhs;
+        } else {
+          mhs = 19;
+        }
+
         newBus[i] = {
           loaded: true,
+          namaBus : rute1[`Bus${i + 1}`].namaBus,
           coordinates: {
             lat: rute1[`Bus${i + 1}`].latitude,
             lng: rute1[`Bus${i + 1}`].longitude,
           },
           halte: rute1[`Bus${i + 1}`].Terminal,
-          numberMhs: rute1[`Bus${i + 1}`].countMhs,
+          numberMhs: mhs,
           waitingTime: 0,
           arriveTime: '',
           error: null,
         }
   
-        const time = calculateWaitingTime(newBus[i]);
+        const time = calculateWaitingTime(newBus[i], 1, nearestHalte);
         newBus[i].waitingTime = time;
         newBus[i].arriveTime = calculateArrivingTime(time);
       }
 
       for (let i = 0; i < length2; i++) {
+        var mhs = 0;
+        if (rute2[`Bus${i + 1}`].countMhs <= 19) {
+          mhs = rute2[`Bus${i + 1}`].countMhs;
+        } else {
+          mhs = 19;
+        }
+
         newBus2[i] = {
           loaded: true,
+          namaBus : rute2[`Bus${i + 1}`].namaBus,
           coordinates: {
             lat: rute2[`Bus${i + 1}`].latitude,
             lng: rute2[`Bus${i + 1}`].longitude,
           },
           halte: rute2[`Bus${i + 1}`].Terminal,
-          numberMhs: rute2[`Bus${i + 1}`].countMhs,
+          numberMhs: mhs,
           waitingTime: 0,
           arriveTime: '',
           error: null,
         }
   
-        const time = calculateWaitingTime(newBus2[i]);
+        const time = calculateWaitingTime(newBus2[i], 2, nearestHalte);
         newBus2[i].waitingTime = time;
         newBus2[i].arriveTime = calculateArrivingTime(time);
       }
@@ -317,49 +334,64 @@ const Map = () => {
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, [user, fetchContents, fetchLocation]);
 
-  function calculateWaitingTime(bus : any) {
+  function calculateWaitingTime(bus : any, route : number, target : any) {
     var start = 0;
     var end = 0;
     var waitingTime = 0;
+    var markRoute;
 
-    for (let i = 0; i < markRoute1.length; i++) {
-      if (markRoute1[i].halte === nearestHalte.popUp) {
+    if (route === 1) {
+      markRoute = markRoute1;
+    } else {
+      markRoute = markRoute2;
+    }
+
+    for (let i = 0; i < markRoute.length; i++) {
+      if (markRoute[i].halte === target.popUp) {
         start = i - 1;
+        if (i <= 0) {
+          start = markRoute.length - 1;
+        }
         break;
       }
     }
 
-    for (let i = 0; i < markRoute2.length; i++) {
-      if (markRoute1[i].halte === bus.halte) {
+    for (let i = 0; i < markRoute.length; i++) {
+      if (markRoute[i].halte === bus.halte) {
         end = i;
         break;
       }
     }
 
     while (start !== end) {
-      waitingTime = waitingTime + markRoute1[start].estimasi;
-      start = start - 1;
+      waitingTime = waitingTime + markRoute[start].estimasi;
 
-      if (start === -1) {
-        start = markRoute1.length - 1;
+      if (start === 0) {
+        start = markRoute.length - 1;
+      } else {
+        start = start - 1;
       }
     }
 
     // Hitung kecepatan dan arah menggunakan Turf.js
-    waitingTime = waitingTime + Math.round(turf.distance(turf.point([bus.coordinates.lng, bus.coordinates.lat]), turf.point([nearestHalte.geocode[1], nearestHalte.geocode[0]]), {units: 'meters'}) / 1800);
-    return waitingTime;
+    waitingTime = waitingTime + Math.round(turf.distance(turf.point([bus.coordinates.lng, bus.coordinates.lat]), turf.point([markRoute[end].geocode[1], markRoute[end].geocode[0]]), {units: 'meters'}) / (30));
+    return Math.ceil(waitingTime / 60);
   }
 
   function calculateArrivingTime(waitingTime : number) {
     // Fungsi untuk memformat waktu menjadi format HH:mm:ss
     const date = new Date();
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
 
     const arriveHours = Math.floor(waitingTime / 60);
     const arriveMinutes = Math.floor(waitingTime % 60);
 
-    return `${hours + arriveHours}:${minutes + arriveMinutes}`;
+    if (minutes + arriveMinutes >= 60) {
+      return `${(hours + arriveHours + 1).toString().padStart(2, '0')}:${((minutes + arriveMinutes) % 60).toString().padStart(2, '0')}`;
+    }
+
+    return `${(hours + arriveHours).toString().padStart(2, '0')}:${(minutes + arriveMinutes).toString().padStart(2, '0')}`;
   }
   
   // Fetch nearest halte and arriving time
@@ -386,7 +418,6 @@ const Map = () => {
       setIsProfilePopUpOpen(false);
     }
     setButtonClicked(!isButtonClicked);
-    console.log(bus[0])
 
     if (user === "") {
       handleOpenLoginWarning();
@@ -445,73 +476,27 @@ const Map = () => {
                         <div className='w-[100%] flex justify-end'>
                           <Image src="/images/closeBusPanel.svg" alt='close-button' width={25} height={25} onClick={() => {handleButtonClick(); handleRouteButtonClick('')}} style={{ cursor: 'pointer' }}/>
                         </div>
-                        {/* <div className='flex border-b-[#0078C9] border-b-[3px] border-solid pb-1'>
-                          <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={50} height={50} />
-                          <div className='header-busPanel ml-1'>
-                            <p className='font-bold text-white'>Halte Terdekat</p>
-                            <p className='font-bold text-white text-2xl'>{nearestHalte['popUp']}</p>
-                          </div>
-                        </div> */}
                         <div className='flex justify-between border-b-[#0078C9] border-b-[3px] border-solid pb-1'>
-                          <div className='flex mb-4'>
+                          <div className='flex mb-4 mt-1'>
                             <Image className="ml-[5px]" src={'/images/busLocationPanel.svg'} alt="bus location" width={50} height={50} />
-                            <div className='header-busPanel ml-3'>
+                            <div className='flex flex-col relative w-full h-full header-busPanel ml-3'>
                               <p className='font-bold text-white'>Halte Terdekat</p>
                               <p className='font-bold text-white text-2xl'>{nearestHalte['popUp']}</p>
                             </div>
-                            <div className='flex flex-col md:flex-row justify-end items-end gap-2 mr-[14px]'>
-                              <button onClick={() => handleRouteButtonClick('Route1')} className={`flex items-center justify-center rounded-[20px] w-[100px] h-[20px] p-4 ${selectedRoute === 'Route1' ? 'bg-[#004099] text-white' : 'bg-[#0078C9] text-white'} `}>Red Route</button>
-                              <button onClick={() => handleRouteButtonClick('Route2')} className={`flex items-center justify-center rounded-[20px] w-[100px] h-[20px] p-4 ${selectedRoute === 'Route2' ? 'bg-[#004099] text-white' : 'bg-[#0078C9] text-white'} `}>Blue Route</button>
+                            <div className='flex flex-col relative w-fit h-full md:flex-row mt-[13.5px] gap-2'>
+                              <button onClick={() => handleRouteButtonClick('Route1')} className={`flex items-center justify-center rounded-[20px] w-[90px] h-7 p-[5px] text-xs font-bold ${selectedRoute === 'Route1' ? 'text-white border-solid border-white border-[1.5px]' : 'bg-[#000000]/10 text-[#000000]/30 border-solid border-[#000000]/10 border-[1.5px]'} `}>Red Route</button>
+                              <button onClick={() => handleRouteButtonClick('Route2')} className={`flex items-center justify-center rounded-[20px] w-[90px] h-7 p-[5px] text-xs font-bold ${selectedRoute === 'Route2' ? 'text-white border-solid border-white border-[1.5px]' : 'bg-[#000000]/10 text-[#000000]/30 border-solid border-[#000000]/10 border-[1.5px]'} `}>Blue Route</button>
                             </div>
                           </div>
-
                         </div>
-                        {/* <div className='flex mt-3 mb-3'>
-                          <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
-                          <div className='mt-1.5 ml-3'>
-                            <p className='font-extralight text-white text-xs'>Nama Bus</p>
-                            <p className='font-bold text-white text-xs'>{bus[0].numberMhs}/30 CAPACITY</p>
-                          </div>
-                          <div className=' bg-[#00409980] bg-opacity-50 h-fit absolute w-fit rounded-lg right-3 p-1.5'>
-                            <div className='flex items-center'>
-                              <p className='font-thin text-xs text-white mx-1.5'>Arriving in</p>
-                              <div className='inline-block mx-1.5'>
-                                <p className='font-extralight text-white text-center'>{bus[0].waitingTime} mins</p>
-                                <p className='font-extralight text-white text-center'>{bus[0].arriveTime}</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div> */}
-
-                        {/* <div>
-                          {bus.map((bus, index) => (
-                            <div key={index} className='flex mt-3 mb-3'>
-                              <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
-                              <div className='mt-1.5 ml-3'>
-                                <p className='font-extralight text-white text-xs'>Nama Bus</p>
-                                <p className='font-bold text-white text-xs'>{bus.numberMhs}/30 CAPACITY</p>
-                              </div>
-                              <div className=' bg-[#00409980] bg-opacity-50 h-fit absolute w-fit rounded-lg right-3 p-1.5'>
-                                <div className='flex items-center'>
-                                  <p className='font-thin text-xs text-white mx-1.5'>Arriving in</p>
-                                  <div className='inline-block mx-1.5'>
-                                    <p className='font-extralight text-white text-center'>{bus.waitingTime} mins</p>
-                                    <p className='font-extralight text-white text-center'>{bus.arriveTime}</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div> */}
-
                         {selectedRoute === 'Route1' && (
                           <div className='scroll-container'>
                             {bus.map((busItem, index) => (
                               <div key={index} className='relative flex mt-3 mb-3'>
                                 <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
                                 <div className='mt-1.5 ml-3'>
-                                  <p className='font-extralight text-white text-xs'>Nama Bus</p>
-                                  <p className='font-bold text-white text-xs'>{busItem.numberMhs}/30 CAPACITY</p>
+                                  <p className='font-extralight text-white text-xs'>{busItem.namaBus}</p>
+                                  <p className='font-bold text-white text-xs'>{busItem.numberMhs}/19 CAPACITY</p>
                                 </div>
                                 <div className=' bg-[#00409980] bg-opacity-50 h-fit absolute w-fit rounded-lg right-3 p-1.5'>
                                   <div className='flex items-center'>
@@ -533,8 +518,8 @@ const Map = () => {
                               <div key={index} className='relative flex mt-3 mb-3'>
                                 <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
                                 <div className='mt-1.5 ml-3'>
-                                  <p className='font-extralight text-white text-xs'>Nama Bus</p>
-                                  <p className='font-bold text-white text-xs'>{busItem.numberMhs}/30 CAPACITY</p>
+                                  <p className='font-extralight text-white text-xs'>{busItem.namaBus}</p>
+                                  <p className='font-bold text-white text-xs'>{busItem.numberMhs}/19 CAPACITY</p>
                                 </div>
                                 <div className=' bg-[#00409980] bg-opacity-50 h-fit absolute w-fit rounded-lg right-3 p-1.5'>
                                   <div className='flex items-center'>
@@ -566,22 +551,65 @@ const Map = () => {
               </Popup>
             </Marker>
 
-            { (bus[0]?.coordinates) &&  (
-              <Marker position={bus[0].coordinates} icon={iconBus}>
+            { bus.map((singleBus) =>  (
+              <Marker position={singleBus?.coordinates} icon={iconBus}>
                 <Popup>
-                  Bus Location
+                  {singleBus.namaBus}
                 </Popup>
-              </Marker>
-            )}
-
-            {markers.map((marker, index) => (
-              <Marker key={`marker-${index}`} position={marker.geocode as LatLngTuple} icon={halteIcon}>
-                <Popup>{marker.popUp}</Popup>
               </Marker>
             ))}
 
-            {/* <Polyline positions={latlngs} color="red" />
-            <Polyline positions={latlngs2} color="blue" /> */}
+            { bus2.map((singleBus) =>  (
+              <Marker position={singleBus?.coordinates} icon={iconBus}>
+                <Popup>
+                  {singleBus.namaBus}
+                </Popup>
+              </Marker>
+            ))}
+
+            {markers.map((marker, index) => (
+              <Marker key={`marker-${index}`} position={marker.geocode as LatLngTuple} icon={halteIcon}>
+                <Popup>
+                  { marker.popUp }
+                  { marker.popUp !== "Parkiran Kehutanan" && (bus.map((singleBus) =>  (
+                    <div>
+                      {singleBus.namaBus} arriving in {calculateWaitingTime(singleBus, 1, marker)} mins
+                    </div>
+                  )))}
+                  { marker.popUp === "Gerbang Utama" && (bus2.map((singleBus) =>  (
+                    <div>
+                      {singleBus.namaBus} arriving in {calculateWaitingTime(singleBus, 2, marker)} mins
+                    </div>
+                  )))}
+                  { marker.popUp === "Asrama" && (bus2.map((singleBus) =>  (
+                    <div>
+                      {singleBus.namaBus} arriving in {calculateWaitingTime(singleBus, 2, marker)} mins
+                    </div>
+                  )))}
+                  { marker.popUp === "GSG" && (bus2.map((singleBus) =>  (
+                    <div>
+                      {singleBus.namaBus} arriving in {calculateWaitingTime(singleBus, 2, marker)} mins
+                    </div>
+                  )))}
+                  { marker.popUp === "GKU 3 / Koica" && (bus2.map((singleBus) =>  (
+                    <div>
+                      {singleBus.namaBus} arriving in {calculateWaitingTime(singleBus, 2, marker)} mins
+                    </div>
+                  )))}
+                  { marker.popUp === "Gedung Rektorat" && (bus2.map((singleBus) =>  (
+                    <div>
+                      {singleBus.namaBus} arriving in {calculateWaitingTime(singleBus, 2, marker)} mins
+                    </div>
+                  )))}
+                  { marker.popUp === "Parkiran Kehutanan" && (bus2.map((singleBus) =>  (
+                    <div>
+                      {singleBus.namaBus} arriving in {calculateWaitingTime(singleBus, 2, marker)} mins
+                    </div>
+                  )))}
+                </Popup>
+              </Marker>
+            ))}
+
             {showRedLine && <Polyline positions={latlngs} color="red" />}
             {showBlueLine && <Polyline positions={latlngs2} color="blue" />}
           </MapContainer>
