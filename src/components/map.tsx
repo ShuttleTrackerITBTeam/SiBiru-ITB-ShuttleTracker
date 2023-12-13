@@ -551,16 +551,16 @@ const Map = () => {
               </Popup>
             </Marker>
 
-            { bus.map((singleBus) =>  (
-              <Marker position={singleBus?.coordinates} icon={iconBus}>
+            { bus.map((singleBus, index) =>  (
+              <Marker key={`marker-${index}`} position={singleBus?.coordinates} icon={iconBus}>
                 <Popup>
                   {singleBus.namaBus}
                 </Popup>
               </Marker>
             ))}
 
-            { bus2.map((singleBus) =>  (
-              <Marker position={singleBus?.coordinates} icon={iconBus}>
+            { bus2.map((singleBus, index) =>  (
+              <Marker key={`marker-${index}`} position={singleBus?.coordinates} icon={iconBus}>
                 <Popup>
                   {singleBus.namaBus}
                 </Popup>
@@ -571,38 +571,38 @@ const Map = () => {
               <Marker key={`marker-${index}`} position={marker.geocode as LatLngTuple} icon={halteIcon}>
                 <Popup>
                   { marker.popUp }
-                  { marker.popUp !== "Parkiran Kehutanan" && (bus.map((singleBus) =>  (
-                    <div>
+                  { marker.popUp !== "Parkiran Kehutanan" && (bus.map((singleBus, index) =>  (
+                    <div key={index}>
                       {singleBus.namaBus} arriving in {calculateWaitingTime(singleBus, 1, marker)} mins
                     </div>
                   )))}
-                  { marker.popUp === "Gerbang Utama" && (bus2.map((singleBus) =>  (
-                    <div>
+                  { marker.popUp === "Gerbang Utama" && (bus2.map((singleBus, index) =>  (
+                    <div key={index}>
                       {singleBus.namaBus} arriving in {calculateWaitingTime(singleBus, 2, marker)} mins
                     </div>
                   )))}
-                  { marker.popUp === "Asrama" && (bus2.map((singleBus) =>  (
-                    <div>
+                  { marker.popUp === "Asrama" && (bus2.map((singleBus, index) =>  (
+                    <div key={index}>
                       {singleBus.namaBus} arriving in {calculateWaitingTime(singleBus, 2, marker)} mins
                     </div>
                   )))}
-                  { marker.popUp === "GSG" && (bus2.map((singleBus) =>  (
-                    <div>
+                  { marker.popUp === "GSG" && (bus2.map((singleBus, index) =>  (
+                    <div key={index}>
                       {singleBus.namaBus} arriving in {calculateWaitingTime(singleBus, 2, marker)} mins
                     </div>
                   )))}
-                  { marker.popUp === "GKU 3 / Koica" && (bus2.map((singleBus) =>  (
-                    <div>
+                  { marker.popUp === "GKU 3 / Koica" && (bus2.map((singleBus, index) =>  (
+                    <div key={index}>
                       {singleBus.namaBus} arriving in {calculateWaitingTime(singleBus, 2, marker)} mins
                     </div>
                   )))}
-                  { marker.popUp === "Gedung Rektorat" && (bus2.map((singleBus) =>  (
-                    <div>
+                  { marker.popUp === "Gedung Rektorat" && (bus2.map((singleBus, index) =>  (
+                    <div key={index}>
                       {singleBus.namaBus} arriving in {calculateWaitingTime(singleBus, 2, marker)} mins
                     </div>
                   )))}
-                  { marker.popUp === "Parkiran Kehutanan" && (bus2.map((singleBus) =>  (
-                    <div>
+                  { marker.popUp === "Parkiran Kehutanan" && (bus2.map((singleBus, index) =>  (
+                    <div key={index}>
                       {singleBus.namaBus} arriving in {calculateWaitingTime(singleBus, 2, marker)} mins
                     </div>
                   )))}
