@@ -120,7 +120,7 @@ const StopPopUp: React.FC<StopPopUpProps> = ({ isButtonClicked, setIsButtonClick
                     busArray.map((busItem, subIndex) => (
                       <div key={`${index}-${subIndex}`} className='relative flex mt-3 mb-3'>
                         {busItem.namaBus === 'Bus Abu' ? (
-                          <Image className='mt-1 ml-3' src={'/images/redBus.svg'} alt="bus location" width={35} height={35}/>
+                          <Image className='mt-1 ml-3' src={'/images/greyBus.svg'} alt="bus location" width={35} height={35}/>
                         ) : (
                           <Image className='mt-1 ml-3' src={'/images/blueBus.svg'} alt="bus location" width={35} height={35}/>
                         )}
