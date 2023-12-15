@@ -10,29 +10,11 @@ import AboutUs from '@src/components/AboutUs';
 import SplashScreen from "@src/components/SplashScreen";
 import { AuthProvider } from "@src/services/AuthContext";
 import { PagesProvider } from "@src/services/PagesContext";
+import { MapDetailsProvider } from "@src/services/MapDetailsContext";
 
-const Map = dynamic(() => import("@src/components/map"), { ssr: false });
+const Map = dynamic(() => import("@src/components/Map"), { ssr: false });
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const splashScreenLastShown = parseInt(localStorage.getItem('splashScreenLastShown') || '0');
-    const now = new Date().getTime();
-
-    if (!splashScreenLastShown || now - splashScreenLastShown > 3600000) { // 3600000 ms = 1 hour
-      setLoading(true);
-      localStorage.setItem('splashScreenLastShown', String(now));
-
-      const timer = setTimeout(() => {
-        setLoading(false);
-      }, 2000);
-
-      return () => clearTimeout(timer);
-    }
-  }, []);
-  
-
   return (
     <>
       <Head>
@@ -44,23 +26,24 @@ export default function Home() {
       <main>
         <AuthProvider>
           <PagesProvider>
-            <div className="relative">
-              <div>
-              {loading ? <SplashScreen  /> : (
-                <>
-                  <div>
-                    <Navbar />
-                    <LoginPopUp />
-                  </div>
-                  <Map />
-                  <RouteMap />
-                  <AboutUs />
-                  <Help />
-                  <Report />
-                </>
-              )}
+            <MapDetailsProvider>
+              <SplashScreen /> 
+              <div className="relative">
+                <div>
+                  <>
+                    <div>
+                      <Navbar />
+                      <LoginPopUp />
+                    </div>
+                    <Map />
+                    <RouteMap />
+                    <AboutUs />
+                    <Help />
+                    <Report />
+                  </>
+                </div>
               </div>
-            </div>
+            </MapDetailsProvider>
           </PagesProvider>
         </AuthProvider>
       </main>

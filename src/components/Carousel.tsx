@@ -27,7 +27,7 @@ export default function Carousel({ width, height, items }: CarouselProps) {
     <div className="carousel-container w-[384px] relative">
       {activeIndex > 0 && (
         <button
-          className="carousel-btn-switch-card absolute left-10"
+          className="carousel-btn-switch-card absolute left-20"
           onClick={handlePrevItemBtn}
         >
           <img src="/images/fotoProfileAbout/arrow_circle_left.svg" style={{ width: '40px', height: '40px' }} />
@@ -40,7 +40,7 @@ export default function Carousel({ width, height, items }: CarouselProps) {
       ))}
       {activeIndex < items.length - 1 && (
         <button
-          className="carousel-btn-switch-card absolute right-10"
+          className="carousel-btn-switch-card absolute right-20"
           onClick={handleNextItemBtn}
         >
           <img src="/images/fotoProfileAbout/arrow_circle_right.svg" style={{ width: '40px', height: '40px' }}/>

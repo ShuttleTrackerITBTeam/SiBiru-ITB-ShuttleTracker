@@ -42,11 +42,12 @@ const Navbar = () => {
                 )
               ) : (
                 <div>
-                  <Image src="/images/logo.svg" alt='logo' width={88} height={30} />
+                  <Image src="/images/logo.svg" alt='logo' width={88} height={80} />
                 </div>
               )}
             </button>
             <div className='flex items-center'>
+              
               <button onClick={handleProfileClick}>
                 <Image src="/images/profile.svg" alt='logo' width={33} height={33} />
               </button>

@@ -2,14 +2,16 @@ import React, { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePages } from '@src/services/PagesContext';
+import { useMapDetails } from '@src/services/MapDetailsContext';
 
 const RouteMap = () => {
     const { showMap, showRouteMap, toggleShowRouteMap, toggleShowMap } = usePages();
+    const { location, bus1, bus2 } = useMapDetails();
 
     return (
         <div>
-            {showMap && (
-                <div className = "fixed top-20 w-screen flex justify-end z-[400]">
+            {(showMap && location && bus1 && bus2) && (
+                <div className = "fixed top-20 right-0 flex justify-end z-[400]">
                     <button onClick={toggleShowRouteMap}>
                         <div 
                         className = "bg-white w-10 h-10 rounded-full mr-3 flex items-center justify-center"
@@ -47,14 +49,12 @@ const RouteMap = () => {
                                 </div>
                             </div>
                             <div className = "mx-[15px] mt-[20px] bg-[#005CB1] bg-opacity-[8%] rounded-lg flex items-center justify-center">
-                                <Link href = "/routeMap" className = "mx-auto mb-[1px]">
-                                    <Image
-                                        src = "/images/routeMap.svg"
-                                        alt = "route-map"
-                                        width = {300}
-                                        height = {200}
-                                    />
-                                </Link>
+                                <Image
+                                    src = "/images/routeMap.svg"
+                                    alt = "route-map"
+                                    width = {300}
+                                    height = {200}
+                                />
                             </div>
                             <div className ="flex flex-col items-center">
                                 <h3 className = "text-center text-[16px] font-bold font-montserrat text-[#002582] mt-[15px]">Jadwal Shuttle</h3>
