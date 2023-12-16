@@ -41,7 +41,7 @@ const AboutUs = () => {
 
 function software(){
     return(
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center pb-9">
             <img src="/images/fotoProfileAbout/aboutSoftware.png" className="h-24 mb-3" />
             <img src="/images/fotoProfileAbout/software.svg"/>
         </div>
@@ -50,7 +50,7 @@ function software(){
 
 function designer(){
     return(
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center pb-9">
             <img src="/images/fotoProfileAbout/aboutDesigner.png" className="h-24 mb-3" />
             <img src="/images/fotoProfileAbout/designer.svg"/>
         </div>
@@ -59,7 +59,7 @@ function designer(){
 
 function requirement(){
     return(
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center pb-9">
             <img src="/images/fotoProfileAbout/aboutRequirement.png" className="h-24 mb-3" />
             <div className="mt-[-21px] ml-[10px]">
               <img src="/images/fotoProfileAbout/requirement.svg"/>
@@ -70,7 +70,7 @@ function requirement(){
 
 function supervisor(){
     return(
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center pb-9">
             <img src="/images/fotoProfileAbout/aboutSupervisor.png" className="h-24 mb-3" />
             <img src="/images/fotoProfileAbout/supervisor.svg" className="h-59"/>
         </div>

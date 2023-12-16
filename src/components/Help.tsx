@@ -5,8 +5,8 @@ const Help = () => {
 
     return (
         showHelp && (
-            <div className="flex w-screen justify-center overflow-y-auto">
-                <div className='mt-14 w-full max-w-[468px] h-[100vh]'>
+            <div className="flex w-screen h-screen justify-center overflow-y-auto">
+                <div className='mt-14 w-full max-w-[468px]'>
                     <div className="container mx-auto bg-transparent px-[19px] pt-[27px]">
                         <div className="container mx-auto bg-[#005CB1] bg-opacity-[15%] rounded-lg">
                             <div className="container mx-auto bg-transparent">
@@ -43,7 +43,7 @@ const Help = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="mt-[30px] mx-[19px] font-open-sans">
+                    <div className="mt-[30px] mx-[19px] font-open-sans pb-5">
                         <h2 className="text-justify-left text-[14px] leading-[19.5px] font-bold text-[#0078C9] font-montserrat">Cara Mengakses Fitur Shuttle<span className="text-[#002582]">Tracker</span></h2>
                         <p className="mt-[8px] ml-[9px] text-justify-left text-[12px] leading-[19px] text-[#1E1E1E]">
                             Saat membuka <span className="font-bold text-[#0078C9] font-montserrat">Shuttle<span className="font-bold text-[#002582] font-montserrat">Tracker</span></span>, Anda dapat menemukan tombol sebagai berikut:
