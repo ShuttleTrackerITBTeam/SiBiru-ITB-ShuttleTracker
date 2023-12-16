@@ -3,11 +3,84 @@
 @tailwind utilities; /* Tailwind's utility classes, if any */
 
 .appBar{
-    box-shadow: 0px 5px 5px #b2b2b2;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
     z-index: 1000;
     border-radius: 0px 0px 10px 10px;
 }
 
 .logo{
     margin-right: 11px;
+}
+    
+/* @font-face {
+    font-family: "Montserrat";
+    src: url("../../public/fonts/Montserrat/Montserrat-VariableFont_wght.ttf");
+  } */
+
+@font-face {
+    font-family: "Open Sans";
+    src: url("../../public/fonts/Open_Sans/OpenSans-VariableFont_wdth\,wght.ttf");
+}
+
+@layer components {
+  .header-link-item {
+    @apply cursor-pointer text-xs font-medium opacity-75 transition duration-300 hover:opacity-100;
+  }
+
+  .carousel-btn-switch-card {
+    @apply absolute z-40 flex h-9 w-9 cursor-pointer items-center justify-center
+    text-2xl opacity-75 transition duration-300 hover:opacity-100 md:h-12 md:w-12;
+  }
+
+  .carousel-btn-switch-card-left {
+    @apply right-1/2 top-1/2 translate-x-[-200px] translate-y-[-50%] transform sm:translate-x-[-250px] md:translate-x-[-300px] lg:translate-x-[-350px];
+  }
+
+  .carousel-btn-switch-card-right {
+    @apply top-1/2 left-1/2 translate-x-[200px] translate-y-[-50%] transform sm:translate-x-[250px] md:translate-x-[300px] lg:translate-x-[350px];
+  }
+
+  .carousel-indicator {
+    @apply absolute left-1/2 -bottom-4 flex h-5 w-24 -translate-x-1/2 transform items-center justify-center space-x-1 md:-bottom-10;
+  }
+
+  .carousel-indicator-dots {
+    @apply h-2 w-2 rounded-full bg-white opacity-50  transition-all duration-500 hover:w-4 hover:opacity-100;
+  }
+
+  .carousel-container {
+    @apply relative h-full w-full sm:h-full md:h-full;
+    perspective: 0px;
+    transform-style: preserve-3d;
+  }
+
+  .carousel-item {
+    @apply absolute w-full cursor-pointer overflow-hidden rounded-3xl drop-shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 ease-in-out;
+  }
+}
+
+/* Add the scrollbar styling to your CSS */
+.scroll-container {
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+/* Styling for Webkit browsers (Chrome, Safari) */
+.scroll-container::-webkit-scrollbar {
+width: 12px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+background-color: black;
+border-radius: 6px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+background-color: transparent;
+}
+
+/* Styling for Firefox */
+.scroll-container {
+scrollbar-width: thin;
+scrollbar-color: black transparent;
 }
