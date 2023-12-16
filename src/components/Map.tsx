@@ -117,8 +117,8 @@ const Map = () => {
               </Marker>
             ))}
 
-            {showRedLine && <Polyline positions={latlngs} color="red" />}
             {showBlueLine && <Polyline positions={latlngs2} color="blue" />}
+            {showRedLine && <Polyline positions={latlngs} color="#575F6C" />}
           </MapContainer>
         </div>
       </div>
