@@ -281,15 +281,20 @@ export const MapDetailsProvider = ({ children }) => {
     if (selectedStop === null ) return [];
 
     let busses = [];
-    for (let i = 0; i < markRoute1.length; i++) {
-      if (markRoute1[i].halte === selectedStop?.popUp) {
-        busses.push(bus1);
+
+    if (showGreyLine) {
+      for (let i = 0; i < markRoute1.length; i++) {
+        if (markRoute1[i].halte === selectedStop?.popUp) {
+          busses.push(bus1);
+        }
       }
     }
 
-    for (let i = 0; i < markRoute2.length; i++) {
-      if (markRoute2[i].halte === selectedStop?.popUp) {
-        busses.push(bus2);
+    if (showBlueLine) {
+      for (let i = 0; i < markRoute2.length; i++) {
+        if (markRoute2[i].halte === selectedStop?.popUp) {
+          busses.push(bus2);
+        }
       }
     }
 

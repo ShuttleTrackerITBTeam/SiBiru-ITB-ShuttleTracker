@@ -91,21 +91,25 @@ const Map = () => {
               </Marker>
             )}
 
-            {bus1.map((singleBus: Bus, index: number) =>  (
-              <Marker key={`marker-${index}`} position={singleBus?.coordinates} icon={iconBus1}>
-                <Popup>
-                  {singleBus.namaBus}
-                </Popup>
-              </Marker>
-            ))}
+            { showGreyLine && (
+              bus1.map((singleBus: Bus, index: number) =>  (
+                <Marker key={`marker-${index}`} position={singleBus?.coordinates} icon={iconBus1}>
+                  <Popup>
+                    {singleBus.namaBus}
+                  </Popup>
+                </Marker>
+              ))
+            )}
 
-            {bus2.map((singleBus: Bus, index: number) =>  (
-              <Marker key={`marker-${index}`} position={singleBus?.coordinates} icon={iconBus2}>
-                <Popup>
-                  {singleBus.namaBus}
-                </Popup>
-              </Marker>
-            ))}
+            { showBlueLine && (
+              bus2.map((singleBus: Bus, index: number) =>  (
+                <Marker key={`marker-${index}`} position={singleBus?.coordinates} icon={iconBus2}>
+                  <Popup>
+                    {singleBus.namaBus}
+                  </Popup>
+                </Marker>
+              ))
+            )}
 
             {markers.map((marker: Stop, index: number) => (
               <Marker key={`marker-${index}`} position={marker.geoCode as LatLngTuple} icon={halteIcon} eventHandlers={{ click: () => handleMarkerClick(marker)}}>
