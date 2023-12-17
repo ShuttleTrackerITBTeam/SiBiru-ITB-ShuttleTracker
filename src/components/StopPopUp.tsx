@@ -106,7 +106,7 @@ const StopPopUp: React.FC<StopPopUpProps> = ({ isButtonClicked, setIsButtonClick
                   <div className='flex w-full'>
                     <Image className="ml-[5px]" src={'/images/busLocationPanel.svg'} alt="bus location" width={50} height={50} />
                     <div className='flex flex-col relative w-full h-full header-busPanel ml-3'>
-                      <p className='font-bold text-white'>Halte Terdekat</p>
+                      <p className='font-bold text-white'>Halte</p>
                       <p className='font-bold text-white text-2xl'>{selectedStop.popUp}</p>
                     </div>
                   </div>
