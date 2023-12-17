@@ -21,7 +21,7 @@ export default function Home() {
         <title>SiBiru ITB Shuttle Tracker</title>
         <meta name="description" content="Shuttle Tracker ITB" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="icon" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
         <AuthProvider>
