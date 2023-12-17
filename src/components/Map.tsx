@@ -29,7 +29,7 @@ interface Stop {
 const Map = () => {
   const { user } = useAuth();
   const { showMap } = usePages();
-  const { bus1, bus2, location, markers, route, route2, showRedLine, showBlueLine, setSelectedStop } = useMapDetails();
+  const { bus1, bus2, location, markers, route, route2, showGreyLine, showBlueLine, setSelectedStop } = useMapDetails();
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   
   const latlngs = route as unknown as LatLngExpression[][];
@@ -91,21 +91,25 @@ const Map = () => {
               </Marker>
             )}
 
-            {bus1.map((singleBus: Bus, index: number) =>  (
-              <Marker key={`marker-${index}`} position={singleBus?.coordinates} icon={iconBus1}>
-                <Popup>
-                  {singleBus.namaBus}
-                </Popup>
-              </Marker>
-            ))}
+            { showGreyLine && (
+              bus1.map((singleBus: Bus, index: number) =>  (
+                <Marker key={`marker-${index}`} position={singleBus?.coordinates} icon={iconBus1}>
+                  <Popup>
+                    {singleBus.namaBus}
+                  </Popup>
+                </Marker>
+              ))
+            )}
 
-            {bus2.map((singleBus: Bus, index: number) =>  (
-              <Marker key={`marker-${index}`} position={singleBus?.coordinates} icon={iconBus2}>
-                <Popup>
-                  {singleBus.namaBus}
-                </Popup>
-              </Marker>
-            ))}
+            { showBlueLine && (
+              bus2.map((singleBus: Bus, index: number) =>  (
+                <Marker key={`marker-${index}`} position={singleBus?.coordinates} icon={iconBus2}>
+                  <Popup>
+                    {singleBus.namaBus}
+                  </Popup>
+                </Marker>
+              ))
+            )}
 
             {markers.map((marker: Stop, index: number) => (
               <Marker key={`marker-${index}`} position={marker.geoCode as LatLngTuple} icon={halteIcon} eventHandlers={{ click: () => handleMarkerClick(marker)}}>
@@ -117,8 +121,8 @@ const Map = () => {
               </Marker>
             ))}
 
-            {showRedLine && <Polyline positions={latlngs} color="red" />}
             {showBlueLine && <Polyline positions={latlngs2} color="blue" />}
+            {showGreyLine && <Polyline positions={latlngs} color="#575F6C" />}
           </MapContainer>
         </div>
       </div>

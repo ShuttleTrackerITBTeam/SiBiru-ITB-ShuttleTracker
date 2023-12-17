@@ -31,7 +31,7 @@ const StopPopUp: React.FC<StopPopUpProps> = ({ isButtonClicked, setIsButtonClick
       location, markers,
       selectedStop, setSelectedStop,
       selectedRoute, setSelectedRoute,
-      setShowRedLine, setShowBlueLine,
+      setShowGreyLine, setShowBlueLine,
       getNearestStop, getBusses
     } = useMapDetails()
     const [isLoginWarningOpen, setIsLoginWarningOpen] = useState(false);
@@ -70,15 +70,15 @@ const StopPopUp: React.FC<StopPopUpProps> = ({ isButtonClicked, setIsButtonClick
     const handleRouteButtonClick = (route: string) => {
       setSelectedRoute(route);
       if (route === 'Route1') {
-        setShowRedLine(true);
+        setShowGreyLine(true);
         setShowBlueLine(false);
       } else if (route === 'Route2') {
-        setShowRedLine(false);
+        setShowGreyLine(false);
         setShowBlueLine(true);
       }
       else {
         setShowBlueLine(true);
-        setShowRedLine(true);
+        setShowGreyLine(true);
       }
     };
 
@@ -112,7 +112,7 @@ const StopPopUp: React.FC<StopPopUpProps> = ({ isButtonClicked, setIsButtonClick
                   </div>
                 </div>
                 <div className='flex flex-row justify-end w-full items-end gap-2 mr-[14px] border-b-[#0078C9] border-b-[3px] border-solid pb-3'>
-                  <button onClick={() => handleRouteButtonClick('Route1')} className={`flex items-center justify-center rounded-[20px] w-[50%] h-[20px] p-4 ${selectedRoute === 'Route1' ? 'bg-[#004099] text-white' : 'bg-[#0078C9] text-white'} `}>Red Route</button>
+                  <button onClick={() => handleRouteButtonClick('Route1')} className={`flex items-center justify-center rounded-[20px] w-[50%] h-[20px] p-4 ${selectedRoute === 'Route1' ? 'bg-[#004099] text-white' : 'bg-[#0078C9] text-white'} `}>Grey Route</button>
                   <button onClick={() => handleRouteButtonClick('Route2')} className={`flex items-center justify-center rounded-[20px] w-[50%] h-[20px] p-4 ${selectedRoute === 'Route2' ? 'bg-[#004099] text-white' : 'bg-[#0078C9] text-white'} `}>Blue Route</button>
                 </div>
                 <div>

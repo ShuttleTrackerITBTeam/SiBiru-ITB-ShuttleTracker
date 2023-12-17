@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { usePages } from '@src/services/PagesContext';
 import { useMapDetails } from '@src/services/MapDetailsContext';
 
 const RouteMap = () => {
     const { showMap, showRouteMap, toggleShowRouteMap, toggleShowMap } = usePages();
-    const { location, bus1, bus2 } = useMapDetails();
+    const { bus1, bus2 } = useMapDetails();
 
     return (
         <div>
-            {(showMap && location && bus1 && bus2) && (
-                <div className = "fixed top-20 right-0 flex justify-end z-[400]">
+            {(showMap && bus1 && bus2) && (
+                <div className = "fixed top-20 right-0 flex justify-end z-[401]">
                     <button onClick={toggleShowRouteMap}>
                         <div 
                         className = "bg-white w-10 h-10 rounded-full mr-3 flex items-center justify-center"
