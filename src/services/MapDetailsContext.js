@@ -13,7 +13,7 @@ export const MapDetailsProvider = ({ children }) => {
   const [selectedStop, setSelectedStop] = useState();
   const [selectedRoute, setSelectedRoute] = useState('');
   const [showBlueLine, setShowBlueLine] = useState(true);
-  const [showRedLine, setShowRedLine] = useState(true);
+  const [showGreyLine, setShowGreyLine] = useState(true);
 
   const markRoute1 = [
       { halte : 'Gerbang Utama', geoCode : [-6.933205, 107.768413], estimasi : 350 },
@@ -314,7 +314,7 @@ export const MapDetailsProvider = ({ children }) => {
         selectedStop, setSelectedStop,
         selectedRoute, setSelectedRoute,
         showBlueLine, setShowBlueLine,
-        showRedLine, setShowRedLine,
+        showGreyLine, setShowGreyLine,
         markRoute1, markRoute2,
         markers, route, route2, 
         fetchLocation, fetchContents,

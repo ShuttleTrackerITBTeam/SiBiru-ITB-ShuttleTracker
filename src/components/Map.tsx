@@ -29,7 +29,7 @@ interface Stop {
 const Map = () => {
   const { user } = useAuth();
   const { showMap } = usePages();
-  const { bus1, bus2, location, markers, route, route2, showRedLine, showBlueLine, setSelectedStop } = useMapDetails();
+  const { bus1, bus2, location, markers, route, route2, showGreyLine, showBlueLine, setSelectedStop } = useMapDetails();
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   
   const latlngs = route as unknown as LatLngExpression[][];
@@ -118,7 +118,7 @@ const Map = () => {
             ))}
 
             {showBlueLine && <Polyline positions={latlngs2} color="blue" />}
-            {showRedLine && <Polyline positions={latlngs} color="#575F6C" />}
+            {showGreyLine && <Polyline positions={latlngs} color="#575F6C" />}
           </MapContainer>
         </div>
       </div>
