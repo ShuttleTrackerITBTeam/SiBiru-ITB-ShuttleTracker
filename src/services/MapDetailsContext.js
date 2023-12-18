@@ -16,14 +16,14 @@ export const MapDetailsProvider = ({ children }) => {
   const [showGreyLine, setShowGreyLine] = useState(true);
 
   const markRoute1 = [
-      { halte : 'Gerbang Utama', geoCode : [-6.933205, 107.768413], estimasi : 350 },
-      { halte : 'Labtek 1B', geoCode : [-6.929396, 107.768557], estimasi : 250 },
+      { halte : 'Gerbang Utama', geoCode : [-6.933205, 107.768413], estimasi : 300 },
+      { halte : 'Labtek 1B', geoCode : [-6.929396, 107.768557], estimasi : 210 },
       { halte : 'GKU 2', geoCode : [-6.929788, 107.769033], estimasi : 100 },
-      { halte : 'GKU 1', geoCode : [-6.929119, 107.769818], estimasi : 190 },
+      { halte : 'GKU 1', geoCode : [-6.929119, 107.769818], estimasi : 170 },
       { halte : 'Gedung Rektorat', geoCode : [-6.927963, 107.770518], estimasi : 100 },
       { halte : 'GKU 3 / Koica', geoCode : [-6.927467, 107.770047], estimasi : 130 },
       { halte : 'GSG', geoCode : [-6.926586, 107.769261], estimasi : 130, },
-      { halte : 'Asrama', geoCode : [-6.926399, 107.767933], estimasi : 370 }
+      { halte : 'Asrama', geoCode : [-6.926399, 107.767933], estimasi : 300 }
   ]
       
   const markRoute2 = [
@@ -31,8 +31,8 @@ export const MapDetailsProvider = ({ children }) => {
       { halte : 'Asrama', geoCode : [-6.926399, 107.767933], estimasi : 100 },
       { halte : 'GSG', geoCode : [-6.926586, 107.769261], estimasi : 130 },
       { halte : 'GKU 3 / Koica', geoCode : [-6.927467, 107.770047], estimasi : 100 },
-      { halte : 'Gedung Rektorat', geoCode : [-6.927963, 107.770518], estimasi : 250 },
-      { halte : 'Parkiran Kehutanan', geoCode : [-6.931548, 107.770884], estimasi : 350 },
+      { halte : 'Gedung Rektorat', geoCode : [-6.927963, 107.770518], estimasi : 210 },
+      { halte : 'Parkiran Kehutanan', geoCode : [-6.931548, 107.770884], estimasi : 300 },
   ]
 
   const markers = [
@@ -250,7 +250,7 @@ export const MapDetailsProvider = ({ children }) => {
 
     for (let i = 0; i < markRoute.length; i++) {
       if (markRoute[i].halte === bus.halte) {
-        end = i;
+        end = i - 1;
         break;
       }
     }
@@ -276,6 +276,10 @@ export const MapDetailsProvider = ({ children }) => {
 
     const arriveHours = Math.floor(waitingTime / 60);
     const arriveMinutes = Math.floor(waitingTime % 60);
+
+    if (hours + arriveHours >= 24) {
+      return `--:--`;
+    }
 
     if (minutes + arriveMinutes >= 60) {
       return `${(hours + arriveHours + 1).toString().padStart(2, '0')}:${((minutes + arriveMinutes) % 60).toString().padStart(2, '0')}`;
