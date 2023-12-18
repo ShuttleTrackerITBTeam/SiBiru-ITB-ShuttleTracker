@@ -127,7 +127,7 @@ const StopPopUp: React.FC<StopPopUpProps> = ({ isButtonClicked, setIsButtonClick
                         <div className='mt-1.5 ml-3'>
                           <p className='font-extralight text-white text-xs'>{busItem.namaBus}</p>
                           <p className='font-bold text-white text-xs'>{busItem.numberMhs}/19 CAPACITY</p>
-                          <p className='font-extralight text-white text-xs flex'>is Going to <p className='font-bold ml-1'> {busItem.halte}</p></p>
+                          <p className='font-extralight text-white text-xs flex'>is Going to {busItem.halte}</p>
                         </div>
                         <div className=' bg-[#00409980] bg-opacity-50 h-fit absolute w-fit rounded-lg right-3 p-1.5'>
                           <div className='flex items-center'>
