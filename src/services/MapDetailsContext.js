@@ -158,8 +158,8 @@ export const MapDetailsProvider = ({ children }) => {
       const length1 = Object.keys(rute1).length;
       const length2 = Object.keys(rute2).length;
   
-      const newBus = getBus(bus1, rute1, length1);
-      const newBus2 = getBus(bus2, rute2, length2);
+      const newBus = getBus(bus1, rute1, length1, 1);
+      const newBus2 = getBus(bus2, rute2, length2, 2);
   
       setBus1(newBus)
       setBus2(newBus2);
@@ -168,7 +168,7 @@ export const MapDetailsProvider = ({ children }) => {
     }
   }
 
-  function getBus(bus, rute, length) {
+  function getBus(bus, rute, length, selectedRoute) {
     let newBus = [...bus];
 
     for (let i = 0; i < length; i++) {
@@ -194,10 +194,17 @@ export const MapDetailsProvider = ({ children }) => {
       }
 
       if (selectedStop) {
-        const waitingTime = calculateWaitingTime(newBus[i], 1, selectedStop);
-        const arriveTime = calculateArrivingTime(waitingTime);
-        newBus[i].waitingTime = waitingTime;
-        newBus[i].arriveTime = arriveTime;
+        if (selectedRoute === 1) {
+          const waitingTime = calculateWaitingTime(newBus[i], 1, selectedStop);
+          const arriveTime = calculateArrivingTime(waitingTime);
+          newBus[i].waitingTime = waitingTime;
+          newBus[i].arriveTime = arriveTime;
+        } else {
+          const waitingTime = calculateWaitingTime(newBus[i], 2, selectedStop);
+          const arriveTime = calculateArrivingTime(waitingTime);
+          newBus[i].waitingTime = waitingTime;
+          newBus[i].arriveTime = arriveTime;
+        }
       }
     }
 
