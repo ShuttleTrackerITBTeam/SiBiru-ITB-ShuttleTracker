@@ -75,7 +75,7 @@ const Map = () => {
     (showMap && bus1.length && bus2.length) && (
       <div className='h-screen flex items-center justify-center'>
         <div className='h-full w-full md:w-[100%]'>
-          <MapContainer className='relative' center={CenterPoint} zoom={16} zoomControl={false} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
+          <MapContainer className='relative' center={CenterPoint} zoom={16} zoomControl={false} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
             <StopPopUp isButtonClicked={isButtonClicked} setIsButtonClicked={setIsButtonClicked} />
 
             <TileLayer
