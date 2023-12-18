@@ -17,13 +17,13 @@ export const MapDetailsProvider = ({ children }) => {
 
   const markRoute1 = [
       { halte : 'Gerbang Utama', geoCode : [-6.933205, 107.768413], estimasi : 300 },
-      { halte : 'Labtek 1B', geoCode : [-6.929396, 107.768557], estimasi : 210 },
+      { halte : 'Labtek 1B', geoCode : [-6.929396, 107.768557], estimasi : 150 },
       { halte : 'GKU 2', geoCode : [-6.929788, 107.769033], estimasi : 100 },
-      { halte : 'GKU 1', geoCode : [-6.929119, 107.769818], estimasi : 170 },
+      { halte : 'GKU 1', geoCode : [-6.929119, 107.769818], estimasi : 210 },
       { halte : 'Gedung Rektorat', geoCode : [-6.927963, 107.770518], estimasi : 100 },
       { halte : 'GKU 3 / Koica', geoCode : [-6.927467, 107.770047], estimasi : 130 },
       { halte : 'GSG', geoCode : [-6.926586, 107.769261], estimasi : 130, },
-      { halte : 'Asrama', geoCode : [-6.926399, 107.767933], estimasi : 300 }
+      { halte : 'Asrama', geoCode : [-6.926399, 107.767933], estimasi : 300 },
   ]
       
   const markRoute2 = [
