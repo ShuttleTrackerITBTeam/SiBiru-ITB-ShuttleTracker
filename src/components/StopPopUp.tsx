@@ -32,7 +32,8 @@ const StopPopUp: React.FC<StopPopUpProps> = ({ isButtonClicked, setIsButtonClick
       selectedStop, setSelectedStop,
       selectedRoute, setSelectedRoute,
       setShowGreyLine, setShowBlueLine,
-      getNearestStop, getBusses
+      getNearestStop, getBusses,
+      getPreviousStop
     } = useMapDetails()
     const [isLoginWarningOpen, setIsLoginWarningOpen] = useState(false);
 
@@ -124,10 +125,10 @@ const StopPopUp: React.FC<StopPopUpProps> = ({ isButtonClicked, setIsButtonClick
                         ) : (
                           <Image className='mt-1 ml-3' src={'/images/blueBus.svg'} alt="bus location" width={35} height={35}/>
                         )}
-                        <div className='mt-1.5 ml-3'>
+                        <div className='ml-3'>
                           <p className='font-extralight text-white text-xs'>{busItem.namaBus}</p>
                           <p className='font-bold text-white text-xs'>{busItem.numberMhs}/19 CAPACITY</p>
-                          <p className='font-extralight text-white text-xs flex'>is Going to {busItem.halte}</p>
+                          <p className='font-extralight text-white text-[8px] sm:text-[11px]'>{getPreviousStop(busItem)} - {busItem.halte}</p>
                         </div>
                         <div className=' bg-[#00409980] bg-opacity-50 h-fit absolute w-fit rounded-lg right-3 p-1.5'>
                           <div className='flex items-center'>

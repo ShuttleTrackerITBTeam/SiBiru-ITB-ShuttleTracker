@@ -18,11 +18,11 @@ export const MapDetailsProvider = ({ children }) => {
   const markRoute1 = [
       { halte : 'Gerbang Utama', geoCode : [-6.933205, 107.768413], estimasi : 300 },
       { halte : 'Labtek 1B', geoCode : [-6.929396, 107.768557], estimasi : 210 },
-      { halte : 'GKU 2', geoCode : [-6.929788, 107.769033], estimasi : 100 }, // end
-      { halte : 'GKU 1', geoCode : [-6.929119, 107.769818], estimasi : 170 }, // start
-      { halte : 'Gedung Rektorat', geoCode : [-6.927963, 107.770518], estimasi : 100 },
+      { halte : 'GKU 2', geoCode : [-6.929788, 107.769033], estimasi : 100 },
+      { halte : 'GKU 1', geoCode : [-6.929119, 107.769818], estimasi : 170 },
+      { halte : 'Rektorat', geoCode : [-6.927963, 107.770518], estimasi : 100 },
       { halte : 'GKU 3 / Koica', geoCode : [-6.927467, 107.770047], estimasi : 130 },
-      { halte : 'GSG', geoCode : [-6.926586, 107.769261], estimasi : 130 },
+      { halte : 'GSG', geoCode : [-6.926586, 107.769261], estimasi : 130, },
       { halte : 'Asrama', geoCode : [-6.926399, 107.767933], estimasi : 300 }
   ]
       
@@ -31,7 +31,7 @@ export const MapDetailsProvider = ({ children }) => {
       { halte : 'Asrama', geoCode : [-6.926399, 107.767933], estimasi : 100 },
       { halte : 'GSG', geoCode : [-6.926586, 107.769261], estimasi : 130 },
       { halte : 'GKU 3 / Koica', geoCode : [-6.927467, 107.770047], estimasi : 100 },
-      { halte : 'Gedung Rektorat', geoCode : [-6.927963, 107.770518], estimasi : 210 },
+      { halte : 'Rektorat', geoCode : [-6.927963, 107.770518], estimasi : 210 },
       { halte : 'Parkiran Kehutanan', geoCode : [-6.931548, 107.770884], estimasi : 300 },
   ]
 
@@ -50,7 +50,7 @@ export const MapDetailsProvider = ({ children }) => {
       },
       {
         geoCode : [-6.927963, 107.770518],
-        popUp : "Gedung Rektorat"
+        popUp : "Rektorat"
       },
       {
         geoCode : [-6.927467, 107.770047],
@@ -157,16 +157,12 @@ export const MapDetailsProvider = ({ children }) => {
       
       const length1 = Object.keys(rute1).length;
       const length2 = Object.keys(rute2).length;
-
-      // console.log('sebelum', bus1)
   
       const newBus = getBus(bus1, rute1, length1, 1);
-      // const newBus2 = getBus(bus2, rute2, length2, 2);
+      const newBus2 = getBus(bus2, rute2, length2, 2);
   
       setBus1(newBus)
-      // setBus2(newBus2);
-
-      // console.log('setelah', newBus)
+      setBus2(newBus2);
     } catch (err) {
       console.log(err)
     }
@@ -185,6 +181,7 @@ export const MapDetailsProvider = ({ children }) => {
 
       newBus[i] = {
         loaded: true,
+        rute: selectedRoute,
         namaBus : rute[`Bus${i + 1}`].namaBus,
         coordinates: {
           lat: rute[`Bus${i + 1}`].latitude,
@@ -234,72 +231,38 @@ export const MapDetailsProvider = ({ children }) => {
     var start = 0;
     var end = 0;
     var waitingTime = 0;
+    var formattedHalte = bus.halte.slice(0, -1);
     var markRoute;
 
-    if (route === 1) {
-      markRoute = markRoute1;
-    } else {
-      markRoute = markRoute2;
-    }
+    if (route === 1) markRoute = markRoute1;
+    if (route === 2) markRoute = markRoute2;
 
     for (let i = 0; i < markRoute.length; i++) {
       if (markRoute[i].halte === target.popUp) {
+        start = i - 1;
+        if (i <= 0) {
+          start = markRoute.length - 1;
+        }
+        break;
+      }
+    }
+
+    for (let i = 0; i < markRoute.length; i++) {
+      if (markRoute[i].halte === formattedHalte) {
         end = i;
         break;
       }
     }
 
-    if (route === 1) {
-      // "Gerbang Utama", "Labtek 1B", "GKU 2","GKU 1","Rektorat","Koica/GKU 3","GSG","Asrama"
-      if (bus.halte === "Gerbang Utama ") {
-        start = 0;
-      }
-      else if (bus.halte === "Labtek 1B ") {
-        start = 1
-      }
-      else if (bus.halte === "GKU 2 ") {
-        start = 2
-      }
-      else if (bus.halte === "GKU 1 ") {
-        start = 3;
-      }
-      else if (bus.halte === "Rektorat ") {
-        start = 4;
-      }
-      else if (bus.halte === "Koica/GKU 3 ") {
-        start = 5;
-      }
-      else if (bus.halte === "GSG ") {
-        start = 6;
-      }
-      else if (bus.halte === "Asrama ") {
-        start = 7;
-      }
-    }
-
-    // for (let i = 0; i < markRoute.length; i++) {
-      // if (markRoute[i].halte === bus.halte) {
-      //   start = i;
-      //   if (i < 0) {
-      //     start = markRoute.length - 1;
-      //   }
-      //   break;
-      // }
-    // }
-
     while (start !== end) {
-      
-      if (end <= 0) {
-        end = markRoute.length - 1;
-      }
-      else {
-        end = end - 1;
-      }
-      
-      waitingTime = waitingTime + markRoute[end].estimasi;
-    }
+      waitingTime = waitingTime + markRoute[start].estimasi;
 
-    console.log({'markRoute': markRoute, 'bus': bus, 'waitingTime': waitingTime, 'end': markRoute[end], 'start': markRoute[start]})
+      if (start === 0) {
+        start = markRoute.length - 1;
+      } else {
+        start = start - 1;
+      }
+    }
 
     waitingTime = waitingTime + Math.round(turf.distance(turf.point([bus.coordinates.lng, bus.coordinates.lat]), turf.point([markRoute[end].geoCode[1], markRoute[end].geoCode[0]]), {units: 'meters'}) / (30));
     return Math.ceil(waitingTime / 60);
@@ -348,6 +311,27 @@ export const MapDetailsProvider = ({ children }) => {
     return busses;
   }
 
+  function getPreviousStop(bus) {
+    var previousStop = '';
+    var formattedHalte = bus.halte.slice(0, -1);
+    var markRoute;
+    if (bus.rute === 1) markRoute = markRoute1;
+    if (bus.rute === 2) markRoute = markRoute2;
+
+    for (let i = 0; i < markRoute.length; i++) {
+      if (markRoute[i].halte === formattedHalte) {
+        if (i === 0) {
+          previousStop = markRoute[markRoute.length - 1].halte;
+        } else {
+          previousStop = markRoute[i - 1].halte;
+        }
+        break;
+      }
+    }
+
+    return previousStop;
+  }
+
   useEffect(() => {
     const interval = setInterval(() => {
       fetchContents();
@@ -371,7 +355,8 @@ export const MapDetailsProvider = ({ children }) => {
         markers, route, route2, 
         fetchLocation, fetchContents,
         getNearestStop, calculateWaitingTime, 
-        calculateArrivingTime, getBusses 
+        calculateArrivingTime, getBusses,
+        getPreviousStop
       }}
     >
       {children}
