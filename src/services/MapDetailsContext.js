@@ -6,6 +6,8 @@ import { useDatabase } from "@src/services/Firebase";
 const MapDetailsContext = createContext();
 
 export const MapDetailsProvider = ({ children }) => {
+  const database = useDatabase();
+
   const [location, setLocation] = useState();
   const [shuttles, setShuttles] = useState([]);
   const [filteredShuttles, setFilteredShuttles] = useState([]);
@@ -145,8 +147,8 @@ export const MapDetailsProvider = ({ children }) => {
   };
 
   const fetchContents = async () => {
-    const dbShuttleDataRef = ref(useDatabase(), 'shuttleData');
-    const dbActiveShuttleRef = ref(useDatabase(), 'activeShuttle');
+    const dbShuttleDataRef = ref(database, 'shuttleData');
+    const dbActiveShuttleRef = ref(database, 'activeShuttle');
     let shuttleDatas = {};
     let shuttleIDs = {};
     let activeShuttles = {};

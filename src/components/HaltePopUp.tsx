@@ -42,7 +42,7 @@ const HaltePopUp: React.FC<HaltePopUpProps> = ({ isButtonClicked, setIsButtonCli
       }
 
       fetchBusses();
-    }, [setFilteredShuttles, selectedHalte, shuttles, setSelectedHalte, isButtonClicked, setIsButtonClicked])
+    }, [setFilteredShuttles, getFilteredShuttles, selectedHalte, shuttles, setSelectedHalte, isButtonClicked, setIsButtonClicked])
 
     const handleButtonClick = () => {
       const nearestHalte = getNearestHalte(location, halteMarkers);
