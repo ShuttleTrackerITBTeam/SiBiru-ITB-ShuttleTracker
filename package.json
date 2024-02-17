@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@turf/turf": "^6.5.0",
-    "firebase": "^10.7.0",
+    "firebase": "^10.8.0",
     "gsap": "^3.12.2",
     "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",

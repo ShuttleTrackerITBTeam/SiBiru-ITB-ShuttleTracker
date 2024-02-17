@@ -1,15 +1,15 @@
 import React from 'react';
 import Image from 'next/image';
-import ProfilePopUp from './ProfilePopUp';
-import { useAuth } from '@src/services/AuthContext';
 import { usePages } from '@src/services/PagesContext';
 
 const Navbar = () => {
-  const { isProfilePopUpOpen, setIsProfilePopUpOpen } = useAuth()
-  const { showMap, showHelp, showAboutUs, showRouteMap, toggleShowMap, toggleShowHelp, toggleShowReport } = usePages();
+  const { 
+    showMap, showHelp, showAboutUs, showRouteMap, toggleShowMap, 
+    toggleShowHelp, toggleShowReport, toggleShowAboutUs
+  } = usePages();
 
   const handleProfileClick = () => {
-    setIsProfilePopUpOpen(!isProfilePopUpOpen);
+    toggleShowAboutUs();
   }
 
   return (
@@ -46,18 +46,12 @@ const Navbar = () => {
                 </div>
               )}
             </button>
-            <div className='flex items-center'>
-              
+            <div className='flex items-center mb-[1px]'>
               <button onClick={handleProfileClick}>
-                <Image src="/images/profile.svg" alt='logo' width={33} height={33} />
+                <Image src="/images/report.svg" style={{ transform: 'scaleY(-1)' }} alt='logo' width={28} height={28} />
               </button>
             </div>
           </div>
-          { isProfilePopUpOpen &&
-            <div>
-              <ProfilePopUp setIsProfilePopUpOpen={setIsProfilePopUpOpen} />
-            </div>
-          }
         </div>
       </nav>
     </>

@@ -1,12 +1,12 @@
 import React from 'react';
-import styles from './SplashScreen.module.css';
+import styles from '@src/styles/SplashScreen.module.css';
 import { useMapDetails } from '@src/services/MapDetailsContext';
 
 const SplashScreen: React.FC = () => {
-    const { bus1, bus2 } = useMapDetails();
+    const { shuttles } = useMapDetails();
 
-    return(
-        (!bus1.length) && (
+    return (
+        (!shuttles.length) && (
             <div className = "relative h-screen flex items-center justify-center z-[402] bg-white">
                 <div className = {"${styles['bg-custom']} h-full w-full md:w-[468px] flex items-center justify-center"}>
                     <div className="flex">

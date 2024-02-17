@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import Navbar from "@src/components/Navbar";
-import LoginPopUp from "@src/components/LoginPopUp";
-import Help from "@src/components/Help";
-import Report from "@src/components/Report";
-import RouteMap from "@src/components/RouteMap";
-import AboutUs from '@src/components/AboutUs';
-import SplashScreen from "@src/components/SplashScreen";
-import { AuthProvider } from "@src/services/AuthContext";
+import Help from "../src/pages/Help";
+import Report from "../src/pages/Report";
+import RouteMap from "../src/pages/RouteMap";
+import AboutUs from '../src/pages/AboutUs';
+import SplashScreen from "../src/pages/SplashScreen";
 import { PagesProvider } from "@src/services/PagesContext";
 import { MapDetailsProvider } from "@src/services/MapDetailsContext";
 
-const Map = dynamic(() => import("@src/components/Map"), { ssr: false });
+const Map = dynamic(() => import("../src/pages/Map"), { ssr: false });
 
 export default function Home() {
   return (
@@ -24,28 +22,25 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <AuthProvider>
-          <PagesProvider>
-            <MapDetailsProvider>
-              <SplashScreen /> 
-              <div className="relative">
-                <div>
-                  <>
-                    <div>
-                      <Navbar />
-                      <LoginPopUp />
-                    </div>
-                    <Map />
-                    <RouteMap />
-                    <AboutUs />
-                    <Help />
-                    <Report />
-                  </>
-                </div>
+        <PagesProvider>
+          <MapDetailsProvider>
+            <SplashScreen /> 
+            <div className="relative">
+              <div>
+                <>
+                  <div>
+                    <Navbar />
+                  </div>
+                  <Map />
+                  <RouteMap />
+                  <AboutUs />
+                  <Help />
+                  <Report />
+                </>
               </div>
-            </MapDetailsProvider>
-          </PagesProvider>
-        </AuthProvider>
+            </div>
+          </MapDetailsProvider>
+        </PagesProvider>
       </main>
     </>
   );
