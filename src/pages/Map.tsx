@@ -71,7 +71,7 @@ const Map = () => {
   }
 
   return (
-    (showMap && shuttles.length) && (
+    showMap && (
       <div className='h-screen flex items-center justify-center'>
         <div className='h-full w-full md:w-[100%]'>
           <MapContainer className='relative' center={CenterPoint} zoom={16} zoomControl={false} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>

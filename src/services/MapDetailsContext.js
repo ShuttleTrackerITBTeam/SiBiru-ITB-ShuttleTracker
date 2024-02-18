@@ -10,30 +10,29 @@ export const MapDetailsProvider = ({ children }) => {
 
   const [location, setLocation] = useState();
   const [shuttles, setShuttles] = useState([]);
-  const [filteredShuttles, setFilteredShuttles] = useState([]);
   const [selectedHalte, setSelectedHalte] = useState();
   const [selectedRoute, setSelectedRoute] = useState('');
   const [showBlueLine, setShowBlueLine] = useState(true);
   const [showGreyLine, setShowGreyLine] = useState(true);
 
   const blueRouteMarkers = [
-      { halte : 'Gerbang Utama', geoCode : [-6.933205, 107.768413], estimation : 300 },
-      { halte : 'Labtek 1B', geoCode : [-6.929396, 107.768557], estimation : 210 },
-      { halte : 'GKU 2', geoCode : [-6.929788, 107.769033], estimation : 100 },
-      { halte : 'GKU 1', geoCode : [-6.929119, 107.769818], estimation : 170 },
-      { halte : 'Rektorat', geoCode : [-6.927963, 107.770518], estimation : 100 },
-      { halte : 'GKU 3 / Koica', geoCode : [-6.927467, 107.770047], estimation : 130 },
-      { halte : 'GSG', geoCode : [-6.926586, 107.769261], estimation : 130, },
-      { halte : 'Asrama', geoCode : [-6.926399, 107.767933], estimation : 300 }
+      { halte : 'Gerbang Utama', geoCode : [-6.933205, 107.768413], nextHalteEstimate : 210 },
+      { halte : 'Labtek 1B', geoCode : [-6.929396, 107.768557], nextHalteEstimate : 100 },
+      { halte : 'GKU 2', geoCode : [-6.929788, 107.769033], nextHalteEstimate : 100 },
+      { halte : 'GKU 1', geoCode : [-6.929119, 107.769818], nextHalteEstimate : 130 },
+      { halte : 'Rektorat', geoCode : [-6.927963, 107.770518], nextHalteEstimate : 100 },
+      { halte : 'GKU 3 / Koica', geoCode : [-6.927467, 107.770047], nextHalteEstimate : 100 },
+      { halte : 'GSG', geoCode : [-6.926586, 107.769261], nextHalteEstimate : 130, },
+      { halte : 'Asrama', geoCode : [-6.926399, 107.767933], nextHalteEstimate : 300 }
   ]
       
   const greyRouteMarkers = [
-      { halte : 'Gerbang Utama', geoCode : [-6.933205, 107.768413], estimation : 100 },
-      { halte : 'Asrama', geoCode : [-6.926399, 107.767933], estimation : 100 },
-      { halte : 'GSG', geoCode : [-6.926586, 107.769261], estimation : 130 },
-      { halte : 'GKU 3 / Koica', geoCode : [-6.927467, 107.770047], estimation : 100 },
-      { halte : 'Rektorat', geoCode : [-6.927963, 107.770518], estimation : 210 },
-      { halte : 'Parkiran Kehutanan', geoCode : [-6.931548, 107.770884], estimation : 300 },
+      { halte : 'Gerbang Utama', geoCode : [-6.933205, 107.768413], nextHalteEstimate : 300 },
+      { halte : 'Asrama', geoCode : [-6.926399, 107.767933], nextHalteEstimate : 130 },
+      { halte : 'GSG', geoCode : [-6.926586, 107.769261], nextHalteEstimate : 100 },
+      { halte : 'GKU 3 / Koica', geoCode : [-6.927467, 107.770047], nextHalteEstimate : 100 },
+      { halte : 'Rektorat', geoCode : [-6.927963, 107.770518], nextHalteEstimate : 210 },
+      { halte : 'Parkiran Kehutanan', geoCode : [-6.931548, 107.770884], nextHalteEstimate : 300 },
   ]
 
   const halteMarkers = [
@@ -109,7 +108,7 @@ export const MapDetailsProvider = ({ children }) => {
     [-6.928785, 107.770305], [-6.929038, 107.770054]
   ]
 
-  const fetchLocation = () => {
+  const fetchLocation = async () => {
     const onSuccess = (location) => {
       setLocation({
         loaded: true,
@@ -146,7 +145,7 @@ export const MapDetailsProvider = ({ children }) => {
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
   };
 
-  const fetchContents = async () => {
+  const fetchShuttles = () => {
     const dbShuttleDataRef = ref(database, 'shuttleData');
     const dbActiveShuttleRef = ref(database, 'activeShuttle');
     let shuttleDatas = {};
@@ -173,28 +172,47 @@ export const MapDetailsProvider = ({ children }) => {
   function getShuttles(shuttles, shuttleDatas, shuttleIDs, activeShuttles) {
     let newShuttle = [...shuttles];
 
+    let j = 0;
     for (let i = 0; i < shuttleIDs.length; i++) {
-      newShuttle[i] = {
-        loaded: true,
-        id: shuttleIDs[i],
-        coordinates: {
-          lat: activeShuttles[shuttleIDs[i]].l[0],
-          lng: activeShuttles[shuttleIDs[i]].l[1],
-        },
-        halte: shuttleDatas[shuttleIDs[i]].halte,
-        countMhs: shuttleDatas[shuttleIDs[i]].countMhs,
-        route: shuttleDatas[shuttleIDs[i]].route,
-        waitingTime: 0,
-        arriveTime: '00:00',
-        error: null,
-      }
+      if (Object.keys(activeShuttles).includes(shuttleIDs[i])) {
+        newShuttle[j] = {
+          loaded: true,
+          id: shuttleIDs[i],
+          coordinates: {
+            lat: activeShuttles[shuttleIDs[i]].l[0],
+            lng: activeShuttles[shuttleIDs[i]].l[1],
+          },
+          halte: shuttleDatas[shuttleIDs[i]].halte,
+          countMhs: shuttleDatas[shuttleIDs[i]].countMhs,
+          route: shuttleDatas[shuttleIDs[i]].route,
+          waitingTime: 0,
+          arriveTime: '00:00',
+          error: null,
+        }
+  
+        if (selectedHalte) {
+          console.log("Selected Halte: " + selectedHalte.popUp);
+          const waitingTime = calculateWaitingTime(newShuttle[j], selectedHalte);
+          if (waitingTime === -1) {
+            newShuttle[j].waitingTime = 0;
+            newShuttle[j].arriveTime = '--:--';
+          }
+          else {
+            const arriveTime = calculateArrivingTime(waitingTime);
+            newShuttle[j].waitingTime = waitingTime;
+            newShuttle[j].arriveTime = arriveTime;
+          }
+        }
 
-      if (selectedHalte) {
-        const waitingTime = calculateWaitingTime(newShuttle[i], selectedHalte);
-        const arriveTime = calculateArrivingTime(waitingTime);
-        newShuttle[i].waitingTime = waitingTime;
-        newShuttle[i].arriveTime = arriveTime;
+        j++;
       }
+    }
+
+    if (selectedRoute === "Blue") {
+      newShuttle = newShuttle.filter(shuttle => shuttle.route === "Blue");
+    }
+    else if (selectedRoute === "Grey") {
+      newShuttle = newShuttle.filter(shuttle => shuttle.route === "Grey");
     }
 
     return newShuttle;
@@ -216,8 +234,8 @@ export const MapDetailsProvider = ({ children }) => {
   }
 
   function calculateWaitingTime(shuttle, halte) {
-    var start = 0;
-    var end = 0;
+    var start = -1;
+    var end = -1;
     var waitingTime = 0;
     var route;
 
@@ -226,6 +244,17 @@ export const MapDetailsProvider = ({ children }) => {
 
     for (let i = 0; i < route.length; i++) {
       if (route[i].halte === halte.popUp) {
+        end = i ;
+        break;
+      }
+    }
+
+    if (end === -1) {
+      return -1;
+    }
+
+    for (let i = 0; i < route.length; i++) {
+      if (route[i].halte === shuttle.halte) {
         start = i - 1;
         if (i <= 0) {
           start = route.length - 1;
@@ -234,20 +263,18 @@ export const MapDetailsProvider = ({ children }) => {
       }
     }
 
-    for (let i = 0; i < route.length; i++) {
-      if (route[i].halte === shuttle.halte) {
-        end = i;
-        break;
-      }
+    if (start === end) {
+      start = 0;
+      end = route.length - 1;
     }
 
     while (start !== end) {
-      waitingTime = waitingTime + route[start].estimation;
+      waitingTime = waitingTime + route[start].nextHalteEstimate;
 
-      if (start === 0) {
-        start = route.length - 1;
+      if (end === 0) {
+        end = route.length - 1;
       } else {
-        start = start - 1;
+        end = end - 1;
       }
     }
 
@@ -274,23 +301,6 @@ export const MapDetailsProvider = ({ children }) => {
     return `${(hours + arriveHours).toString().padStart(2, '0')}:${(minutes + arriveMinutes).toString().padStart(2, '0')}`;
   }
 
-  function getFilteredShuttles(selectedHalte, shuttles) {
-    if (selectedHalte === null ) return [];
-
-    let filteredShuttles = [];
-
-    for (let i = 0; i < shuttles.length; i++) {
-      if (showBlueLine && shuttles[i].route === "Blue") {
-        filteredShuttles.push(shuttles[i]);
-      }
-      if (showGreyLine && shuttles[i].route === "Grey") {
-        filteredShuttles.push(shuttles[i]);
-      }
-    }
-
-    return filteredShuttles;
-  }
-
   function getPreviousHalte(shuttle) {
     var previousStop = '';
     var route;
@@ -311,19 +321,24 @@ export const MapDetailsProvider = ({ children }) => {
     return previousStop;
   }
 
+  function getContents() {
+    fetchShuttles();
+    fetchLocation();
+  }
+
   useEffect(() => {
-    const interval = setInterval(() => {      
-      fetchContents();
-      fetchLocation();
+    getContents();
+
+    const interval = setInterval(() => {
+      getContents
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [fetchContents, fetchLocation, selectedHalte, setSelectedHalte, filteredShuttles]);
+  }, [selectedHalte, selectedRoute]);
   
   return (
     <MapDetailsContext.Provider value={{
         location, setLocation,
-        filteredShuttles, setFilteredShuttles,
         shuttles, setShuttles,
         selectedHalte, setSelectedHalte,
         selectedRoute, setSelectedRoute,
@@ -331,10 +346,9 @@ export const MapDetailsProvider = ({ children }) => {
         showGreyLine, setShowGreyLine,
         blueRouteMarkers, greyRouteMarkers,
         halteMarkers, blueRoute, greyRoute, 
-        fetchLocation, fetchContents,
+        fetchLocation, fetchShuttles,
         getNearestHalte, calculateWaitingTime, 
-        calculateArrivingTime, getFilteredShuttles,
-        getPreviousHalte
+        calculateArrivingTime, getPreviousHalte
       }}
     >
       {children}
