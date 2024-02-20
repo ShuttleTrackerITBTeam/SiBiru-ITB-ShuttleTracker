@@ -162,15 +162,15 @@ export const MapDetailsProvider = ({ children }) => {
         activeShuttles = activeShuttleSnapshot.val();
       }
 
-      let newShuttles = getShuttles(shuttles, shuttleDatas, shuttleIDs, activeShuttles);
+      let newShuttles = getShuttles(shuttleDatas, shuttleIDs, activeShuttles);
       setShuttles(newShuttles);
     }).catch((error) => {
       console.error(error);
     });
   }
 
-  function getShuttles(shuttles, shuttleDatas, shuttleIDs, activeShuttles) {
-    let newShuttle = [...shuttles];
+  function getShuttles(shuttleDatas, shuttleIDs, activeShuttles) {
+    let newShuttle = [];
 
     let j = 0;
     for (let i = 0; i < shuttleIDs.length; i++) {
@@ -191,7 +191,6 @@ export const MapDetailsProvider = ({ children }) => {
         }
   
         if (selectedHalte) {
-          console.log("Selected Halte: " + selectedHalte.popUp);
           const waitingTime = calculateWaitingTime(newShuttle[j], selectedHalte);
           if (waitingTime === -1) {
             newShuttle[j].waitingTime = 0;
@@ -330,7 +329,7 @@ export const MapDetailsProvider = ({ children }) => {
     getContents();
 
     const interval = setInterval(() => {
-      getContents
+      getContents();
     }, 3000);
 
     return () => clearInterval(interval);
