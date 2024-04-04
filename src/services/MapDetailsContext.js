@@ -21,7 +21,7 @@ export const MapDetailsProvider = ({ children }) => {
       { halte : 'GKU 2', geoCode : [-6.929788, 107.769033], nextHalteEstimate : 100 },
       { halte : 'GKU 1', geoCode : [-6.929119, 107.769818], nextHalteEstimate : 130 },
       { halte : 'Rektorat', geoCode : [-6.927963, 107.770518], nextHalteEstimate : 100 },
-      { halte : 'GKU 3 / Koica', geoCode : [-6.927467, 107.770047], nextHalteEstimate : 100 },
+      { halte : 'Koica / GKU 3', geoCode : [-6.927467, 107.770047], nextHalteEstimate : 100 },
       { halte : 'GSG', geoCode : [-6.926586, 107.769261], nextHalteEstimate : 130, },
       { halte : 'Asrama', geoCode : [-6.926399, 107.767933], nextHalteEstimate : 300 }
   ]
@@ -30,7 +30,7 @@ export const MapDetailsProvider = ({ children }) => {
       { halte : 'Gerbang Utama', geoCode : [-6.933205, 107.768413], nextHalteEstimate : 300 },
       { halte : 'Asrama', geoCode : [-6.926399, 107.767933], nextHalteEstimate : 130 },
       { halte : 'GSG', geoCode : [-6.926586, 107.769261], nextHalteEstimate : 100 },
-      { halte : 'GKU 3 / Koica', geoCode : [-6.927467, 107.770047], nextHalteEstimate : 100 },
+      { halte : 'Koica / GKU 3', geoCode : [-6.927467, 107.770047], nextHalteEstimate : 100 },
       { halte : 'Rektorat', geoCode : [-6.927963, 107.770518], nextHalteEstimate : 210 },
       { halte : 'Parkiran Kehutanan', geoCode : [-6.931548, 107.770884], nextHalteEstimate : 300 },
   ]
@@ -54,7 +54,7 @@ export const MapDetailsProvider = ({ children }) => {
       },
       {
         geoCode : [-6.927467, 107.770047],
-        popUp : "GKU 3 / Koica"
+        popUp : "Koica / GKU 3"
       },
       {
         geoCode : [-6.926586, 107.769261],
