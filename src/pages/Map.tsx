@@ -1,10 +1,10 @@
 import 'leaflet/dist/leaflet.css';
 import { useState } from 'react';
-import L, { LatLngExpression, LatLngTuple } from 'leaflet';
+import L, { LatLngTuple } from 'leaflet';
 import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
 import { usePages } from '@src/services/PagesContext';
 import { useMapDetails } from '@src/services/MapDetailsContext';
-import StopPopUp from '@src/components/HaltePopUp';
+import HaltePopUp from '@src/components/HaltePopUp';
 
 interface Shuttle {
   loaded: boolean;
@@ -22,22 +22,27 @@ interface Shuttle {
 }
 
 interface Halte {
+  halte: string;
   geoCode: number[];
-  popUp: string;
 }
 
 const Map = () => {
   const { showMap } = usePages();
-  const { shuttles, location, halteMarkers, blueRoute, greyRoute, showGreyLine, showBlueLine, setSelectedHalte } = useMapDetails();
+  const { 
+    shuttles, location, routeMarkers, route,
+    selectedHalte, setSelectedHalte
+  } = useMapDetails();
   const [isButtonClicked, setIsButtonClicked] = useState(false);
-  
-  const blueRouteLatLngs = blueRoute as unknown as LatLngExpression[][];
-  const greyRouteLatLngs = greyRoute as unknown as LatLngExpression[][];
 
   const iconHalte = L.icon({
-    iconUrl: "/images/halte.svg",
+    iconUrl: "/images/iconHalte.svg",
     iconSize: [30, 41],
   });
+
+  const iconHalteHighlighted = L.icon({
+    iconUrl: "/images/iconHalteHighlighted.svg",
+    iconSize: [30, 41],
+  })
 
   const CenterPoint = { lat: -6.930370, lng: 107.769550 };
   
@@ -75,7 +80,7 @@ const Map = () => {
       <div className='h-screen flex items-center justify-center'>
         <div className='h-full w-full md:w-[100%]'>
           <MapContainer className='relative' center={CenterPoint} zoom={16} zoomControl={false} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
-            <StopPopUp isButtonClicked={isButtonClicked} setIsButtonClicked={setIsButtonClicked} />
+            <HaltePopUp isButtonClicked={isButtonClicked} setIsButtonClicked={setIsButtonClicked} />
 
             <TileLayer
               url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png"
@@ -86,28 +91,22 @@ const Map = () => {
               <Marker position={location.coordinates} icon={iconUser}/>
             )}
 
-            { showBlueLine && (
-              shuttles.map((shuttle: Shuttle, index: number) =>  (
-                (shuttle.route === "Blue" &&
-                  <Marker key={`marker-${index}`} position={shuttle?.coordinates} icon={iconBlueBus} />
-                )
-              ))
-            )}
+            {shuttles.map((shuttle: Shuttle, index: number) =>  (
+              shuttle.route === "Blue" ?
+                <Marker key={`marker-${index}`} position={shuttle?.coordinates} icon={iconBlueBus} /> 
+                :
+                <Marker key={`marker-${index}`} position={shuttle?.coordinates} icon={iconGreyBus} />
+            ))}
 
-            { showGreyLine && (
-              shuttles.map((shuttle: Shuttle, index: number) =>  (
-                (shuttle.route === "Grey" &&
-                  <Marker key={`marker-${index}`} position={shuttle?.coordinates} icon={iconGreyBus} />
-                )
-              ))
-            )}
-
-            {halteMarkers.map((marker: Halte, index: number) => (
+            {routeMarkers.map((marker: Halte, index: number) => (
               <Marker key={`marker-${index}`} position={marker.geoCode as LatLngTuple} icon={iconHalte} eventHandlers={{ click: () => handleMarkerClick(marker)}}/>
             ))}
 
-            {showBlueLine && <Polyline positions={blueRouteLatLngs} color="blue" />}
-            {showGreyLine && <Polyline positions={greyRouteLatLngs} color="#575F6C" />}
+            {selectedHalte && (
+              <Marker position={selectedHalte.geoCode as LatLngTuple} icon={iconHalteHighlighted} />
+            )}
+
+            <Polyline positions={route} color="blue" />
           </MapContainer>
         </div>
       </div>

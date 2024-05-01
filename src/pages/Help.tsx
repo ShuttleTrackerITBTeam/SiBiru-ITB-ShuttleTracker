@@ -24,13 +24,13 @@ const Help = () => {
                                     </li>
                                     <li>
                                         <div className="container text-center font-bold text-[14px] text-[#005CB1]">
-                                            <img className="mx-auto mb-[14px]" src="images/iconShuttle.svg" alt="halte" width={38} height={38}/> 
+                                            <img className="mx-auto mb-[11px]" src="images/blueBus.svg" alt="halte" width={40} height={40}/> 
                                             <a href="#Shuttle">Shuttle</a>
                                         </div>
                                     </li>
                                     <li>
                                         <div className="container text-center font-bold text-[14px] text-[#005CB1]">
-                                            <img className="mx-auto mb-[14px]" src="images/iconUser.svg" alt="halte" width={38} height={38}/> 
+                                            <img className="mx-auto mb-[12px]" src="images/iconUser.svg" alt="halte" width={38} height={38}/> 
                                             <a href="#User">User</a>
                                         </div>
                                     </li>

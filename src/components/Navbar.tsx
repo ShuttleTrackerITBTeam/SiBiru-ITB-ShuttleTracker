@@ -4,7 +4,7 @@ import { usePages } from '@src/services/PagesContext';
 
 const Navbar = () => {
   const { 
-    showMap, showHelp, showAboutUs, showRouteMap, toggleShowMap, 
+    showMap, showHelp, showReport, showAboutUs, showRouteMap, toggleShowMap, 
     toggleShowHelp, toggleShowReport, toggleShowAboutUs
   } = usePages();
 
@@ -15,10 +15,10 @@ const Navbar = () => {
   return (
     <>
       <nav className='flex justify-center '>
-        <div className="w-full md:w-[100%] fixed bg-white appBar">
+        <div className="w-full md:w-[100%] h-[64px] fixed bg-white appBar">
           <div className="flex justify-between px-[14px] py-[15px] relative">
             <div className='flex items-center gap-2'>
-              {!showMap && !showRouteMap && !showAboutUs ? (
+              {!showMap && !showRouteMap ? (
                 <button className="absolute left-0 ml-[17px]" onClick={toggleShowMap}>
                   <img className=" rounded-full hover:brightness-110 hover:shadow-lg" src="images/back.svg" alt="back" width={27} height={27}/>
                 </button>
@@ -34,11 +34,13 @@ const Navbar = () => {
               )}
             </div>
             <button className='flex items-center ml-[-10px] logo' onClick={toggleShowMap}>
-              {!showMap && !showRouteMap && !showAboutUs ? (
-                showHelp ? (
-                  <p className="text-center ml-14 text-[14px] font-bold text-[#0078C9] font-montserrat leading-[16px]">Pusat <br/> Bantuan </p>
-                ) : (
-                  <p className="text-center ml-14 text-[14px] font-bold text-[#0078C9] font-montserrat leading-[16px]">Lapor </p>
+              {!showMap && !showRouteMap ? (
+                showHelp && (
+                  <p className="text-center mt-1 ml-14 text-[18px] font-bold text-[#0078C9] font-montserrat">Pusat Bantuan</p>
+                ) || showReport && (
+                  <p className="text-center mt-1 ml-14 text-[18px] font-bold text-[#0078C9] font-montserrat">Lapor</p>
+                ) || showAboutUs && (
+                  <p className="text-center mt-1 ml-14 text-[18px] font-bold text-[#0078C9] font-montserrat">About Us</p>
                 )
               ) : (
                 <div>
@@ -48,7 +50,7 @@ const Navbar = () => {
             </button>
             <div className='flex items-center mb-[1px]'>
               <button onClick={handleProfileClick}>
-                <Image src="/images/report.svg" style={{ transform: 'scaleY(-1)' }} alt='logo' width={28} height={28} />
+                <Image src="/images/info.svg" alt='more information' width={28} height={28} />
               </button>
             </div>
           </div>
