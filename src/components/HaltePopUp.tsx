@@ -45,8 +45,8 @@ const HaltePopUp: React.FC<HaltePopUpProps> = ({ isButtonClicked, setIsButtonCli
       <div className='justify-center w-full flex'>
         <button className='bg-gradient-to-b from-[#0078C9] to-[#005BBF] w-[256px] h-[46px] rounded-3xl' onClick={handleButtonClick}>
           <div className='flex justify-center items-center mt-[2px]'>
-            <Image src={'/images/busLocationPanel.svg'} alt="bus location" width={22} height={29} />
-            <p className='ml-2 text-[14px] font-bold text-white mt-[-3px]'>Tampilkan Halte Terdekat</p>
+            <Image src={'/images/iconHalteWhite.png'} alt="bus location" width={17} height={17} />
+            <p className='ml-3 text-[14px] font-bold text-white mt-[-3px]'>Tampilkan Halte Terdekat</p>
           </div>
         </button>
         {( isButtonClicked &&
@@ -57,7 +57,7 @@ const HaltePopUp: React.FC<HaltePopUpProps> = ({ isButtonClicked, setIsButtonCli
               </div>
               <div className='flex justify-between pb-2'>
                 <div className='flex w-full'>
-                  <Image className="ml-[5px]" src={'/images/busLocationPanel.svg'} alt="bus location" width={50} height={50} />
+                  <Image className="ml-[10px]" src={'/images/iconHalteWhite.png'} alt="bus location" width={37} height={30} />
                   <div className='flex flex-col relative w-full h-full header-busPanel ml-3'>
                     <p className='font-extralight text-white'>Halte</p>
                     <p className='font-bold text-white text-2xl'>{selectedHalte.halte}</p>

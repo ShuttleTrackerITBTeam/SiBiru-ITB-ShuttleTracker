@@ -18,19 +18,19 @@ const Help = () => {
                                 <ul className="flex px-[23.5px] py-[10.5px] justify-around font-montserrat">
                                     <li>
                                         <div className="container text-center font-bold text-[14px] text-[#005CB1]">
-                                            <img className="mx-auto mb-[1px]" src="images/iconHalte.svg" alt="halte" width={38} height={49}/> 
+                                            <img className="mx-auto mb-[11px]" src="images/iconHalte.png" alt="halte" width={27} height={27}/> 
                                             <a href="#Halte">Halte</a>
                                         </div>
                                     </li>
                                     <li>
                                         <div className="container text-center font-bold text-[14px] text-[#005CB1]">
-                                            <img className="mx-auto mb-[11px]" src="images/blueBus.svg" alt="halte" width={40} height={40}/> 
+                                            <img className="mx-auto mb-[12px]" src="images/blueBus.svg" alt="halte" width={38} height={38}/> 
                                             <a href="#Shuttle">Shuttle</a>
                                         </div>
                                     </li>
                                     <li>
                                         <div className="container text-center font-bold text-[14px] text-[#005CB1]">
-                                            <img className="mx-auto mb-[12px]" src="images/iconUser.svg" alt="halte" width={38} height={38}/> 
+                                            <img className="mx-auto mb-[12px]" src="images/iconUser.png" alt="halte" width={38} height={38}/> 
                                             <a href="#User">User</a>
                                         </div>
                                     </li>
@@ -54,15 +54,11 @@ const Help = () => {
                                 <p className="text-[#1E1E1E] text-[12px] leading-[19px]"><span className="font-bold text-[#0078C9]">Lapor</span>: Pilih tombol ini saat Anda ingin memberi laporan terkait shuttle</p>
                             </li>
                             <li className="flex justify-start mt-[10px]">
-                                <img className="ml-[2px] mr-[15px]" src="images/profile.svg" alt="Login" width={24} height={22.8}></img>
-                                <p className="text-[#1E1E1E] text-[12px] leading-[19px]"><span className="font-bold text-[#0078C9]">Login</span >: Pilih tombol ini untuk mengarahkan Anda melakukan login untuk mengakses semua fitur</p>
-                            </li>
-                            <li className="flex justify-start mt-[10px]">
-                                <img className="mr-[13px]" src="images/iconHalte.svg" alt="Halte" width={28} height={32}></img>
+                                <img className="mr-[13px]" src="images/iconHalte.png" alt="Halte" width={28} height={28}></img>
                                 <p className="text-[#1E1E1E] text-[12px] leading-[19px]"><span className="font-bold text-[#0078C9]">Nama Halte</span>: Pilih icon halte saat Anda ingin mengetahui nama dari halte tersebut</p>
                             </li>
                             <li className="flex justify-start mt-[10px]">
-                                <img className="mr-[13px]" src="images/iconHalteWhite.svg" alt="Halte" width={28} height={32}></img>
+                                <img className="mr-[8px] ml-[-4px]" src="images/iconHalteWhite.png" alt="Halte" width={36} height={28}></img>
                                 <p className="text-[#1E1E1E] text-[12px] leading-[19px]"><span className="font-bold text-[#0078C9]">Halte Terdekat</span> : Pilih tombol “Tampilkan Halte Terdekat” saat Anda ingin mengetahui halte dengan jarak terdekat dari Anda</p>
                             </li>
                         </ul>   

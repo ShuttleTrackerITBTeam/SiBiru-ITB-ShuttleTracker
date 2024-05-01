@@ -34,40 +34,31 @@ const Map = () => {
   } = useMapDetails();
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
+  const CenterPoint = { lat: -6.930370, lng: 107.769550 };
+
   const iconHalte = L.icon({
-    iconUrl: "/images/iconHalte.svg",
-    iconSize: [30, 41],
+    iconUrl: "/images/iconHalte.png",
+    iconSize: [20, 30],
   });
 
   const iconHalteHighlighted = L.icon({
-    iconUrl: "/images/iconHalteHighlighted.svg",
-    iconSize: [30, 41],
+    iconUrl: "/images/iconHalteHighlighted.png",
+    iconSize: [20, 30],
   })
-
-  const CenterPoint = { lat: -6.930370, lng: 107.769550 };
   
   const iconUser = L.icon({
-    iconUrl: "/images/iconUser.svg",
-    iconSize: [25, 41],
-    iconAnchor: [10, 41],
-    popupAnchor: [2, -40],
-    shadowSize: [41, 41]
+    iconUrl: "/images/iconUser.png",
+    iconSize: [20, 20],
   });
 
   const iconBlueBus = L.icon({
     iconUrl: "/images/blueBus.svg",
-    iconSize: [25, 41],
-    iconAnchor: [10, 41],
-    popupAnchor: [2, -40],
-    shadowSize: [41, 41]
+    iconSize: [35, 35],
   });
 
   const iconGreyBus = L.icon({
     iconUrl: "/images/greyBus.svg",
-    iconSize: [25, 41],
-    iconAnchor: [10, 41],
-    popupAnchor: [2, -40],
-    shadowSize: [41, 41]
+    iconSize: [35, 35],
   });
 
   const handleMarkerClick = (marker: Halte) => {
