@@ -232,7 +232,7 @@ export const MapDetailsProvider = ({ children }) => {
 
     const interval = setInterval(() => {
       getContents();
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [selectedHalte, selectedRoute]);
