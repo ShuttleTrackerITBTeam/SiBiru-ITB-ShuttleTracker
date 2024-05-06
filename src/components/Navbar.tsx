@@ -43,9 +43,12 @@ const Navbar = () => {
                   <p className="text-center mt-1 ml-14 text-[18px] font-bold text-[#0078C9] font-montserrat">About Us</p>
                 )
               ) : (
-                <div>
-                  <Image src="/images/logo.svg" alt='logo' width={88} height={80} />
-                </div>
+                <>
+                  <div>
+                    <Image src="/images/logo.svg" alt='logo' width={88} height={80} />
+                  </div>
+                  <p className="text-center mt-5 ml-1 text-[10px] font-bold text-[#0078C9] font-montserrat">Beta</p>
+                </>
               )}
             </button>
             <div className='flex items-center mb-[1px]'>
